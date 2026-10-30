@@ -1,16 +1,18 @@
 # Privacy Policy
 
-**Last Updated:** January 20, 2026
+> **Mailaxe** is an unofficial fork of [Aerion](https://github.com/hkdb/aerion) and is not affiliated with or endorsed by the Aerion project. This document is adapted from Aerion's original document; questions about Mailaxe should go to the Mailaxe repository, not to the Aerion developers.
+
+**Last Updated:** October 30, 2026
 
 ## Introduction
 
-Aerion ("we," "our," or "the Application") is an open-source desktop email client. The official Aerion website and online documentation is hosted at [https://aerion.3df.io](https://aerion.3df.io). This Privacy Policy explains how Aerion handles your information. Because Aerion is a desktop application that runs entirely on your computer, our approach to privacy is fundamentally different from cloud-based services.
+Mailaxe ("we," "our," or "the Application") is an open-source desktop email client. Mailaxe source code and releases are hosted at [https://github.com/valba8/aerion](https://github.com/valba8/aerion). This Privacy Policy explains how Mailaxe handles your information. Because Mailaxe is a desktop application that runs entirely on your computer, our approach to privacy is fundamentally different from cloud-based services.
 
-**Key Point:** Aerion does not operate any servers that collect, store, or process your data. All your information stays on your device.
+**Key Point:** Mailaxe does not operate any servers that collect, store, or process your data. All your information stays on your device.
 
 ## Information We Do Not Collect
 
-Unlike many applications, Aerion:
+Unlike many applications, Mailaxe:
 
 - **Does not collect** any personal information on external servers
 - **Does not transmit** your emails, contacts, or credentials to us
@@ -20,7 +22,7 @@ Unlike many applications, Aerion:
 
 ## Information Stored Locally on Your Device
 
-Aerion stores the following information locally on your computer:
+Mailaxe stores the following information locally on your computer:
 
 ### Email Data
 - Email messages synchronized from your email accounts
@@ -46,27 +48,18 @@ Aerion stores the following information locally on your computer:
 
 ## Google API Services
 
-Aerion uses Google APIs to provide Gmail integration. Our use of information received from Google APIs adheres to the [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.
+Mailaxe releases do **not** include Google OAuth credentials. To use Gmail over OAuth you register your own OAuth client in your own Google Cloud project and enter it in Mailaxe (Settings → Accounts → OAuth Credentials); alternatively you can use IMAP with an app password. In both cases Mailaxe talks directly from your device to Google: no data passes through the Mailaxe developers.
 
 ### Google API Scopes Used
 
 - **IMAP/SMTP Access** - To read, send, and manage your emails via standard IMAP/SMTP protocols (OAuth2 authenticated)
 - **Google People API** - To access your contacts for email autocomplete
 
-### Limited Use Disclosure
-
-Aerion's use and transfer of information received from Google APIs to any other app will adhere to the [Google API Services User Data Policy](https://developers.google.com/terms/api-services-user-data-policy), including the Limited Use requirements.
-
-Specifically:
-- Aerion only uses Google data to provide email functionality to you
-- Aerion does not transfer Google data to third parties
-- Aerion does not use Google data for advertising
-- Aerion does not use Google data to train AI/ML models
-- Human access to Google data is limited to debugging with user consent
+Mailaxe only uses Google data to provide email functionality to you, does not transfer Google data to third parties, does not use it for advertising and does not use it to train AI/ML models.
 
 ## Microsoft API Services
 
-Aerion uses Microsoft Graph APIs to provide Outlook/Microsoft 365 integration.
+Mailaxe uses Microsoft Graph APIs to provide Outlook/Microsoft 365 integration. Mailaxe releases do not include a Microsoft OAuth client: you register your own (free) app in Azure and enter its client ID in Mailaxe.
 
 ### Microsoft API Scopes Used
 
@@ -81,14 +74,14 @@ All Microsoft data is stored locally and used solely for email functionality.
 
 Your data security depends on:
 
-1. **Your device security** - Aerion stores data locally, so your device's security measures (disk encryption, password protection, etc.) protect your email data
+1. **Your device security** - Mailaxe stores data locally, so your device's security measures (disk encryption, password protection, etc.) protect your email data
 2. **Secure connections** - All connections to email servers use TLS/SSL encryption
 3. **System keyring** - Sensitive credentials are stored in your operating system's secure credential storage
 4. **No cloud exposure** - Your data is never transmitted to our servers because we don't operate any
 
 ## Third-Party Services
 
-Aerion only connects to services you explicitly configure:
+Mailaxe only connects to services you explicitly configure:
 
 - Your email provider (via IMAP/SMTP)
 - Google APIs (if you use Gmail)
@@ -102,25 +95,23 @@ We do not integrate with any advertising networks, analytics services, or other 
 Since all data is stored locally on your device:
 
 - **You control retention** - Data remains until you delete it
-- **Uninstalling Aerion** - Removes the application but may leave data in your local application data directory
-- **Complete removal** - Delete the Aerion data directory to remove all locally stored data
+- **Uninstalling Mailaxe** - Removes the application but may leave data in your local application data directory
+- **Complete removal** - Delete the Mailaxe data directory to remove all locally stored data
 
 ## Children's Privacy
 
-Aerion is not directed at children under 13. We do not knowingly collect information from children. Since Aerion stores all data locally and does not transmit data to external servers, parental supervision of the device itself is the appropriate safeguard.
+Mailaxe is not directed at children under 13. We do not knowingly collect information from children. Since Mailaxe stores all data locally and does not transmit data to external servers, parental supervision of the device itself is the appropriate safeguard.
 
 ## Changes to This Privacy Policy
 
-We may update this Privacy Policy from time to time. Changes will be reflected in the "Last Updated" date. Since Aerion is open source, you can review any changes in our public repository.
+We may update this Privacy Policy from time to time. Changes will be reflected in the "Last Updated" date. Since Mailaxe is open source, you can review any changes in our public repository.
 
 ## Open Source Transparency
 
-Aerion is open-source software. You can review exactly how we handle your data by examining our source code at [https://github.com/hkdb/aerion](https://github.com/hkdb/aerion).
+Mailaxe is open-source software. You can review exactly how we handle your data by examining our source code at [https://github.com/valba8/aerion](https://github.com/valba8/aerion).
 
 ## Contact Us
 
 If you have questions about this Privacy Policy, please contact us at:
 
-**Email:** aerion@3df.io
-
-**GitHub Issues:** [https://github.com/hkdb/aerion/issues](https://github.com/hkdb/aerion/issues)
+**GitHub Issues:** [https://github.com/valba8/aerion/issues](https://github.com/valba8/aerion/issues)

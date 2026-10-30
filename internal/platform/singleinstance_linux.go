@@ -14,7 +14,7 @@ import (
 )
 
 // linuxSingleInstanceLock uses a Unix socket for single-instance detection.
-// The socket lives alongside the IPC socket at /tmp/aerion-{uid}/instance.sock.
+// The socket lives alongside the IPC socket at /tmp/mailaxe-{uid}/instance.sock.
 type linuxSingleInstanceLock struct {
 	listener   net.Listener
 	socketPath string
@@ -148,7 +148,7 @@ func (l *linuxSingleInstanceLock) handleConnection(conn net.Conn) {
 // buildSocketPath returns the path for the instance lock socket.
 func (l *linuxSingleInstanceLock) buildSocketPath() (string, error) {
 	uid := os.Getuid()
-	socketDir := filepath.Join(os.TempDir(), fmt.Sprintf("aerion-%d", uid))
+	socketDir := filepath.Join(os.TempDir(), fmt.Sprintf("mailaxe-%d", uid))
 
 	if err := os.MkdirAll(socketDir, 0700); err != nil {
 		return "", fmt.Errorf("failed to create socket directory: %w", err)

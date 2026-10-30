@@ -12,6 +12,8 @@ import (
 	goSync "sync"
 	"time"
 
+	extcalendarbe "github.com/hkdb/aerion/extensions/calendar/backend"
+	extcontactsbe "github.com/hkdb/aerion/extensions/contacts/backend"
 	"github.com/hkdb/aerion/internal/account"
 	"github.com/hkdb/aerion/internal/appstate"
 	"github.com/hkdb/aerion/internal/carddav"
@@ -21,8 +23,6 @@ import (
 	"github.com/hkdb/aerion/internal/credentials"
 	"github.com/hkdb/aerion/internal/database"
 	"github.com/hkdb/aerion/internal/draft"
-	extcalendarbe "github.com/hkdb/aerion/extensions/calendar/backend"
-	extcontactsbe "github.com/hkdb/aerion/extensions/contacts/backend"
 	extauth "github.com/hkdb/aerion/internal/extensions/auth"
 	extcompose "github.com/hkdb/aerion/internal/extensions/compose"
 	extmail "github.com/hkdb/aerion/internal/extensions/mail"
@@ -35,9 +35,9 @@ import (
 	"github.com/hkdb/aerion/internal/message"
 	"github.com/hkdb/aerion/internal/notification"
 	"github.com/hkdb/aerion/internal/oauth2"
+	"github.com/hkdb/aerion/internal/pgp"
 	"github.com/hkdb/aerion/internal/platform"
 	"github.com/hkdb/aerion/internal/settings"
-	"github.com/hkdb/aerion/internal/pgp"
 	"github.com/hkdb/aerion/internal/smime"
 	"github.com/hkdb/aerion/internal/sync"
 	"github.com/hkdb/aerion/internal/undo"
@@ -238,14 +238,14 @@ type App struct {
 	// into App via its Bridge struct (declared at the top of this struct
 	// definition); the *Extension field below is the lightweight lifecycle
 	// handle the host's knownExtensions Register loop iterates.
-	authBroker       *extauth.Broker      // coreapi.Auth impl for extensions
-	mailAPI          *extmail.API         // coreapi.Mail impl wrapping core stores
-	composerAPI      *extcompose.API      // coreapi.Composer impl wrapping OpenComposerWindow
-	uiRegistry       *extui.Registry      // coreapi.UI impl: rail tabs, account-setup hooks, ...
-	contactsExt      *extcontactsbe.Extension // Contacts lifecycle handle (manifest + Register only)
-	calendarExt      *extcalendarbe.Extension // Calendar lifecycle handle (manifest + Register only)
-	knownExtensions  []coreapi.Extension      // all first-party extensions, iterated by ListExtensions
-	extensionUnregs  []coreapi.Unregister     // teardown funcs returned from each Extension.Register
+	authBroker      *extauth.Broker          // coreapi.Auth impl for extensions
+	mailAPI         *extmail.API             // coreapi.Mail impl wrapping core stores
+	composerAPI     *extcompose.API          // coreapi.Composer impl wrapping OpenComposerWindow
+	uiRegistry      *extui.Registry          // coreapi.UI impl: rail tabs, account-setup hooks, ...
+	contactsExt     *extcontactsbe.Extension // Contacts lifecycle handle (manifest + Register only)
+	calendarExt     *extcalendarbe.Extension // Calendar lifecycle handle (manifest + Register only)
+	knownExtensions []coreapi.Extension      // all first-party extensions, iterated by ListExtensions
+	extensionUnregs []coreapi.Unregister     // teardown funcs returned from each Extension.Register
 
 	// coreapi.EventBus implementation, lazily constructed on first
 	// Core.Events() call (via eventBusInitOnce). Extensions consume via
@@ -324,7 +324,7 @@ type App struct {
 
 	// Draft IMAP sync goroutine tracking — cancel in-flight syncDraftToIMAP
 	draftSyncContexts map[string]context.CancelFunc // keyed by draft ID
-	draftSyncDone     map[string]chan struct{}       // closed when goroutine exits
+	draftSyncDone     map[string]chan struct{}      // closed when goroutine exits
 
 	// Sleep/wake detection for auto-sync on wake
 	sleepWakeMonitor platform.SleepWakeMonitor
@@ -378,14 +378,14 @@ type StartupDialogInfo struct {
 // Other backends show the URL as selectable plain text and use the
 // ActionURL field to drive an "Open Docs" button.
 func StartupDialogInfoFor(err error) StartupDialogInfo {
-	const docsRollbackURL = "https://github.com/hkdb/aerion/blob/main/docs/SQL_ROLLBACK.md"
+	const docsRollbackURL = "https://github.com/valba8/aerion/blob/mailaxe/docs/SQL_ROLLBACK.md"
 
 	var schemaTooNew *database.ErrSchemaTooNew
 	if errors.As(err, &schemaTooNew) {
 		text := fmt.Sprintf(
-			"Aerion cannot open your database because its schema (version %d) is newer "+
-				"than this build of Aerion supports (max version %d).\n\n"+
-				"This usually means you downgraded Aerion. To recover, either reinstall "+
+			"Mailaxe cannot open your database because its schema (version %d) is newer "+
+				"than this build of Mailaxe supports (max version %d).\n\n"+
+				"This usually means you downgraded Mailaxe. To recover, either reinstall "+
 				"the newer version, or follow the rollback instructions to bring your "+
 				"database back to version %d:\n\n"+
 				"%s",
@@ -393,15 +393,15 @@ func StartupDialogInfoFor(err error) StartupDialogInfo {
 			docsRollbackURL,
 		)
 		return StartupDialogInfo{
-			Title:       "Aerion could not start",
+			Title:       "Mailaxe could not start",
 			Text:        text,
 			ActionLabel: "Open Docs",
 			ActionURL:   docsRollbackURL,
 		}
 	}
 	return StartupDialogInfo{
-		Title: "Aerion could not start",
-		Text:  fmt.Sprintf("Aerion could not start.\n\nDetails: %v", err),
+		Title: "Mailaxe could not start",
+		Text:  fmt.Sprintf("Mailaxe could not start.\n\nDetails: %v", err),
 	}
 }
 
@@ -842,7 +842,7 @@ func (a *App) Startup(ctx context.Context) {
 	// Initialize autostart manager
 	a.autostartMgr = platform.NewAutostartManager()
 
-	log.Info().Msg("Aerion started successfully")
+	log.Info().Msg("Mailaxe started successfully")
 }
 
 // IsReady reports whether Startup has fully completed. The frontend calls
@@ -1067,7 +1067,7 @@ func (a *App) Shutdown(ctx context.Context) {
 		log.Info().Msg("Database closed")
 	}
 
-	log.Info().Msg("Aerion shutdown complete")
+	log.Info().Msg("Mailaxe shutdown complete")
 }
 
 // updateDBConnectionPool scales the database connection pool based on account count.

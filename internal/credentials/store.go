@@ -11,7 +11,7 @@ import (
 	gokeyring "github.com/zalando/go-keyring"
 )
 
-const serviceName = "aerion"
+const serviceName = "mailaxe"
 
 // Store provides credential storage with OS keyring and encrypted DB fallback
 type Store struct {
@@ -50,7 +50,7 @@ func NewStore(db *sql.DB, dataDir string) (*Store, error) {
 
 // testKeyring checks if the OS keyring is available and functional
 func testKeyring() bool {
-	testKey := "aerion-test-keyring-check"
+	testKey := "mailaxe-test-keyring-check"
 	testValue := "test"
 
 	// Try to set a test value

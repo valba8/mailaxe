@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	autostartFilename = "io.github.hkdb.Aerion.desktop"
+	autostartFilename = "io.github.valba8.Mailaxe.desktop"
 	desktopEntryTmpl  = `[Desktop Entry]
 Type=Application
 Name=Aerion
@@ -115,7 +115,7 @@ func (m *linuxAutostartManager) portalRequestBackground(autostart bool) error {
 		"handle_token": dbus.MakeVariant(handleToken),
 		"reason":       dbus.MakeVariant("Start automatically on login and sync email in the background"),
 		"autostart":    dbus.MakeVariant(autostart),
-		"commandline":  dbus.MakeVariant([]string{"aerion"}),
+		"commandline":  dbus.MakeVariant([]string{"mailaxe"}),
 	}
 
 	obj := conn.Object("org.freedesktop.portal.Desktop", "/org/freedesktop/portal/desktop")
@@ -232,7 +232,7 @@ func (m *linuxAutostartManager) autostartDir() (string, error) {
 func (m *linuxAutostartManager) execCommand() string {
 	exe, err := os.Executable()
 	if err != nil {
-		return "aerion"
+		return "mailaxe"
 	}
 	return exe
 }

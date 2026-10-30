@@ -64,7 +64,7 @@ func resolveLogConfig() logging.Config {
 		level = "debug"
 	}
 	if _, err := zerolog.ParseLevel(level); err != nil {
-		fmt.Fprintf(os.Stderr, "aerion: invalid --log-level %q (want fatal, error, warn, info or debug)\n", level)
+		fmt.Fprintf(os.Stderr, "mailaxe: invalid --log-level %q (want fatal, error, warn, info or debug)\n", level)
 		os.Exit(2)
 	}
 
@@ -95,7 +95,7 @@ func main() {
 	}
 	if err := logging.Init(logCfg); err != nil {
 		// A bad --log-file must not block startup; stderr logging still works.
-		fmt.Fprintf(os.Stderr, "aerion: logging init failed: %v\n", err)
+		fmt.Fprintf(os.Stderr, "mailaxe: logging init failed: %v\n", err)
 	}
 
 	// Check for mailto: URL in non-flag arguments
@@ -183,7 +183,7 @@ func runMainMode(mailtoData *app.MailtoData, rawMailtoArg string) {
 
 	// Create application with options
 	err = wails.Run(&options.App{
-		Title:                    "Aerion",
+		Title:                    "Mailaxe",
 		Width:                    windowWidth,
 		Height:                   windowHeight,
 		MinWidth:                 360,
@@ -205,7 +205,7 @@ func runMainMode(mailtoData *app.MailtoData, rawMailtoArg string) {
 		},
 		Linux: &linux.Options{
 			WebviewGpuPolicy: linux.WebviewGpuPolicyOnDemand,
-			ProgramName:      "io.github.hkdb.Aerion",
+			ProgramName:      "io.github.valba8.Mailaxe",
 		},
 	})
 
@@ -298,7 +298,7 @@ func runComposerMode() {
 		},
 		Linux: &linux.Options{
 			WebviewGpuPolicy: linux.WebviewGpuPolicyOnDemand,
-			ProgramName:      "io.github.hkdb.Aerion",
+			ProgramName:      "io.github.valba8.Mailaxe",
 		},
 	})
 

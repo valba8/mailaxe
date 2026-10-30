@@ -1,39 +1,28 @@
 name: Release
 
+# Mailaxe release workflow (replaces Aerion's, which also publishes Flatpak,
+# AUR and signed macOS builds tied to the upstream project).
+#
+# Push a tag like v0.3.6-mailaxe.1 to build Windows and Linux binaries and
+# attach them to a DRAFT GitHub release for review before publishing.
+# Builds carry no OAuth credentials: users bring their own (see README).
+
 on:
   push:
     tags: 'v*'
+  workflow_dispatch:
 
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
+          - os: windows-latest
+            platform: windows
           - os: ubuntu-22.04
             platform: linux
-            arch: amd64
-          - os: ubuntu-22.04-arm
-            platform: linux
-            arch: arm64
-          - os: macos-latest
-            platform: darwin
-            arch: amd64
-          - os: macos-latest
-            platform: darwin
-            arch: arm64
-          - os: windows-latest
-            platform: windows
-            arch: amd64
-          - os: windows-latest
-            platform: windows
-            arch: arm64
     runs-on: ${{ matrix.os }}
-    env:
-      GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-      GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-      MICROSOFT_CLIENT_ID: ${{ secrets.MICROSOFT_CLIENT_ID }}
-      GOOGLE_TESTING_CLIENT_ID: ${{ secrets.GOOGLE_TESTING_CLIENT_ID }}
-      GOOGLE_TESTING_CLIENT_SECRET: ${{ secrets.GOOGLE_TESTING_CLIENT_SECRET }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
@@ -50,7 +39,7 @@ jobs:
           node-version: '24'
 
       - name: Install Wails CLI
-        run: go install github.com/wailsapp/wails/v2/cmd/wails@latest
+        run: go install github.com/wailsapp/wails/v2/cmd/wails@v2.16.0
 
       - name: Install Linux dependencies
         if: matrix.platform == 'linux'
@@ -58,246 +47,58 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.1-dev
 
-      - name: Install Windows dependencies (NSIS)
+      - name: Install NSIS
         if: matrix.platform == 'windows'
         shell: pwsh
         run: |
           choco install nsis -y --no-progress
-          # Wails detects NSIS via exec.LookPath("makensis") — make sure subsequent steps see it.
+          # Wails finds NSIS via exec.LookPath("makensis")
           Add-Content -Path $env:GITHUB_PATH -Value "C:\Program Files (x86)\NSIS"
-
-      - name: Install frontend dependencies
-        run: |
-          cd frontend
-          npm install
-
-      - name: Build (Linux)
-        if: matrix.platform == 'linux'
-        run: |
-          make build-linux
-
-          # Rename binary with version tag
-          if [ "${{ matrix.arch }}" = "amd64" ]; then
-            mv build/bin/aerion build/bin/aerion-${{ github.ref_name }}-linux-x86_64
-          elif [ "${{ matrix.arch }}" = "arm64" ]; then
-            mv build/bin/aerion build/bin/aerion-${{ github.ref_name }}-linux-aarch64
-          fi
-
-          # Build OAuth credentials shim binary
-          if [ "${{ matrix.arch }}" = "amd64" ]; then
-            CGO_ENABLED=0 GOARCH=amd64 go build \
-              -ldflags "-X 'main.GoogleClientID=$GOOGLE_CLIENT_ID' -X 'main.GoogleClientSecret=$GOOGLE_CLIENT_SECRET' -X 'main.MicrosoftClientID=$MICROSOFT_CLIENT_ID' -X 'main.GoogleTestingClientID=$GOOGLE_TESTING_CLIENT_ID' -X 'main.GoogleTestingClientSecret=$GOOGLE_TESTING_CLIENT_SECRET'" \
-              -o build/bin/flathub-build-env-${{ github.ref_name }}-linux-x86_64 \
-              cmd/aerion-creds/main.go
-          elif [ "${{ matrix.arch }}" = "arm64" ]; then
-            CGO_ENABLED=0 GOARCH=arm64 go build \
-              -ldflags "-X 'main.GoogleClientID=$GOOGLE_CLIENT_ID' -X 'main.GoogleClientSecret=$GOOGLE_CLIENT_SECRET' -X 'main.MicrosoftClientID=$MICROSOFT_CLIENT_ID' -X 'main.GoogleTestingClientID=$GOOGLE_TESTING_CLIENT_ID' -X 'main.GoogleTestingClientSecret=$GOOGLE_TESTING_CLIENT_SECRET'" \
-              -o build/bin/flathub-build-env-${{ github.ref_name }}-linux-aarch64 \
-              cmd/aerion-creds/main.go
-          fi
-
-          # Create distribution tarball (complete package for manual installation)
-          mkdir -p dist-package
-          cp build/bin/aerion-${{ github.ref_name }}-linux-* dist-package/aerion
-          cp build/linux/install.sh dist-package/
-          cp build/linux/uninstall.sh dist-package/
-          cp build/linux/aerion.desktop dist-package/io.github.hkdb.Aerion.desktop
-          # 256 at tarball root keeps AUR aerion-bin working; sized copies +
-          # scalable SVG live under icons/ so install.sh can fill hicolor
-          # (#395). Keep sizes in sync with ICON_SIZES in Makefile/install.sh.
-          cp build/linux/aerion.png dist-package/io.github.hkdb.Aerion.png
-          for sz in 32 48 64 128 256; do
-            mkdir -p dist-package/icons/${sz}x${sz}
-            cp build/linux/icons/${sz}x${sz}/io.github.hkdb.Aerion.png \
-              dist-package/icons/${sz}x${sz}/
-          done
-          mkdir -p dist-package/icons/scalable
-          cp build/linux/icons/scalable/io.github.hkdb.Aerion.svg dist-package/icons/scalable/
-
-          if [ "${{ matrix.arch }}" = "amd64" ]; then
-            tar czf aerion-linux-amd64.tar.gz -C dist-package .
-          elif [ "${{ matrix.arch }}" = "arm64" ]; then
-            tar czf aerion-linux-arm64.tar.gz -C dist-package .
-          fi
-
-          rm -rf dist-package
-
-      - name: Build (macOS)
-        if: matrix.platform == 'darwin'
-        env:
-          GOARCH: ${{ matrix.arch }}
-        run: |
-          make build
-          cd build/bin
-          zip -r Aerion-darwin-${{ matrix.arch }}.zip Aerion.app
-          rm -rf Aerion.app
 
       - name: Build (Windows)
         if: matrix.platform == 'windows'
         shell: pwsh
-        env:
-          GOARCH: ${{ matrix.arch }}
         run: |
-          make build-windows-installer
-          Move-Item build/bin/aerion.exe build/bin/Aerion-windows-${{ matrix.arch }}.exe
-          Move-Item build/bin/aerion-${{ matrix.arch }}-installer.exe build/bin/Aerion-windows-setup-${{ matrix.arch }}.exe
+          wails build -clean -nsis -platform windows/amd64
+          New-Item -ItemType Directory -Force dist | Out-Null
+          Move-Item build/bin/mailaxe.exe dist/Mailaxe-windows-amd64.exe
+          Move-Item build/bin/mailaxe-amd64-installer.exe dist/Mailaxe-windows-setup-amd64.exe
+
+      - name: Build (Linux)
+        if: matrix.platform == 'linux'
+        run: |
+          wails build -clean -platform linux/amd64 -tags webkit2_41,linux,production
+          mkdir -p dist package
+          cp build/bin/mailaxe package/mailaxe
+          cp LICENSE NOTICE README.md package/
+          tar czf dist/mailaxe-linux-amd64.tar.gz -C package .
 
       - uses: actions/upload-artifact@v7
         with:
-          name: aerion-${{ matrix.platform }}-${{ matrix.arch }}${{ matrix.variant && format('-{0}', matrix.variant) || '' }}
-          path: |
-            build/bin/aerion-*
-            build/bin/Aerion-*
-            build/bin/flathub-build-env-*
-            aerion-*.tar.gz
+          name: mailaxe-${{ matrix.platform }}
+          path: dist/*
           retention-days: 1
 
   publish:
     needs: build
+    if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     env:
       GH_REPO: ${{ github.repository }}
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    permissions:
-      contents: write
-    outputs:
-      release-id: ${{ steps.create-release.outputs.id }}
     steps:
-      - uses: actions/checkout@v6
-
-      - uses: actions/download-artifact@v7
-
-      - name: Create GitHub Release
-        id: create-release
-        run: |
-          TAG_NAME=${{ github.ref_name }}
-
-          # Upload all artifacts (binaries, shim binaries, tarballs)
-          gh release upload $TAG_NAME \
-            aerion-*/build/bin/* \
-            aerion-*/*.tar.gz \
-            --clobber
-
-  update-manifest:
-    needs: publish
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget
-
-      - name: Calculate hashes and update manifest
-        run: |
-          cd build/flatpak/flathub
-          chmod +x calculate-hashes.sh
-          ./calculate-hashes.sh ${{ github.ref_name }}
-
-      - name: Upload updated manifest
-        uses: actions/upload-artifact@v7
-        with:
-          name: flathub-manifest
-          path: build/flatpak/flathub/io.github.hkdb.Aerion.yml
-          retention-days: 1
-
-  build-flatpak:
-    needs: update-manifest
-    strategy:
-      matrix:
-        include:
-          - os: ubuntu-24.04
-            arch: x86_64
-          - os: ubuntu-24.04-arm
-            arch: aarch64
-    runs-on: ${{ matrix.os }}
-    permissions:
-      contents: write
-    env:
-      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
       - uses: actions/download-artifact@v7
         with:
-          name: flathub-manifest
-          path: build/flatpak/flathub
+          path: artifacts
+          merge-multiple: true
 
-      - name: Install dependencies
+      - name: Create draft release
         run: |
-          sudo apt-get update
-          # Primary: normal install (phased-updates opt-in is CI hygiene —
-          # runners aren't a user population).
-          # Fallback: EXACT noble release-pocket versions. Ubuntu can leave
-          # -updates/-security unsatisfiable after pulling a bad update
-          # (2026-09-17: bubblewrap 0.9.0-1ubuntu0.2 published + deleted
-          # same day WITHOUT restoring ubuntu0.1, while updates-flatpak
-          # depends on >= ubuntu0.1 — broke apt-install of flatpak on all
-          # arches until mirrors carried the redone 0.9.0-1ubuntu0.3).
-          # The release pocket is frozen and never deleted, and its
-          # versions interlock by definition, so this set always installs
-          # (verified co-installable). NOT -t noble: Default-Release
-          # matches by codename too, so all noble-* pockets get pinned and
-          # the broken updates candidate still wins. Versions are
-          # noble-specific — refresh if the runner image moves off 24.04.
-          sudo apt-get install -y -o APT::Get::Always-Include-Phased-Updates=true flatpak flatpak-builder \
-            || sudo apt-get install -y flatpak=1.14.6-1 libflatpak0=1.14.6-1 bubblewrap=0.9.0-1build1 flatpak-builder=1.4.2-1build2
-
-      - name: Add Flathub repository
-        run: flatpak remote-add --if-not-exists --user flathub https://flathub.org/repo/flathub.flatpakrepo
-
-      - name: Install Flatpak runtimes and SDK extensions
-        run: |
-          flatpak install -y --user flathub \
-            org.gnome.Platform//49 \
-            org.gnome.Sdk//49 \
-            org.freedesktop.Sdk.Extension.golang//24.08 \
-            org.freedesktop.Sdk.Extension.node24//24.08
-
-      - name: Clean flatpak-builder cache
-        run: |
-          rm -rf .flatpak-builder
-
-      - name: Build Flatpak (like Flathub would)
-        run: |
-          flatpak-builder --user --force-clean --repo=repo \
-            --install-deps-from=flathub \
-            build-dir build/flatpak/flathub/io.github.hkdb.Aerion.yml
-
-          mkdir -p build/bin
-          flatpak build-bundle repo build/bin/Aerion-${{ github.ref_name }}-${{ matrix.arch }}.flatpak io.github.hkdb.Aerion
-
-      - name: Upload Flatpak to release
-        run: |
-          gh release upload ${{ github.ref_name }} \
-            build/bin/Aerion-${{ github.ref_name }}-${{ matrix.arch }}.flatpak \
-            --clobber
-
-  commit-manifest:
-    needs: build-flatpak
-    if: ${{ !contains(github.ref_name, '-build') && !contains(github.ref_name, '-test') && !contains(github.ref_name, '-rc') }}
-    runs-on: ubuntu-24.04
-    permissions:
-      contents: write
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - uses: actions/download-artifact@v7
-        with:
-          name: flathub-manifest
-          path: build/flatpak/flathub
-
-      - name: Commit updated manifest
-        if: success()
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git fetch origin main:main
-          git checkout main
-          git add build/flatpak/flathub/io.github.hkdb.Aerion.yml
-          git commit -m "${{ github.ref_name }} - Flathub submission" || echo "No changes to commit"
-          git push origin main
+          TAG=${{ github.ref_name }}
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --draft --prerelease --generate-notes \
+              --title "Mailaxe $TAG" \
+              --notes "Unofficial fork of Aerion. Builds ship without OAuth credentials: see the README for Gmail/Outlook setup."
+          gh release upload "$TAG" artifacts/* --clobber

@@ -28,8 +28,11 @@
     }
   })
 
-  const PRIVACY_URL = 'https://github.com/hkdb/aerion/blob/main/docs/PRIVACY.md'
-  const TERMS_URL = 'https://github.com/hkdb/aerion/blob/main/docs/TERMS.md'
+  const PRIVACY_URL = 'https://github.com/valba8/aerion/blob/mailaxe/docs/PRIVACY.md'
+  const TERMS_URL = 'https://github.com/valba8/aerion/blob/mailaxe/docs/TERMS.md'
+  // Mailaxe is a derivative of Aerion (Apache 2.0); credit the original project
+  const UPSTREAM_URL = 'https://github.com/hkdb/aerion'
+  const LICENSE_URL = 'https://github.com/valba8/aerion/blob/mailaxe/LICENSE'
 
   function openWebsite() {
     if (appInfo?.website) {
@@ -43,6 +46,14 @@
 
   function openTermsOfService() {
     BrowserOpenURL(TERMS_URL)
+  }
+
+  function openUpstream() {
+    BrowserOpenURL(UPSTREAM_URL)
+  }
+
+  function openLicense() {
+    BrowserOpenURL(LICENSE_URL)
   }
 </script>
 
@@ -87,6 +98,19 @@
         <Icon icon="mdi:file-document" class="w-5 h-5" />
         <span>{$_('settingsAbout.termsOfUse')}</span>
       </button>
+    </div>
+
+    <!-- Unofficial fork notice: Mailaxe is based on Aerion -->
+    <div class="max-w-sm text-center text-xs text-muted-foreground space-y-2 border-t border-border pt-4">
+      <p>{$_('settingsAbout.forkNotice')}</p>
+      <div class="flex items-center justify-center gap-4">
+        <button onclick={openUpstream} class="text-primary hover:underline">
+          {$_('settingsAbout.originalProject')}
+        </button>
+        <button onclick={openLicense} class="text-primary hover:underline">
+          {$_('settingsAbout.license')}
+        </button>
+      </div>
     </div>
 
   {:else}

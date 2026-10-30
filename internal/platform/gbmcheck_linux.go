@@ -59,8 +59,8 @@ func MonitorGBMErrors() {
 		for scanner.Scan() {
 			line := scanner.Text()
 			if strings.Contains(line, "Failed to create GBM buffer") ||
-			strings.Contains(line, "Protocol error) dispatching to Wayland display") ||
-			strings.Contains(line, "Failed to submit review to ODRS") {
+				strings.Contains(line, "Protocol error) dispatching to Wayland display") ||
+				strings.Contains(line, "Failed to submit review to ODRS") {
 				once.Do(func() {
 					showGBMFixDialog()
 				})
@@ -75,10 +75,10 @@ func MonitorGBMErrors() {
 func showGBMFixDialog() {
 	ShowDialogAsync(
 		DialogIconWarning,
-		"Aerion - Display Issue Detected",
+		"Mailaxe - Display Issue Detected",
 		"A display rendering error was detected that may cause a blank window or crash.\n\n"+
-			"To fix this permanently, close Aerion and run:\n\n"+
+			"To fix this permanently, close Mailaxe and run:\n\n"+
 			"flatpak override --user --env=WEBKIT_DISABLE_DMABUF_RENDERER=1 io.github.hkdb.Aerion\n\n"+
-			"Then restart Aerion.",
+			"Then restart Mailaxe.",
 	)
 }

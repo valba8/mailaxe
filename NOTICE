@@ -1,0 +1,40 @@
+Mailaxe
+Copyright 2026 valba8
+
+Mailaxe is an unofficial fork and derivative work of Aerion
+(https://github.com/hkdb/aerion), an open source email client.
+
+Aerion
+Copyright 2024-2025 Aerion Contributors
+
+Both Aerion and Mailaxe are licensed under the Apache License, Version 2.0
+(the "License"); you may not use these files except in compliance with the
+License. A copy of the License is included in the LICENSE file and is also
+available at http://www.apache.org/licenses/LICENSE-2.0.
+
+Modifications
+-------------
+Mailaxe modifies the original Aerion source code. Every change made to the
+Aerion files is recorded in the Git history of the Mailaxe repository
+(https://github.com/valba8/aerion), starting after Aerion's v0.3.6-dev
+branch. In summary, Mailaxe:
+
+  - renames the application to Mailaxe and gives it its own data directory,
+    keyring entries and single-instance lock, so it can run alongside Aerion;
+  - ships without OAuth client credentials (users provide their own);
+  - adds optional message viewer and message list features (collapsible
+    quoted text, checkbox toolbar toggle, account color strip, unread accent
+    under the avatar, hover quick actions, View Source in the context menu)
+    and fixes "Collapse all".
+
+Trademarks
+----------
+"Aerion" and the Aerion logo belong to their respective owners. Mailaxe is
+not affiliated with, sponsored by or endorsed by the Aerion project. The
+Aerion name is used only to describe the origin of this software.
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+License for the specific language governing permissions and limitations
+under the License.

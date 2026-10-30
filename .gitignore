@@ -5,6 +5,9 @@ context
 aerion
 aerion.exe
 aerion-creds
+mailaxe
+mailaxe.exe
+mailaxe-creds
 
 # Wails build artifacts
 build/bin/

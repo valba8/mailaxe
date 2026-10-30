@@ -2,8 +2,9 @@
   // AerionCoreOAuthSection — Settings → Accounts disclosure section for
   // Aerion CORE's OAuth client credentials (google-mail, microsoft-mail).
   //
-  // COLLAPSED by default — this is advanced power-user territory. Most users
-  // never expand it; Aerion ships verified mail creds out of the box.
+  // COLLAPSED by default. Mailaxe (unofficial Aerion fork) ships without
+  // OAuth creds, so this is where users enter their own Google/Microsoft
+  // client to add OAuth accounts.
   //
   // Per-extension OAuth slots (google-contacts, microsoft-contacts, etc.)
   // live inside that extension's own settings dialog, NOT here.
@@ -36,10 +37,9 @@
   {#if isExpanded}
     <div class="mt-3 space-y-3">
       <p class="text-sm text-muted-foreground">
-        Override the OAuth Client ID and Secret used for adding Google and Microsoft
-        email accounts. Most users should leave these on the shipped defaults.
-        Use your own credentials if your organization requires it, or to bypass
-        Aerion's quota / verification status.
+        Mailaxe is distributed without OAuth credentials. Enter your own OAuth
+        Client ID (and Secret for Google) here to add Google and Microsoft email
+        accounts, or add them with IMAP and an app password instead.
       </p>
       <OAuthCredsSlotEditor
         configID="google-mail"

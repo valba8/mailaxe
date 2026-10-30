@@ -178,7 +178,7 @@ type ErrSchemaTooNew struct {
 }
 
 func (e *ErrSchemaTooNew) Error() string {
-	return fmt.Sprintf("database schema version %d is newer than this Aerion build (max known: %d). See https://github.com/hkdb/aerion/blob/main/docs/SQL_ROLLBACK.md", e.DBVersion, e.BuildVersion)
+	return fmt.Sprintf("database schema version %d is newer than this Mailaxe build (max known: %d). See https://github.com/valba8/aerion/blob/mailaxe/docs/SQL_ROLLBACK.md", e.DBVersion, e.BuildVersion)
 }
 
 // Migrate runs all pending migrations

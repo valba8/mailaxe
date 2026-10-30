@@ -1,6 +1,6 @@
 <script lang="ts">
   // Per-version release announcement. Shown once after the user upgrades
-  // to a new Aerion version. Only the explicit OK click records
+  // to a new Mailaxe version. Only the explicit OK click records
   // acknowledgement (via onAcknowledge → SetLastSeenVersion in App.svelte).
   // Closing via ESC or outside-click leaves the version unrecorded, so
   // the dialog fires again on next launch.
@@ -31,7 +31,7 @@
     return () => dialogGuardClose()
   })
 
-  const CHANGELOG_URL = 'https://github.com/hkdb/aerion/blob/main/CHANGELOG.md'
+  const CHANGELOG_URL = 'https://github.com/valba8/aerion/releases'
 
   // Open external links via the backend OpenURL: on Linux it tries the OpenURI
   // portal first, so links work inside the Flatpak sandbox (where xdg-open —
@@ -59,21 +59,24 @@
       </div>
 
       <div class="space-y-4 max-h-[60vh] overflow-y-auto text-sm">
-        <p>🚀 Welcome to Aerion v0.3.5!</p>
+        <p>🚀 Welcome to Mailaxe v0.3.6-mailaxe.1!</p>
 
-        <p>v0.3.5 is a temp hotfix for a launch crash caused by WebKitGTK v2.54 recently rolled out in various runtimes. For those of you who didn't get a chance to see what's new in v0.3.4, here are the highlights of the release:</p>
+        <p>Mailaxe is an unofficial fork of Aerion v0.3.6. On top of Aerion, it adds:</p>
 
         <ul class="list-disc pl-6 space-y-1">
-          <li>⚗️ The message list's optional unread accent now has two new options: dot and glowing dot</li>
-          <li>✏️ Added Reply-To field to composer</li>
-          <li>✏️ Default CC, BCC, and Reply-To can now be set in Settings --> Composer</li>
-          <li>📖 Added English (UK) and Dutch spellcheck</li>
-          <li>🪟 Aerion now remembers your last window size which survives quit and relaunch</li>
-          <li>📩 Improved handling of rapid individual message deletes</li>
-          <li>🐛 Bug fixes and other improvements</li>
+          <li>💬 Collapse quoted text in replies behind a ••• button</li>
+          <li>☑️ Toolbar button to show or hide the selection checkboxes</li>
+          <li>🎨 Account color as a side strip, and the unread accent under the avatar</li>
+          <li>⚡ Archive and Delete quick actions when hovering a message</li>
+          <li>🧭 View Source in the message right-click menu</li>
+          <li>🐛 "Collapse all" now collapses every message</li>
         </ul>
 
-        <p>🏷 See the full change log here:</p>
+        <p>⚙️ The new options are off by default: turn them on in Settings → General.</p>
+
+        <p>🔑 Mailaxe ships without OAuth credentials. To use Gmail or Outlook, add the account with IMAP and an app password, or enter your own OAuth client in Settings → Accounts.</p>
+
+        <p>🏷 Release notes:</p>
 
         <p>
           <button
@@ -81,7 +84,7 @@
             class="text-primary hover:underline break-all focus:outline-none focus-visible:outline-none focus:ring-0"
             onclick={() => openExternal(CHANGELOG_URL)}
           >
-            https://github.com/hkdb/aerion/blob/main/CHANGELOG.md
+            https://github.com/valba8/aerion/releases
           </button>
         </p>
       </div>

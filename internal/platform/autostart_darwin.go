@@ -9,7 +9,7 @@ import (
 )
 
 const (
-	launchAgentLabel = "io.github.hkdb.Aerion"
+	launchAgentLabel = "io.github.valba8.Mailaxe"
 	launchAgentPlist = `<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -103,7 +103,7 @@ func (m *darwinAutostartManager) launchAgentsDir() (string, error) {
 func (m *darwinAutostartManager) execCommand() string {
 	exe, err := os.Executable()
 	if err != nil {
-		return "aerion"
+		return "mailaxe"
 	}
 	return exe
 }

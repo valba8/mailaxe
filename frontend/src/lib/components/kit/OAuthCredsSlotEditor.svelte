@@ -207,7 +207,7 @@
         {:else if statusBadgeKind() === 'custom'}
           <span class="text-xs px-2 py-0.5 rounded bg-primary/15 text-primary">Custom</span>
         {:else if statusBadgeKind() === 'aerion'}
-          <span class="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground">Aerion</span>
+          <span class="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground">Mailaxe</span>
         {:else}
           <span class="text-xs px-2 py-0.5 rounded bg-destructive/15 text-destructive">Not configured</span>
         {/if}

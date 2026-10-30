@@ -176,7 +176,7 @@ func (a *App) GetOAuthCredsChoices(configID, extensionID string) (OAuthCredsChoi
 		if mailSlot != configID && mailHasShipped {
 			out.Choices = append(out.Choices, OAuthCredsChoice{
 				ID:    "aerion-mail",
-				Label: "Aerion - Google",
+				Label: "Mailaxe - Google",
 			})
 		}
 	}
@@ -294,13 +294,13 @@ func providerFromConfigID(configID string) string {
 func shippedLabelForSlot(configID string) string {
 	switch configID {
 	case "google-contacts", "google-calendar":
-		return "Aerion - Google (Testing)"
+		return "Mailaxe - Google (Testing)"
 	case "google-mail":
-		return "Aerion - Google"
+		return "Mailaxe - Google"
 	case "microsoft-mail", "microsoft-contacts", "microsoft-calendar":
-		return "Aerion - Microsoft"
+		return "Mailaxe - Microsoft"
 	}
-	return "Aerion - Default"
+	return "Mailaxe - Default"
 }
 
 // SetOAuthCreds saves user-supplied OAuth client credentials for the given
@@ -414,4 +414,3 @@ func contactSourceEmail(s *carddav.Source) string {
 	}
 	return s.Username
 }
-

@@ -81,10 +81,10 @@ type ComposeMessage struct {
 
 	// Options
 	RequestReadReceipt bool `json:"request_read_receipt"`
-	SignMessage         bool `json:"sign_message"`    // S/MIME sign this message
-	EncryptMessage      bool `json:"encrypt_message"` // S/MIME encrypt this message
-	PGPSignMessage      bool `json:"pgp_sign_message"`    // PGP sign this message
-	PGPEncryptMessage   bool `json:"pgp_encrypt_message"` // PGP encrypt this message
+	SignMessage        bool `json:"sign_message"`        // S/MIME sign this message
+	EncryptMessage     bool `json:"encrypt_message"`     // S/MIME encrypt this message
+	PGPSignMessage     bool `json:"pgp_sign_message"`    // PGP sign this message
+	PGPEncryptMessage  bool `json:"pgp_encrypt_message"` // PGP encrypt this message
 }
 
 // AllRecipients returns all recipients (To + Cc + Bcc)
@@ -107,7 +107,7 @@ func (m *ComposeMessage) ToRFC822() ([]byte, error) {
 	var buf bytes.Buffer
 
 	// Generate Message-ID
-	messageID := fmt.Sprintf("<%s@aerion>", uuid.New().String())
+	messageID := fmt.Sprintf("<%s@mailaxe>", uuid.New().String())
 
 	// Write headers
 	writeHeader(&buf, "From", m.From.String())
@@ -123,7 +123,7 @@ func (m *ComposeMessage) ToRFC822() ([]byte, error) {
 	writeHeader(&buf, "Date", time.Now().Format(time.RFC1123Z))
 	writeHeader(&buf, "Message-ID", messageID)
 	writeHeader(&buf, "MIME-Version", "1.0")
-	writeHeader(&buf, "User-Agent", "Aerion Email Client")
+	writeHeader(&buf, "User-Agent", "Mailaxe Email Client")
 
 	// Threading headers
 	if m.InReplyTo != "" {

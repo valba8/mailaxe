@@ -1,17 +1,17 @@
 {
   "$schema": "https://wails.io/schemas/config.v2.json",
-  "name": "aerion",
-  "outputfilename": "aerion",
+  "name": "mailaxe",
+  "outputfilename": "mailaxe",
   "frontend:install": "npm install",
   "frontend:build": "npm run build",
   "frontend:dev:watcher": "npm run dev",
   "frontend:dev:serverUrl": "auto",
   "info": {
-    "companyName": "Aerion",
-    "productName": "Aerion",
+    "companyName": "Mailaxe",
+    "productName": "Mailaxe",
     "productVersion": "0.3.6",
-    "copyright": "Copyright 2024-2025",
-    "comments": "A modern, cross-platform email client",
+    "copyright": "Copyright 2024-2025 Aerion Contributors; Mailaxe modifications Copyright 2026 valba8",
+    "comments": "Unofficial fork of Aerion, a modern, cross-platform email client",
     "protocols": [
       {
         "scheme": "mailto",
@@ -20,7 +20,7 @@
     ]
   },
   "author": {
-    "name": "hkdb",
-    "email": "hkdb@3df.io"
+    "name": "valba8",
+    "email": "valba8@gmail.com"
   }
 }
