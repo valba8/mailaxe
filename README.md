@@ -81,6 +81,10 @@ wails build -clean
 
 The binary ends up in `build/bin/mailaxe.exe`. To bake your own OAuth client into a local build, put it in a `.env.local` file (see [.env.example](.env.example)); that file is git-ignored and must never be committed.
 
+## Contributing
+
+Pull requests are welcome, including finished features you have already implemented: no prior approval needed. New features and visual changes should come with a Settings option that is off by default. See [CONTRIBUTING.md](CONTRIBUTING.md).
+
 ## Credits and license
 
 Mailaxe is built on top of [Aerion](https://github.com/hkdb/aerion) by hkdb and the Aerion contributors. Aerion's original README, with its full feature list and contributors, is kept in [docs/AERION_README.md](docs/AERION_README.md).

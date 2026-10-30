@@ -1,15 +1,20 @@
 name: Bug Report
-description: Report a bug in Aerion
+description: Report something in Mailaxe that doesn't work as expected
 labels: ["bug"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search [existing issues](https://github.com/valba8/aerion/issues?q=label%3Abug) first. Pull requests with a fix are welcome, with or without an issue.
+
   - type: dropdown
     id: os
     attributes:
       label: Operating System
       options:
+        - Windows
         - Linux
         - Mac
-        - Windows
     validations:
       required: true
 
@@ -26,55 +31,48 @@ body:
   - type: input
     id: distro
     attributes:
-      label: Linux Distro
+      label: Linux Distro and Version
       description: Required if OS is Linux
-      placeholder: e.g. Ubuntu, Fedora, Arch
-
-  - type: input
-    id: distro-version
-    attributes:
-      label: Linux Distro Version
-      description: Required if OS is Linux
-      placeholder: e.g. 24.04, 41, Rolling
-
-  - type: dropdown
-    id: webkit2gtk
-    attributes:
-      label: Is webkit2gtk 4.1 installed?
-      description: Required if OS is Linux
-      options:
-        - "Yes"
-        - "No"
+      placeholder: e.g. Ubuntu 24.04, Fedora 41, Arch
 
   - type: dropdown
     id: install-method
     attributes:
       label: Install Method
       options:
-        - Windows Binary
-        - MacOS DMG
-        - Linux Binary
-        - Flatpak
-        - Compile from Source
+        - Windows Installer
+        - Windows Portable
+        - Linux Binary (tar.gz)
+        - Compiled from Source
     validations:
       required: true
 
   - type: input
     id: version
     attributes:
-      label: Aerion Version
-      description: "Find out what version you are running from Aerion at ⚙️ (settings) --> About."
-      placeholder: e.g. v0.1.25
+      label: Mailaxe Version
+      description: "Find it in Mailaxe at ⚙️ (Settings) → About."
+      placeholder: e.g. 0.3.6-mailaxe.1
     validations:
       required: true
-      pattern: "^(v|0)\\d*\\.\\d+\\.\\d+"
-      validation_message: "Version must start with 'v' or '0' and follow the format (e.g. v0.1.25 or 0.1.25)"
+
+  - type: dropdown
+    id: account-type
+    attributes:
+      label: Account type (if relevant)
+      multiple: true
+      options:
+        - Gmail (OAuth, own client)
+        - Gmail (IMAP + app password)
+        - Outlook / Microsoft 365
+        - Other IMAP
+        - Not account related
 
   - type: textarea
     id: description
     attributes:
       label: Description
-      description: A clear description of the bug
+      description: A clear description of the bug. If it involves a Mailaxe-specific option (Settings → General), say which ones are turned on.
     validations:
       required: true
 
@@ -82,7 +80,6 @@ body:
     id: steps
     attributes:
       label: Steps to Reproduce
-      description: How can we reproduce this bug?
       placeholder: |
         1. Go to '...'
         2. Click on '...'
@@ -94,7 +91,6 @@ body:
     id: expected
     attributes:
       label: Expected Behavior
-      description: What did you expect to happen?
     validations:
       required: true
 
@@ -102,6 +98,15 @@ body:
     id: actual
     attributes:
       label: Actual Behavior
-      description: What actually happened?
+      description: What actually happened? Screenshots help a lot.
     validations:
       required: true
+
+  - type: dropdown
+    id: upstream
+    attributes:
+      label: Does it also happen in the official Aerion app?
+      options:
+        - "I don't know"
+        - "Yes"
+        - "No, only in Mailaxe"

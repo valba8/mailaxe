@@ -1,0 +1,71 @@
+name: Feature or UI Change
+description: Suggest a new feature, an improvement, or a visual change
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please search [existing issues](https://github.com/valba8/aerion/issues?q=label%3Aenhancement) first.
+
+        You don't need an issue to send a pull request: if you have already implemented it, open the PR directly. New features and visual changes should come with a **Settings** option that is **off by default** (see [CONTRIBUTING](https://github.com/valba8/aerion/blob/mailaxe/CONTRIBUTING.md#optional-features-need-a-setting)).
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Type of change
+      options:
+        - New feature
+        - Improvement to an existing feature
+        - Visual / aesthetic change
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options:
+        - Message list
+        - Message viewer
+        - Composer
+        - Sidebar / folders
+        - Settings
+        - Notifications / tray
+        - Accounts / sync
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or motivation
+      description: What is missing, confusing or annoying today?
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed change
+      description: Describe what it should look like or do. Mockups and screenshots are very welcome.
+    validations:
+      required: true
+
+  - type: textarea
+    id: setting
+    attributes:
+      label: Proposed setting
+      description: How would users turn it on or off? (e.g. "Settings → General → Show X", off by default)
+      placeholder: Optional
+
+  - type: dropdown
+    id: contribute
+    attributes:
+      label: Will you implement it?
+      options:
+        - "No, just suggesting it"
+        - "Yes, I'll send a pull request"
+        - "I already have a pull request"
+    validations:
+      required: true
