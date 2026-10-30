@@ -209,6 +209,8 @@ export function GetAccentUnreadStyle():Promise<string>;
 
 export function GetAccount(arg1:string):Promise<account.Account>;
 
+export function GetAccountColorStrip():Promise<boolean>;
+
 export function GetAccountFoldersForMapping(arg1:string):Promise<Array<folder.Folder>>;
 
 export function GetAccounts():Promise<Array<account.Account>>;
@@ -230,6 +232,8 @@ export function GetAutoDetectedFolders(arg1:string):Promise<Record<string, strin
 export function GetAutostart():Promise<boolean>;
 
 export function GetCheckboxToggleButton():Promise<boolean>;
+
+export function GetCollapseQuotedText():Promise<boolean>;
 
 export function GetComposerFormat():Promise<string>;
 
@@ -341,6 +345,8 @@ export function GetPendingMailto():Promise<app.MailtoData>;
 
 export function GetReadReceiptResponsePolicy():Promise<string>;
 
+export function GetRowHoverActions():Promise<boolean>;
+
 export function GetRunBackground():Promise<boolean>;
 
 export function GetSMIMECertificateForEmail(arg1:string,arg2:string):Promise<smime.Certificate>;
@@ -358,6 +364,8 @@ export function GetShowMessageListCircles():Promise<boolean>;
 export function GetShowMessageListProfilePics():Promise<boolean>;
 
 export function GetShowTitleBar():Promise<boolean>;
+
+export function GetShowViewSourceButton():Promise<boolean>;
 
 export function GetShowViewerCircles():Promise<boolean>;
 
@@ -392,6 +400,8 @@ export function GetUnifiedInboxConversations(arg1:number,arg2:number,arg3:string
 export function GetUnifiedInboxCount(arg1:string):Promise<number>;
 
 export function GetUnifiedInboxUnreadCount():Promise<number>;
+
+export function GetUnreadAccentUnderAvatar():Promise<boolean>;
 
 export function HasPGPKey(arg1:string):Promise<boolean>;
 
@@ -561,6 +571,8 @@ export function SetAccentBarUnread(arg1:boolean):Promise<void>;
 
 export function SetAccentUnreadStyle(arg1:string):Promise<void>;
 
+export function SetAccountColorStrip(arg1:boolean):Promise<void>;
+
 export function SetAccountEnabled(arg1:string,arg2:boolean):Promise<void>;
 
 export function SetAddressbookEnabled(arg1:string,arg2:boolean):Promise<void>;
@@ -572,6 +584,8 @@ export function SetAlwaysShowMessageCheckbox(arg1:boolean):Promise<void>;
 export function SetAutostart(arg1:boolean):Promise<void>;
 
 export function SetCheckboxToggleButton(arg1:boolean):Promise<void>;
+
+export function SetCollapseQuotedText(arg1:boolean):Promise<void>;
 
 export function SetComposerFormat(arg1:string):Promise<void>;
 
@@ -621,6 +635,8 @@ export function SetPGPSignPolicy(arg1:string,arg2:string):Promise<void>;
 
 export function SetReadReceiptResponsePolicy(arg1:string):Promise<void>;
 
+export function SetRowHoverActions(arg1:boolean):Promise<void>;
+
 export function SetRunBackground(arg1:boolean):Promise<void>;
 
 export function SetSMIMEEncryptPolicy(arg1:string,arg2:string):Promise<void>;
@@ -633,6 +649,8 @@ export function SetShowMessageListProfilePics(arg1:boolean):Promise<void>;
 
 export function SetShowTitleBar(arg1:boolean):Promise<void>;
 
+export function SetShowViewSourceButton(arg1:boolean):Promise<void>;
+
 export function SetShowViewerCircles(arg1:boolean):Promise<void>;
 
 export function SetSpellcheckEnabled(arg1:boolean):Promise<void>;
@@ -644,6 +662,8 @@ export function SetStartHidden(arg1:boolean):Promise<void>;
 export function SetTermsAccepted(arg1:boolean):Promise<void>;
 
 export function SetThemeMode(arg1:string):Promise<void>;
+
+export function SetUnreadAccentUnderAvatar(arg1:boolean):Promise<void>;
 
 export function ShowWindow():Promise<void>;
 

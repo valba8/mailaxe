@@ -382,6 +382,10 @@ export function GetAccount(arg1) {
   return window['go']['app']['App']['GetAccount'](arg1);
 }
 
+export function GetAccountColorStrip() {
+  return window['go']['app']['App']['GetAccountColorStrip']();
+}
+
 export function GetAccountFoldersForMapping(arg1) {
   return window['go']['app']['App']['GetAccountFoldersForMapping'](arg1);
 }
@@ -424,6 +428,10 @@ export function GetAutostart() {
 
 export function GetCheckboxToggleButton() {
   return window['go']['app']['App']['GetCheckboxToggleButton']();
+}
+
+export function GetCollapseQuotedText() {
+  return window['go']['app']['App']['GetCollapseQuotedText']();
 }
 
 export function GetComposerFormat() {
@@ -646,6 +654,10 @@ export function GetReadReceiptResponsePolicy() {
   return window['go']['app']['App']['GetReadReceiptResponsePolicy']();
 }
 
+export function GetRowHoverActions() {
+  return window['go']['app']['App']['GetRowHoverActions']();
+}
+
 export function GetRunBackground() {
   return window['go']['app']['App']['GetRunBackground']();
 }
@@ -680,6 +692,10 @@ export function GetShowMessageListProfilePics() {
 
 export function GetShowTitleBar() {
   return window['go']['app']['App']['GetShowTitleBar']();
+}
+
+export function GetShowViewSourceButton() {
+  return window['go']['app']['App']['GetShowViewSourceButton']();
 }
 
 export function GetShowViewerCircles() {
@@ -748,6 +764,10 @@ export function GetUnifiedInboxCount(arg1) {
 
 export function GetUnifiedInboxUnreadCount() {
   return window['go']['app']['App']['GetUnifiedInboxUnreadCount']();
+}
+
+export function GetUnreadAccentUnderAvatar() {
+  return window['go']['app']['App']['GetUnreadAccentUnderAvatar']();
 }
 
 export function HasPGPKey(arg1) {
@@ -1086,6 +1106,10 @@ export function SetAccentUnreadStyle(arg1) {
   return window['go']['app']['App']['SetAccentUnreadStyle'](arg1);
 }
 
+export function SetAccountColorStrip(arg1) {
+  return window['go']['app']['App']['SetAccountColorStrip'](arg1);
+}
+
 export function SetAccountEnabled(arg1, arg2) {
   return window['go']['app']['App']['SetAccountEnabled'](arg1, arg2);
 }
@@ -1108,6 +1132,10 @@ export function SetAutostart(arg1) {
 
 export function SetCheckboxToggleButton(arg1) {
   return window['go']['app']['App']['SetCheckboxToggleButton'](arg1);
+}
+
+export function SetCollapseQuotedText(arg1) {
+  return window['go']['app']['App']['SetCollapseQuotedText'](arg1);
 }
 
 export function SetComposerFormat(arg1) {
@@ -1206,6 +1234,10 @@ export function SetReadReceiptResponsePolicy(arg1) {
   return window['go']['app']['App']['SetReadReceiptResponsePolicy'](arg1);
 }
 
+export function SetRowHoverActions(arg1) {
+  return window['go']['app']['App']['SetRowHoverActions'](arg1);
+}
+
 export function SetRunBackground(arg1) {
   return window['go']['app']['App']['SetRunBackground'](arg1);
 }
@@ -1230,6 +1262,10 @@ export function SetShowTitleBar(arg1) {
   return window['go']['app']['App']['SetShowTitleBar'](arg1);
 }
 
+export function SetShowViewSourceButton(arg1) {
+  return window['go']['app']['App']['SetShowViewSourceButton'](arg1);
+}
+
 export function SetShowViewerCircles(arg1) {
   return window['go']['app']['App']['SetShowViewerCircles'](arg1);
 }
@@ -1252,6 +1288,10 @@ export function SetTermsAccepted(arg1) {
 
 export function SetThemeMode(arg1) {
   return window['go']['app']['App']['SetThemeMode'](arg1);
+}
+
+export function SetUnreadAccentUnderAvatar(arg1) {
+  return window['go']['app']['App']['SetUnreadAccentUnderAvatar'](arg1);
 }
 
 export function ShowWindow() {

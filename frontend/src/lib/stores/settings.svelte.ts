@@ -2,7 +2,7 @@
 // Provides reactive state for application settings
 
 // @ts-ignore - wailsjs path
-import { GetMessageListDensity, GetMessageListSortOrder, GetThemeMode, GetShowTitleBar, GetRunBackground, GetStartHidden, GetAutostart, GetLanguage, GetComposerMode, GetMailtoMode, GetComposerFormat, GetNativeTitleBar, GetAlwaysLoadImages, GetDarkMailContent, GetDarkComposerBody, GetAccentBarUnread, GetAccentUnreadStyle, GetShowMessageListCircles, GetShowMessageListProfilePics, GetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, GetShowViewerCircles, GetSpellcheckEnabled, GetSpellcheckLanguages, GetSpellcheckCustomWords } from '../../../wailsjs/go/app/App'
+import { GetMessageListDensity, GetMessageListSortOrder, GetThemeMode, GetShowTitleBar, GetRunBackground, GetStartHidden, GetAutostart, GetLanguage, GetComposerMode, GetMailtoMode, GetComposerFormat, GetNativeTitleBar, GetAlwaysLoadImages, GetDarkMailContent, GetDarkComposerBody, GetAccentBarUnread, GetAccentUnreadStyle, GetShowMessageListCircles, GetShowMessageListProfilePics, GetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, GetShowViewerCircles, GetCollapseQuotedText, GetShowViewSourceButton, GetSpellcheckEnabled, GetSpellcheckLanguages, GetSpellcheckCustomWords } from '../../../wailsjs/go/app/App'
 import { setLocale as setI18nLocale, locale as i18nLocale } from '$lib/i18n'
 import { get } from 'svelte/store'
 import { loadDateFnsLocale, getDateFnsLocale } from '$lib/i18n/dateFnsLocale'
@@ -51,6 +51,8 @@ let checkboxToggleButton = $state<boolean>(false)
 // Session-only: whether the toolbar toggle currently reveals the checkboxes
 let checkboxesRevealed = $state<boolean>(false)
 let showViewerCircles = $state<boolean>(true)
+let collapseQuotedText = $state<boolean>(false)
+let showViewSourceButton = $state<boolean>(true)
 
 // Getter functions to access the state
 export function getMessageListDensity(): MessageListDensity {
@@ -155,6 +157,14 @@ export function getCheckboxesRevealed(): boolean {
 
 export function getShowViewerCircles(): boolean {
   return showViewerCircles
+}
+
+export function getCollapseQuotedText(): boolean {
+  return collapseQuotedText
+}
+
+export function getShowViewSourceButton(): boolean {
+  return showViewSourceButton
 }
 
 export function getCurrentDateFnsLocale(): Locale | undefined {
@@ -271,10 +281,18 @@ export function setShowViewerCircles(v: boolean) {
   showViewerCircles = v
 }
 
+export function setCollapseQuotedText(v: boolean) {
+  collapseQuotedText = v
+}
+
+export function setShowViewSourceButton(v: boolean) {
+  showViewSourceButton = v
+}
+
 // Load settings from backend (call on app startup)
 export async function loadSettings(): Promise<ThemeMode> {
   try {
-    const [density, sortOrder, theme, titleBar, runBg, startHid, autoSt, lang, compMode, mailMode, compFormat, nativeTB, alwaysImages, darkMail, darkComposer, accentBar, accentStyle, listCircles, listProfilePics, alwaysCheckbox, checkboxToggle, viewerCircles, scEnabled, scLangs, scWords] = await Promise.all([
+    const [density, sortOrder, theme, titleBar, runBg, startHid, autoSt, lang, compMode, mailMode, compFormat, nativeTB, alwaysImages, darkMail, darkComposer, accentBar, accentStyle, listCircles, listProfilePics, alwaysCheckbox, checkboxToggle, viewerCircles, collapseQuoted, viewSourceButton, scEnabled, scLangs, scWords] = await Promise.all([
       GetMessageListDensity(),
       GetMessageListSortOrder(),
       GetThemeMode(),
@@ -297,6 +315,8 @@ export async function loadSettings(): Promise<ThemeMode> {
       GetAlwaysShowMessageCheckbox(),
       GetCheckboxToggleButton(),
       GetShowViewerCircles(),
+      GetCollapseQuotedText(),
+      GetShowViewSourceButton(),
       GetSpellcheckEnabled(),
       GetSpellcheckLanguages(),
       GetSpellcheckCustomWords(),
@@ -322,6 +342,8 @@ export async function loadSettings(): Promise<ThemeMode> {
     alwaysShowMessageCheckbox = alwaysCheckbox ?? false
     checkboxToggleButton = checkboxToggle ?? false
     showViewerCircles = viewerCircles ?? true
+    collapseQuotedText = collapseQuoted ?? false
+    showViewSourceButton = viewSourceButton ?? true
     spellcheckEnabled = scEnabled ?? true
     spellcheckLanguages = scLangs ?? []
     spellcheckCustomWords = scWords ?? []

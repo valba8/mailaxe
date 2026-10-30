@@ -41,6 +41,8 @@ const (
 	KeyAlwaysShowMessageCheckbox  = "always_show_message_checkbox"   // reserve a fixed checkbox column instead of the hover/swipe slide-reveal (default off)
 	KeyCheckboxToggleButton       = "checkbox_toggle_button"         // hide checkboxes until shown with a message list toolbar button (default off)
 	KeyShowViewerCircles          = "show_viewer_circles"
+	KeyCollapseQuotedText         = "collapse_quoted_text"    // collapse the quoted part of replies behind a toggle in the viewer (default off)
+	KeyShowViewSourceButton       = "show_view_source_button" // show the View Source button below each message in the viewer (default on)
 	KeyLastSeenVersion            = "last_seen_version"       // for "What's new in this version" launch dialog
 	KeyOAuthWarningDisabled       = "oauth_warning_disabled"  // user toggled "Don't show again" on the missing-OAuth-creds launch warning
 	KeySpellcheckEnabled          = "spellcheck_enabled"      // composer spellcheck master toggle (defaults on)
@@ -505,6 +507,45 @@ func (s *Store) SetShowViewerCircles(enabled bool) error {
 		v = "true"
 	}
 	return s.Set(KeyShowViewerCircles, v)
+}
+
+// GetCollapseQuotedText returns whether the quoted part of replies is collapsed in the viewer. Default: false.
+func (s *Store) GetCollapseQuotedText() (bool, error) {
+	value, err := s.Get(KeyCollapseQuotedText)
+	if err != nil {
+		return false, err
+	}
+	return value == "true", nil
+}
+
+// SetCollapseQuotedText sets whether the quoted part of replies is collapsed in the viewer
+func (s *Store) SetCollapseQuotedText(enabled bool) error {
+	v := "false"
+	if enabled {
+		v = "true"
+	}
+	return s.Set(KeyCollapseQuotedText, v)
+}
+
+// GetShowViewSourceButton returns whether the View Source button is shown below each message. Default: true.
+func (s *Store) GetShowViewSourceButton() (bool, error) {
+	value, err := s.Get(KeyShowViewSourceButton)
+	if err != nil {
+		return true, err
+	}
+	if value == "" {
+		return true, nil
+	}
+	return value == "true", nil
+}
+
+// SetShowViewSourceButton sets whether the View Source button is shown below each message
+func (s *Store) SetShowViewSourceButton(enabled bool) error {
+	v := "false"
+	if enabled {
+		v = "true"
+	}
+	return s.Set(KeyShowViewSourceButton, v)
 }
 
 // GetMessageListSortOrder returns the current message list sort order
