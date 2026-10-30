@@ -62,3 +62,7 @@ npm-debug.log*
 # Cache
 .cache/
 .gitnexus
+
+# Source design files (Affinity Designer, etc.)
+graphics/
+*.afdesign
