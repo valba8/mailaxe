@@ -30,6 +30,8 @@
     accentUnreadStyle: string
     showMessageListCircles: boolean
     showMessageListProfilePics: boolean
+    accountColorStrip: boolean
+    unreadAccentUnderAvatar: boolean
     alwaysShowMessageCheckbox: boolean
     checkboxToggleButton: boolean
     showViewerCircles: boolean
@@ -61,6 +63,8 @@
     accentUnreadStyle = $bindable(),
     showMessageListCircles = $bindable(),
     showMessageListProfilePics = $bindable(),
+    accountColorStrip = $bindable(),
+    unreadAccentUnderAvatar = $bindable(),
     alwaysShowMessageCheckbox = $bindable(),
     checkboxToggleButton = $bindable(),
     showViewerCircles = $bindable(),
@@ -418,6 +422,22 @@
       </div>
     </div>
 
+    <!-- Show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default off) -->
+    <div class="space-y-2">
+      <div class="flex items-center justify-between">
+        <div>
+          <Label for="account-color-strip">{$_('settingsGeneral.accountColorStrip')}</Label>
+          <p class="text-xs text-muted-foreground">
+            {$_('settingsGeneral.accountColorStripHelp')}
+          </p>
+        </div>
+        <Switch
+          id="account-color-strip"
+          bind:checked={accountColorStrip}
+        />
+      </div>
+    </div>
+
     <!-- Accent bar for unread messages -->
     <div class="space-y-2">
       <div class="flex items-center justify-between">
@@ -445,6 +465,19 @@
             <Select.Item value="bar" label={$_('settingsGeneral.accentStyleBar')} />
           </Select.Content>
         </Select.Root>
+        <!-- Place the accent under the sender avatar instead of the left edge -->
+        <div class="flex items-center justify-between pt-2">
+          <div>
+            <Label for="unread-accent-under-avatar">{$_('settingsGeneral.unreadAccentUnderAvatar')}</Label>
+            <p class="text-xs text-muted-foreground">
+              {$_('settingsGeneral.unreadAccentUnderAvatarHelp')}
+            </p>
+          </div>
+          <Switch
+            id="unread-accent-under-avatar"
+            bind:checked={unreadAccentUnderAvatar}
+          />
+        </div>
       {/if}
     </div>
 
