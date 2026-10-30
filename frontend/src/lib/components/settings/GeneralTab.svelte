@@ -424,18 +424,34 @@
       </div>
     </div>
 
-    <!-- Show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default off) -->,     <!-- Show archive/delete buttons under the star when hovering a message list row (default off) -->
+    <!-- Show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default off) -->
     <div class="space-y-2">
       <div class="flex items-center justify-between">
         <div>
-          <Label for="account-color-strip">{$_('settingsGeneral.accountColorStrip')}</Label>,           <Label for="row-hover-actions">{$_('settingsGeneral.rowHoverActions')}</Label>
+          <Label for="account-color-strip">{$_('settingsGeneral.accountColorStrip')}</Label>
           <p class="text-xs text-muted-foreground">
-            {$_('settingsGeneral.accountColorStripHelp')},             {$_('settingsGeneral.rowHoverActionsHelp')}
+            {$_('settingsGeneral.accountColorStripHelp')}
           </p>
         </div>
         <Switch
-          id="account-color-strip",           id="row-hover-actions"
-          bind:checked={accountColorStrip},           bind:checked={rowHoverActions}
+          id="account-color-strip"
+          bind:checked={accountColorStrip}
+        />
+      </div>
+    </div>
+
+    <!-- Show archive/delete buttons under the star when hovering a message list row (default off) -->
+    <div class="space-y-2">
+      <div class="flex items-center justify-between">
+        <div>
+          <Label for="row-hover-actions">{$_('settingsGeneral.rowHoverActions')}</Label>
+          <p class="text-xs text-muted-foreground">
+            {$_('settingsGeneral.rowHoverActionsHelp')}
+          </p>
+        </div>
+        <Switch
+          id="row-hover-actions"
+          bind:checked={rowHoverActions}
         />
       </div>
     </div>

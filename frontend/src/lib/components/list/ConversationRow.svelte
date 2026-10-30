@@ -20,7 +20,7 @@
   import MessageContextMenu from '$lib/components/common/MessageContextMenu.svelte'
   import Avatar from '$lib/components/kit/Avatar.svelte'
   import { toasts } from '$lib/stores/toast'
-  import { getAccentBarUnread, getAccentUnreadStyle, getShowMessageListCircles, getShowMessageListProfilePics, getAlwaysShowMessageCheckbox, getRowHoverActions } from '$lib/stores/settings.svelte', getAccountColorStrip, getUnreadAccentUnderAvatar } from '$lib/stores/settings.svelte', getCheckboxToggleButton, getCheckboxesRevealed } from '$lib/stores/settings.svelte'
+  import { getAccentBarUnread, getAccentUnreadStyle, getShowMessageListCircles, getShowMessageListProfilePics, getAlwaysShowMessageCheckbox, getCheckboxToggleButton, getCheckboxesRevealed, getAccountColorStrip, getUnreadAccentUnderAvatar, getRowHoverActions } from '$lib/stores/settings.svelte'
   import { getLayoutMode } from '$lib/stores/layout.svelte'
   import { contactPhotos } from '$lib/stores/contactPhotos.svelte'
 
