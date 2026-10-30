@@ -11,11 +11,14 @@ import (
 	"git.sr.ht/~jackmordaunt/go-toast/v2/wintoast"
 	"github.com/hkdb/aerion/internal/logging"
 	"github.com/rs/zerolog"
+	"golang.org/x/sys/windows/registry"
 )
 
 const (
-	windowsAppID = "io.github.valba8.Mailaxe"
-	windowsGUID  = "{8F2B5A4E-3C1D-4E6F-9A7B-2D8E1F0C3B5A}"
+	windowsAppID       = "io.github.valba8.Mailaxe"
+	windowsDisplayName = "Mailaxe"
+	// Own activation GUID so Mailaxe and Aerion don't share a COM activator
+	windowsGUID = "{F29AFA96-9241-4CD4-9EFB-753357C4F805}"
 )
 
 // windowsNotifier uses Windows Toast notifications with COM activation
@@ -48,6 +51,7 @@ func (n *windowsNotifier) Start(ctx context.Context) error {
 		// Non-fatal: notifications may still display but clicks may not route back
 		n.log.Warn().Err(err).Msg("Failed to register Windows app data (notifications may not support click handling)")
 	}
+	n.setDisplayName()
 
 	// Set up the activation callback for toast interactions.
 	// invokedArgs contains our notification ID (set in the toast launch attribute).
@@ -80,6 +84,25 @@ func (n *windowsNotifier) Start(ctx context.Context) error {
 	n.initialized = true
 	n.log.Info().Msg("Windows notification support started (Toast/COM)")
 	return nil
+}
+
+// setDisplayName overrides the toast header text. go-toast registers the AppID
+// itself as DisplayName and never updates an existing value, so the header
+// would show "io.github.valba8.Mailaxe". CustomActivator is rewritten as well
+// so installs registered with an older GUID pick up the current one.
+func (n *windowsNotifier) setDisplayName() {
+	key, _, err := registry.CreateKey(registry.CURRENT_USER, `SOFTWARE\Classes\AppUserModelId\`+windowsAppID, registry.SET_VALUE)
+	if err != nil {
+		n.log.Debug().Err(err).Msg("Failed to open AppUserModelId registry key")
+		return
+	}
+	defer key.Close()
+	if err := key.SetStringValue("DisplayName", windowsDisplayName); err != nil {
+		n.log.Debug().Err(err).Msg("Failed to set notification display name")
+	}
+	if err := key.SetStringValue("CustomActivator", windowsGUID); err != nil {
+		n.log.Debug().Err(err).Msg("Failed to set notification activator")
+	}
 }
 
 func (n *windowsNotifier) Stop() {
