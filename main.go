@@ -25,6 +25,9 @@ import (
 //go:embed all:frontend/dist
 var assets embed.FS
 
+//go:embed build/windows/icon.ico
+var trayIcon []byte
+
 // Command-line flags
 var (
 	debugMode   = flag.Bool("debug", false, "Enable debug logging (same as --log-level debug)")
@@ -162,6 +165,7 @@ func runMainMode(mailtoData *app.MailtoData, rawMailtoArg string) {
 	// Create an instance of the app structure
 	application := app.NewApp(*dbusNotify)
 	application.SingleInstanceLock = lock
+	application.TrayIcon = trayIcon
 
 	// Store mailto data if provided (will be used after startup)
 	if mailtoData != nil {

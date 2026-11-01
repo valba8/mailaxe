@@ -344,6 +344,10 @@ type App struct {
 	// Single-instance lock (set by main before wails.Run)
 	SingleInstanceLock platform.SingleInstanceLock
 
+	// TrayIcon is the .ico shown in the Windows notification area (set by main
+	// before wails.Run; unused on other platforms)
+	TrayIcon []byte
+
 	// Autostart manager
 	autostartMgr platform.AutostartManager
 
@@ -514,6 +518,9 @@ func (a *App) Startup(ctx context.Context) {
 			a.ShowWindow()
 		})
 	}
+
+	// Notification area icon (Windows only; no-op elsewhere)
+	a.startTray()
 
 	// Logging, paths, db open, migrations, and credential store are all
 	// initialized in Preflight (called from main.go before wails.Run). By
@@ -995,6 +1002,8 @@ func (a *App) InitiateShutdown() {
 // Shutdown is called when the app is closing
 func (a *App) Shutdown(ctx context.Context) {
 	log := logging.WithComponent("app")
+
+	a.stopTray()
 
 	// Broadcast shutdown to all composer windows
 	if a.ipcServer != nil {
