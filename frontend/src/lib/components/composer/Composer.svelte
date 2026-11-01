@@ -47,6 +47,10 @@
     insertSignatureIntoContent,
     removeSignatureFromContent,
     hasSignatureMarker,
+    buildSignatureText,
+    hasSignatureText,
+    insertSignatureIntoText,
+    removeSignatureFromText,
   } from './composerSignature'
   import * as Select from '$lib/components/ui/select'
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
@@ -921,6 +925,18 @@
     const mode = getDisplayMode()
     if (!shouldAppendSignature(identity, mode)) return
 
+    // Plain-text mode edits the textarea, not the (hidden) rich editor
+    if (isPlainTextMode) {
+      const signatureText = buildSignatureText(identity, htmlToPlainText)
+      if (!signatureText || hasSignatureText(plainTextContent, signatureText)) return
+      plainTextContent = insertSignatureIntoText(
+        plainTextContent,
+        signatureText,
+        identity.signaturePlacement || 'above'
+      )
+      return
+    }
+
     const signatureHtml = buildSignatureHtml(identity)
     if (!signatureHtml) return
 
@@ -1007,6 +1023,7 @@
   function handleIdentityChange(newIdentityId: string) {
     if (newIdentityId === selectedIdentityId) return
 
+    const oldIdentity = identities.find(i => i.id === selectedIdentityId)
     const newIdentity = identities.find(i => i.id === newIdentityId)
     const oldAccountId = activeAccountId
     selectedIdentityId = newIdentityId
@@ -1039,6 +1056,9 @@
     // Remove old signature and apply new one
     const content = removeSignatureFromContent(editor.getHTML())
     editor.commands.setContent(content)
+    if (isPlainTextMode && oldIdentity) {
+      plainTextContent = removeSignatureFromText(plainTextContent, buildSignatureText(oldIdentity, htmlToPlainText))
+    }
 
     appendSignatureForIdentity(newIdentity)
     scheduleDraftSave()

@@ -173,3 +173,68 @@ export function removeSignatureFromContent(content: string): string {
 export function hasSignatureMarker(content: string): boolean {
   return content.includes(SIGNATURE_MARKER)
 }
+
+// Plain-text compose mode edits a textarea instead of the rich editor, so the
+// signature has to be inserted as text there.
+
+const PLAIN_FWD_SEPARATOR = '---------- Forwarded message ----------'
+
+/**
+ * Build the plain-text signature from identity settings (signatureText, or
+ * the HTML signature converted to text). Returns '' when there is none.
+ */
+export function buildSignatureText(identity: Identity, htmlToText: (html: string) => string): string {
+  if (!identity.signatureEnabled) return ''
+  const text = (identity.signatureText || htmlToText(identity.signatureHtml || '')).trim()
+  if (!text) return ''
+  return identity.signatureSeparator ? `-- \n${text}` : text
+}
+
+/**
+ * Index where quoted content (citation line or forward header) starts in a
+ * plain-text body, or -1 when there is none.
+ */
+function plainQuoteStart(content: string): number {
+  const starts = [content.search(/^.*wrote:\s*$/m), content.indexOf(PLAIN_FWD_SEPARATOR)].filter(i => i > -1)
+  return starts.length > 0 ? Math.min(...starts) : -1
+}
+
+/**
+ * Whether the plain-text body already contains the signature in the part the
+ * user writes (before any quoted content).
+ */
+export function hasSignatureText(content: string, signatureText: string): boolean {
+  if (!signatureText) return false
+  const quoteStart = plainQuoteStart(content)
+  const userPart = quoteStart > -1 ? content.substring(0, quoteStart) : content
+  return userPart.includes(signatureText)
+}
+
+/**
+ * Insert the signature into a plain-text body, mirroring insertSignatureIntoContent:
+ * above the quoted text by default, otherwise at the end.
+ */
+export function insertSignatureIntoText(content: string, signatureText: string, placement: string = 'above'): string {
+  const quoteStart = plainQuoteStart(content)
+  if (placement === 'above' && quoteStart > -1) {
+    return '\n\n' + signatureText + '\n\n\n' + content.substring(quoteStart)
+  }
+  if (content.trim() === '') {
+    return '\n\n' + signatureText
+  }
+  return content.replace(/\s+$/, '') + '\n\n' + signatureText
+}
+
+/**
+ * Remove a previously inserted signature from a plain-text body (used when
+ * the From identity changes).
+ */
+export function removeSignatureFromText(content: string, signatureText: string): string {
+  if (!signatureText) return content
+  const index = content.indexOf(signatureText)
+  if (index === -1) return content
+  const before = content.substring(0, index).replace(/\n+$/, '')
+  const after = content.substring(index + signatureText.length).replace(/^\n+/, '')
+  if (!after) return before
+  return before + '\n\n' + after
+}
