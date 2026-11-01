@@ -26,6 +26,9 @@ export interface ComposerApi {
   /** Get identities for an account */
   getIdentities: (accountId: string) => Promise<account.Identity[]>
 
+  /** Seconds to wait before sending, with an Undo option (0 = send immediately) */
+  getUndoSendDelay: () => Promise<number>
+
   /** Get the account's default address list for a kind ('bcc' | 'replyto'); "" when disabled */
   getDefaultAddress: (kind: string, accountId: string) => Promise<string>
 
@@ -159,6 +162,11 @@ export function createMainWindowApi(): ComposerApi {
     getAccount: async (accountId: string) => {
       const { GetAccount } = await import('../../wailsjs/go/app/App.js')
       return GetAccount(accountId)
+    },
+
+    getUndoSendDelay: async () => {
+      const { GetUndoSendDelay } = await import('../../wailsjs/go/app/App.js')
+      return GetUndoSendDelay()
     },
 
     getDefaultAddress: async (kind: string, accountId: string) => {
@@ -313,6 +321,11 @@ export function createComposerWindowApi(_accountId: string): ComposerApi {
     getAccount: async (accountId: string) => {
       const { GetAccount } = await import('../../wailsjs/go/app/ComposerApp.js')
       return GetAccount(accountId)
+    },
+
+    getUndoSendDelay: async () => {
+      const { GetUndoSendDelay } = await import('../../wailsjs/go/app/ComposerApp.js')
+      return GetUndoSendDelay()
     },
 
     getDefaultAddress: async (kind: string, accountId: string) => {

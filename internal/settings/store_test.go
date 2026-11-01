@@ -517,3 +517,25 @@ func TestMailaxeFirstLaunchDefaults(t *testing.T) {
 		t.Error("GetCollapseQuotedText() = true after SetCollapseQuotedText(false)")
 	}
 }
+
+func TestUndoSendDelay(t *testing.T) {
+	store := NewStore(openTestDB(t))
+
+	got, err := store.GetUndoSendDelay()
+	if err != nil || got != DefaultUndoSendDelay {
+		t.Fatalf("default GetUndoSendDelay() = %d, %v; want %d", got, err, DefaultUndoSendDelay)
+	}
+	for _, v := range []int{0, 10, MaxUndoSendDelay} {
+		if err := store.SetUndoSendDelay(v); err != nil {
+			t.Fatalf("SetUndoSendDelay(%d) error: %v", v, err)
+		}
+		if got, _ := store.GetUndoSendDelay(); got != v {
+			t.Errorf("GetUndoSendDelay() = %d after Set(%d)", got, v)
+		}
+	}
+	for _, v := range []int{-1, MaxUndoSendDelay + 1} {
+		if err := store.SetUndoSendDelay(v); err == nil {
+			t.Errorf("SetUndoSendDelay(%d) succeeded; want error", v)
+		}
+	}
+}

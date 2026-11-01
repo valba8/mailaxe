@@ -18,6 +18,7 @@ import (
 const (
 	KeyReadReceiptResponsePolicy  = "read_receipt_response_policy"
 	KeyMarkAsReadDelay            = "mark_as_read_delay"
+	KeyUndoSendDelay              = "undo_send_delay" // seconds the composer waits before sending, with an Undo button (0 = send immediately)
 	KeyMessageListDensity         = "message_list_density"
 	KeyMessageListSortOrder       = "message_list_sort_order"
 	KeyThemeMode                  = "theme_mode"
@@ -40,7 +41,7 @@ const (
 	KeyRowHoverActions            = "row_hover_actions"              // show archive/delete buttons under the star when hovering a message list row (default on)
 	KeyShowMessageListProfilePics = "show_message_list_profile_pics" // render contact photos in the message-list avatar slot (default on)
 	KeyAccountColorStrip          = "account_color_strip"            // show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default on)
-	KeyGroupMessagesByDate = "group_messages_by_date" // show Today / Yesterday / This week... headers between message list rows (default on)
+	KeyGroupMessagesByDate        = "group_messages_by_date"         // show Today / Yesterday / This week... headers between message list rows (default on)
 	KeyUnreadAccentUnderAvatar    = "unread_accent_under_avatar"     // place the unread accent under the sender avatar instead of the row's left edge (default on)
 	KeyAlwaysShowMessageCheckbox  = "always_show_message_checkbox"   // reserve a fixed checkbox column instead of the hover/swipe slide-reveal (default off)
 	KeyCheckboxToggleButton       = "checkbox_toggle_button"         // hide checkboxes until shown with a message list toolbar button (default on)
@@ -151,6 +152,12 @@ const (
 	PolicyNever  = "never"
 	PolicyAsk    = "ask"
 	PolicyAlways = "always"
+)
+
+// Undo send: default and maximum wait in seconds before a message is sent
+const (
+	DefaultUndoSendDelay = 6
+	MaxUndoSendDelay     = 30
 )
 
 // Default mark as read delay in milliseconds (Mailaxe: immediately; Aerion: 1 second)
@@ -329,6 +336,31 @@ func (s *Store) GetMarkAsReadDelay() (int, error) {
 
 // SetMarkAsReadDelay sets the delay before marking messages as read (in milliseconds)
 // Valid values: -1 (manual only), 0 (immediate), or 100-5000 (delay in ms)
+// GetUndoSendDelay returns how many seconds the composer waits before sending
+// (0 = send immediately). Default: DefaultUndoSendDelay.
+func (s *Store) GetUndoSendDelay() (int, error) {
+	value, err := s.Get(KeyUndoSendDelay)
+	if err != nil {
+		return DefaultUndoSendDelay, err
+	}
+	if value == "" {
+		return DefaultUndoSendDelay, nil
+	}
+	seconds, err := strconv.Atoi(value)
+	if err != nil || seconds < 0 || seconds > MaxUndoSendDelay {
+		return DefaultUndoSendDelay, nil
+	}
+	return seconds, nil
+}
+
+// SetUndoSendDelay sets the undo send wait in seconds (0 to MaxUndoSendDelay)
+func (s *Store) SetUndoSendDelay(seconds int) error {
+	if seconds < 0 || seconds > MaxUndoSendDelay {
+		return fmt.Errorf("invalid undo send delay: %d (must be 0-%d seconds)", seconds, MaxUndoSendDelay)
+	}
+	return s.Set(KeyUndoSendDelay, strconv.Itoa(seconds))
+}
+
 func (s *Store) SetMarkAsReadDelay(delayMs int) error {
 	// Validate delay
 	if delayMs < -1 {

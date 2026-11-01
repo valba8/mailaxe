@@ -758,6 +758,10 @@ export function GetUndoDescription() {
   return window['go']['app']['App']['GetUndoDescription']();
 }
 
+export function GetUndoSendDelay() {
+  return window['go']['app']['App']['GetUndoSendDelay']();
+}
+
 export function GetUnifiedInboxConversations(arg1, arg2, arg3, arg4) {
   return window['go']['app']['App']['GetUnifiedInboxConversations'](arg1, arg2, arg3, arg4);
 }
@@ -1296,6 +1300,10 @@ export function SetTermsAccepted(arg1) {
 
 export function SetThemeMode(arg1) {
   return window['go']['app']['App']['SetThemeMode'](arg1);
+}
+
+export function SetUndoSendDelay(arg1) {
+  return window['go']['app']['App']['SetUndoSendDelay'](arg1);
 }
 
 export function SetUnreadAccentUnderAvatar(arg1) {

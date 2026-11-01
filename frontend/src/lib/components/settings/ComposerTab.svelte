@@ -2,6 +2,7 @@
   import Icon from '@iconify/svelte'
   import * as Select from '$lib/components/ui/select'
   import { Label } from '$lib/components/ui/label'
+  import { Input } from '$lib/components/ui/input'
   import Switch from '$lib/components/ui/switch/Switch.svelte'
   import AccountAddressDefaults from './AccountAddressDefaults.svelte'
   import { _ } from '$lib/i18n'
@@ -15,6 +16,7 @@
     composerMode: string
     mailtoMode: string
     composerFormat: string
+    undoSendDelay: number
     readReceiptResponsePolicy: string
     spellcheckEnabled: boolean
     spellcheckLanguages: string[]
@@ -30,6 +32,7 @@
     composerMode = $bindable(),
     mailtoMode = $bindable(),
     composerFormat = $bindable(),
+    undoSendDelay = $bindable(),
     readReceiptResponsePolicy = $bindable(),
     spellcheckEnabled = $bindable(),
     spellcheckLanguages = $bindable(),
@@ -173,6 +176,29 @@
     </Select.Root>
     <p class="text-xs text-muted-foreground">
       {$_('settings.composerFormatDescription')}
+    </p>
+  </div>
+
+  <div class="space-y-2">
+    <Label for="undo-send-delay">{$_('settings.undoSendDelay')}</Label>
+    <div class="flex items-center gap-2">
+      <Input
+        id="undo-send-delay"
+        type="number"
+        value={undoSendDelay}
+        oninput={(e) => {
+          const v = Math.round(Number((e.currentTarget as HTMLInputElement).value))
+          if (Number.isFinite(v)) undoSendDelay = Math.min(30, Math.max(0, v))
+        }}
+        min={0}
+        max={30}
+        step={1}
+        class="w-24"
+      />
+      <span class="text-sm text-muted-foreground">{$_('common.seconds')}</span>
+    </div>
+    <p class="text-xs text-muted-foreground">
+      {$_('settings.undoSendDelayDescription')}
     </p>
   </div>
 

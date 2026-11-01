@@ -5,7 +5,7 @@
   import * as Tabs from '$lib/components/ui/tabs'
   import { Button } from '$lib/components/ui/button'
   // @ts-ignore - wailsjs path
-  import { GetReadReceiptResponsePolicy, SetReadReceiptResponsePolicy, GetMarkAsReadDelay, SetMarkAsReadDelay, GetMessageListDensity, SetMessageListDensity, GetThemeMode, SetThemeMode, GetShowTitleBar, SetShowTitleBar, GetRunBackground, SetRunBackground, GetStartHidden, SetStartHidden, GetAutostart, SetAutostart, GetLanguage, SetLanguage, GetComposerMode, SetComposerMode, GetMailtoMode, SetMailtoMode, GetComposerFormat, SetComposerFormat, GetNativeTitleBar, SetNativeTitleBar, GetAlwaysLoadImages, SetAlwaysLoadImages, GetDarkMailContent, SetDarkMailContent, GetDarkComposerBody, SetDarkComposerBody, GetAccentBarUnread, SetAccentBarUnread, GetAccentUnreadStyle, SetAccentUnreadStyle, GetShowMessageListCircles, SetShowMessageListCircles, GetRowHoverActions, SetRowHoverActions, GetShowMessageListProfilePics, SetShowMessageListProfilePics, GetAccountColorStrip, SetAccountColorStrip, GetGroupMessagesByDate, SetGroupMessagesByDate, GetUnreadAccentUnderAvatar, SetUnreadAccentUnderAvatar, GetAlwaysShowMessageCheckbox, SetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, SetCheckboxToggleButton, GetShowViewerCircles, SetShowViewerCircles, GetCollapseQuotedText, SetCollapseQuotedText, GetShowViewSourceButton, SetShowViewSourceButton, GetSpellcheckEnabled, SetSpellcheckEnabled, GetSpellcheckLanguages, SetSpellcheckLanguages, QuitApp } from '../../../../wailsjs/go/app/App.js'
+  import { GetReadReceiptResponsePolicy, SetReadReceiptResponsePolicy, GetMarkAsReadDelay, SetMarkAsReadDelay, GetMessageListDensity, SetMessageListDensity, GetThemeMode, SetThemeMode, GetShowTitleBar, SetShowTitleBar, GetRunBackground, SetRunBackground, GetStartHidden, SetStartHidden, GetAutostart, SetAutostart, GetLanguage, SetLanguage, GetComposerMode, SetComposerMode, GetMailtoMode, SetMailtoMode, GetComposerFormat, SetComposerFormat, GetNativeTitleBar, SetNativeTitleBar, GetAlwaysLoadImages, SetAlwaysLoadImages, GetDarkMailContent, SetDarkMailContent, GetDarkComposerBody, SetDarkComposerBody, GetAccentBarUnread, SetAccentBarUnread, GetAccentUnreadStyle, SetAccentUnreadStyle, GetShowMessageListCircles, SetShowMessageListCircles, GetRowHoverActions, SetRowHoverActions, GetShowMessageListProfilePics, SetShowMessageListProfilePics, GetAccountColorStrip, SetAccountColorStrip, GetGroupMessagesByDate, SetGroupMessagesByDate, GetUnreadAccentUnderAvatar, SetUnreadAccentUnderAvatar, GetAlwaysShowMessageCheckbox, SetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, SetCheckboxToggleButton, GetShowViewerCircles, SetShowViewerCircles, GetCollapseQuotedText, SetCollapseQuotedText, GetShowViewSourceButton, SetShowViewSourceButton, GetSpellcheckEnabled, SetSpellcheckEnabled, GetSpellcheckLanguages, SetSpellcheckLanguages, GetUndoSendDelay, SetUndoSendDelay, QuitApp } from '../../../../wailsjs/go/app/App.js'
   import { addToast } from '$lib/stores/toast'
   import { setMessageListDensity as updateDensityStore, setThemeMode as updateThemeStore, setShowTitleBar as updateShowTitleBarStore, setRunBackground as updateRunBackgroundStore, setStartHidden as updateStartHiddenStore, setAutostart as updateAutostartStore, setLanguage as updateLanguageStore, setComposerMode as updateComposerModeStore, setMailtoMode as updateMailtoModeStore, setComposerFormat as updateComposerFormatStore, setNativeTitleBar as updateNativeTitleBarStore, setAlwaysLoadImages as updateAlwaysLoadImagesStore, setDarkMailContent as updateDarkMailContentStore, setDarkComposerBody as updateDarkComposerBodyStore, setAccentBarUnread as updateAccentBarUnreadStore, setAccentUnreadStyle as updateAccentUnreadStyleStore, setShowMessageListCircles as updateShowMessageListCirclesStore, setRowHoverActions as updateRowHoverActionsStore, setShowMessageListProfilePics as updateShowMessageListProfilePicsStore, setAccountColorStrip as updateAccountColorStripStore, setGroupMessagesByDate as updateGroupMessagesByDateStore, setUnreadAccentUnderAvatar as updateUnreadAccentUnderAvatarStore, setAlwaysShowMessageCheckbox as updateAlwaysShowMessageCheckboxStore, setCheckboxToggleButton as updateCheckboxToggleButtonStore, setShowViewerCircles as updateShowViewerCirclesStore, setCollapseQuotedText as updateCollapseQuotedTextStore, setShowViewSourceButton as updateShowViewSourceButtonStore, setSpellcheckEnabled as updateSpellcheckEnabledStore, setSpellcheckLanguages as updateSpellcheckLanguagesStore, type MessageListDensity, type ThemeMode, type ComposerMode, type ComposerFormat } from '$lib/stores/settings.svelte'
   import { syncSpellcheckLanguagesIfActive, defaultSpellcheckLanguages } from '$lib/spellcheck/settings'
@@ -46,6 +46,7 @@
   let composerMode = $state<string>('inline')
   let mailtoMode = $state<string>('inline')
   let composerFormat = $state<string>('rich')
+  let undoSendDelay = $state<number>(6)
   let spellcheckEnabled = $state<boolean>(true)
   let spellcheckLanguages = $state<string[]>([])
   let nativeTitleBar = $state<boolean>(false)
@@ -156,6 +157,7 @@
       composerMode = comp || 'inline'
       mailtoMode = mail || 'inline'
       composerFormat = compFmt || 'rich'
+      undoSendDelay = await GetUndoSendDelay().catch(() => 6)
       spellcheckEnabled = scEnabled ?? true
       // Empty stored list = "use defaults" — show the same set the engine uses.
       spellcheckLanguages = (scLangs && scLangs.length) ? scLangs : defaultSpellcheckLanguages()
@@ -205,6 +207,7 @@
       await SetComposerMode(composerMode)
       await SetMailtoMode(mailtoMode)
       await SetComposerFormat(composerFormat)
+      await SetUndoSendDelay(undoSendDelay)
       await SetSpellcheckEnabled(spellcheckEnabled)
       await SetSpellcheckLanguages(spellcheckLanguages)
       await SetNativeTitleBar(nativeTitleBar)
@@ -392,6 +395,7 @@
               bind:composerMode
               bind:mailtoMode
               bind:composerFormat
+              bind:undoSendDelay
               bind:readReceiptResponsePolicy
               bind:spellcheckEnabled
               bind:spellcheckLanguages

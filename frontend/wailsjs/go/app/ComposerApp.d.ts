@@ -54,6 +54,8 @@ export function GetSystemTheme():Promise<string>;
 
 export function GetThemeMode():Promise<string>;
 
+export function GetUndoSendDelay():Promise<number>;
+
 export function HasPGPKey(arg1:string):Promise<boolean>;
 
 export function HasSMIMECertificate(arg1:string):Promise<boolean>;

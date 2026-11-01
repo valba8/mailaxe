@@ -90,6 +90,10 @@ export function GetThemeMode() {
   return window['go']['app']['ComposerApp']['GetThemeMode']();
 }
 
+export function GetUndoSendDelay() {
+  return window['go']['app']['ComposerApp']['GetUndoSendDelay']();
+}
+
 export function HasPGPKey(arg1) {
   return window['go']['app']['ComposerApp']['HasPGPKey'](arg1);
 }

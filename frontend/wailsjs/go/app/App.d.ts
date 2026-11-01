@@ -397,6 +397,8 @@ export function GetUIState():Promise<appstate.UIState>;
 
 export function GetUndoDescription():Promise<string>;
 
+export function GetUndoSendDelay():Promise<number>;
+
 export function GetUnifiedInboxConversations(arg1:number,arg2:number,arg3:string,arg4:string):Promise<Array<message.Conversation>>;
 
 export function GetUnifiedInboxCount(arg1:string):Promise<number>;
@@ -666,6 +668,8 @@ export function SetStartHidden(arg1:boolean):Promise<void>;
 export function SetTermsAccepted(arg1:boolean):Promise<void>;
 
 export function SetThemeMode(arg1:string):Promise<void>;
+
+export function SetUndoSendDelay(arg1:number):Promise<void>;
 
 export function SetUnreadAccentUnderAvatar(arg1:boolean):Promise<void>;
 

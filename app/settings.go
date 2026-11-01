@@ -42,6 +42,16 @@ func (a *App) SetReadReceiptResponsePolicy(policy string) error {
 	return a.settingsStore.SetReadReceiptResponsePolicy(policy)
 }
 
+// GetUndoSendDelay returns how many seconds the composer waits before sending (0 = immediately)
+func (a *App) GetUndoSendDelay() (int, error) {
+	return a.settingsStore.GetUndoSendDelay()
+}
+
+// SetUndoSendDelay sets the undo send wait in seconds (0-30)
+func (a *App) SetUndoSendDelay(seconds int) error {
+	return a.settingsStore.SetUndoSendDelay(seconds)
+}
+
 // GetMarkAsReadDelay returns the delay before marking messages as read (in milliseconds)
 // Returns: -1 = manual only, 0 = immediate, >0 = delay in ms
 func (a *App) GetMarkAsReadDelay() (int, error) {

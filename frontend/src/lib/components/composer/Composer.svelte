@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount, onDestroy, getContext, setContext, untrack } from 'svelte'
+  import { onMount, onDestroy, getContext, setContext, untrack, tick } from 'svelte'
   import Icon from '@iconify/svelte'
   import type { Editor } from '@tiptap/core'
   import { createComposerEditor } from './composerEditor'
@@ -129,6 +129,15 @@
   let replyToRecipients = $state<smtp.Address[]>([])
   let sending = $state(false)
   let poppingOut = $state(false)  // Pop-out in progress
+
+  // Undo send: the message is held for undoSendDelay seconds after Send, with
+  // Undo / Send now. The draft is saved first, so nothing is lost if the app
+  // closes during the wait.
+  let undoSendDelay = $state(6)
+  let pendingSendRemaining = $state<number | null>(null)
+  let pendingSendMessage: smtp.ComposeMessage | null = null
+  let pendingSendTimer: ReturnType<typeof setInterval> | null = null
+  let undoSendButtonRef = $state<HTMLButtonElement | null>(null)
   let editorElement = $state<HTMLElement | null>(null)
   let editor = $state<Editor | null>(null)
 
@@ -729,6 +738,10 @@
 
   // Initialize
   onMount(async () => {
+    api.getUndoSendDelay()
+      .then(seconds => { undoSendDelay = seconds })
+      .catch(err => console.error('Failed to load undo send delay:', err))
+
     // Load identities — try cross-account first (main window), fall back to single-account (detached)
     try {
       // When replying or forwarding on a no-outgoing account, honor that
@@ -1065,6 +1078,8 @@
   }
 
   onDestroy(() => {
+    // An unsent held message stays in the saved draft
+    clearPendingSend()
     // Unsubscribe from draft sync events
     EventsOff('draft:syncStatusChanged')
     // Clear any pending save timeout
@@ -1283,10 +1298,57 @@
     // Wait for any in-flight draft save to complete before sending
     await savingComplete
 
+    if (undoSendDelay > 0) {
+      await startPendingSend()
+      return
+    }
+
+    await performSend(buildMessage())
+  }
+
+  // Hold the message for undoSendDelay seconds, counting down once a second
+  async function startPendingSend() {
+    await saveDraft()
+    pendingSendMessage = buildMessage()
+    pendingSendRemaining = undoSendDelay
+    pendingSendTimer = setInterval(() => {
+      if (pendingSendRemaining === null) return
+      pendingSendRemaining -= 1
+      if (pendingSendRemaining <= 0) sendPendingNow()
+    }, 1000)
+    await tick()
+    undoSendButtonRef?.focus()
+  }
+
+  function clearPendingSend() {
+    if (pendingSendTimer) {
+      clearInterval(pendingSendTimer)
+      pendingSendTimer = null
+    }
+    pendingSendRemaining = null
+  }
+
+  function undoPendingSend() {
+    clearPendingSend()
+    pendingSendMessage = null
+    if (isPlainTextMode) {
+      plainTextRef?.focus()
+      return
+    }
+    editor?.commands.focus()
+  }
+
+  function sendPendingNow() {
+    const message = pendingSendMessage
+    clearPendingSend()
+    pendingSendMessage = null
+    if (message) performSend(message)
+  }
+
+  async function performSend(message: smtp.ComposeMessage) {
     sending = true
 
     try {
-      const message = buildMessage()
       await api.sendMessage(activeAccountId, message)
 
       // Delete the draft on successful send (fire-and-forget - don't block UI)
@@ -1329,6 +1391,9 @@
   }
 
   function handleClose() {
+    // Closing during the undo window cancels the held send
+    if (pendingSendRemaining !== null) undoPendingSend()
+
     // Cancel any pending draft save
     if (saveTimeoutId) {
       clearTimeout(saveTimeoutId)
@@ -1490,6 +1555,18 @@
 
   // Keyboard shortcuts
   function handleKeyDown(e: KeyboardEvent) {
+    // While a send is held: Escape undoes, Ctrl+Enter sends now, nothing else
+    if (pendingSendRemaining !== null) {
+      if (e.key === 'Escape') {
+        e.preventDefault()
+        undoPendingSend()
+      } else if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+        e.preventDefault()
+        sendPendingNow()
+      }
+      return
+    }
+
     // Security mode key handling (must be early in handleKeyDown)
     if (securityMode) {
       if (e.key === 'Escape') {
@@ -2246,6 +2323,34 @@
     </div>
   </div>
 
+  <!-- Undo send: holds the message for a few seconds after Send -->
+  {#if pendingSendRemaining !== null}
+    <div class="absolute inset-0 z-20 flex items-end justify-center bg-background/60 p-4">
+      <div class="w-full max-w-md rounded-lg border border-border bg-popover text-popover-foreground shadow-lg overflow-hidden" role="status" aria-live="polite">
+        <div class="flex items-center gap-3 px-4 py-3">
+          <Icon icon="mdi:send-clock" class="w-5 h-5 flex-shrink-0 text-primary" />
+          <span class="flex-1 text-sm">{$_('composer.sendingIn', { values: { seconds: pendingSendRemaining } })}</span>
+          <button
+            bind:this={undoSendButtonRef}
+            onclick={undoPendingSend}
+            class="px-3 py-1.5 text-sm font-medium rounded-md text-primary hover:bg-accent hover:text-accent-foreground transition-colors"
+          >
+            {$_('composer.undoSend')}
+          </button>
+          <button
+            onclick={sendPendingNow}
+            class="px-3 py-1.5 text-sm font-medium rounded-md text-primary-foreground bg-primary hover:bg-primary/90 transition-colors"
+          >
+            {$_('composer.sendNow')}
+          </button>
+        </div>
+        <div class="h-1 bg-muted">
+          <div class="undo-send-progress h-full bg-primary" style="animation-duration: {undoSendDelay}s"></div>
+        </div>
+      </div>
+    </div>
+  {/if}
+
   <!-- Drag overlay -->
   {#if isDraggingOver}
     <div class="absolute inset-0 bg-primary/10 flex items-center justify-center pointer-events-none z-10">
@@ -2361,5 +2466,16 @@
   :global(.composer-editor th) {
     background-color: hsl(var(--muted));
     font-weight: 600;
+  }
+
+  /* Undo send countdown bar: empties over the whole wait */
+  .undo-send-progress {
+    animation-name: undo-send-progress;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+  }
+  @keyframes undo-send-progress {
+    from { width: 100%; }
+    to { width: 0%; }
   }
 </style>

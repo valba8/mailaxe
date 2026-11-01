@@ -22,9 +22,9 @@ import (
 	"github.com/hkdb/aerion/internal/logging"
 	"github.com/hkdb/aerion/internal/message"
 	"github.com/hkdb/aerion/internal/oauth2"
+	"github.com/hkdb/aerion/internal/pgp"
 	"github.com/hkdb/aerion/internal/platform"
 	"github.com/hkdb/aerion/internal/settings"
-	"github.com/hkdb/aerion/internal/pgp"
 	"github.com/hkdb/aerion/internal/smime"
 	"github.com/hkdb/aerion/internal/smtp"
 	wailsRuntime "github.com/wailsapp/wails/v2/pkg/runtime"
@@ -529,6 +529,12 @@ func (c *ComposerApp) GetThemeMode() (string, error) {
 // with the surface matching the user's choice).
 func (c *ComposerApp) GetDarkComposerBody() (bool, error) {
 	return c.settingsStore.GetDarkComposerBody()
+}
+
+// GetUndoSendDelay returns how many seconds the composer waits before sending,
+// so the detached composer offers the same Undo window as the in-window one.
+func (c *ComposerApp) GetUndoSendDelay() (int, error) {
+	return c.settingsStore.GetUndoSendDelay()
 }
 
 // GetDefaultAddress returns the account's default address list for the given
