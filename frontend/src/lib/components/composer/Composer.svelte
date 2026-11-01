@@ -1,5 +1,6 @@
 <script lang="ts">
   import { onMount, onDestroy, getContext, setContext, untrack, tick } from 'svelte'
+  import type { HeldMessage } from '$lib/stores/heldSend'
   import Icon from '@iconify/svelte'
   import type { Editor } from '@tiptap/core'
   import { createComposerEditor } from './composerEditor'
@@ -89,9 +90,13 @@
     onTitleChange?: (to: string, subject: string) => void
     /** Whether remote images were loaded in the viewer before reply/forward */
     imagesLoaded?: boolean
+    /** Undo send in the main window: hand the message over and close; the
+     *  parent counts down in a toast and reopens the composer on Undo.
+     *  Without it (detached window) the composer shows its own countdown. */
+    onSendHeld?: (held: HeldMessage) => void
   }
 
-  let { accountId, initialMessage = null, draftId = null, messageId = null, onClose, onSent, api: propApi, isDetached = false, closeRequested = false, onCloseHandled, onTitleChange, imagesLoaded = false }: Props = $props()
+  let { accountId, initialMessage = null, draftId = null, messageId = null, onClose, onSent, api: propApi, isDetached = false, closeRequested = false, onCloseHandled, onTitleChange, imagesLoaded = false, onSendHeld }: Props = $props()
 
   // Get API from context, props, or create default main window API
   const contextApi = getContext<ComposerApi | undefined>(COMPOSER_API_KEY)
@@ -1298,6 +1303,13 @@
     // Wait for any in-flight draft save to complete before sending
     await savingComplete
 
+    if (undoSendDelay > 0 && onSendHeld) {
+      // Save first so the message survives in Drafts if the app closes
+      await saveDraft()
+      onSendHeld({ accountId: activeAccountId, message: buildMessage(), draftId: currentDraftId, seconds: undoSendDelay })
+      onClose?.()
+      return
+    }
     if (undoSendDelay > 0) {
       await startPendingSend()
       return

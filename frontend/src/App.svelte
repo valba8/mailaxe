@@ -22,6 +22,7 @@
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import { accountStore } from '$lib/stores/accounts.svelte'
   import { addToast } from '$lib/stores/toast'
+  import { holdSend, type HeldMessage } from '$lib/stores/heldSend'
   import { loadSettings, getThemeMode, getShowTitleBar, getNativeTitleBar, getComposerMode, getMailtoMode } from '$lib/stores/settings.svelte'
   import { loadImageAllowlist } from '$lib/stores/imageAllowlist.svelte'
   import { initTheme, applyThemeFromMode, handleSystemThemeEvent, handleMediaQueryChange } from '$lib/stores/theme.svelte'
@@ -42,7 +43,7 @@
   import { dispatchExtensionShortcut } from '$lib/stores/extensionShortcuts.svelte'
   import { initLayout, getLayoutMode, getResponsiveView, showViewer, hideViewer, showSidebar, hideSidebar, isResponsive } from '$lib/stores/layout.svelte'
   // @ts-ignore - wailsjs path
-  import { PrepareReply, GetPendingMailto, GetDraft, MarkAsRead, MarkAsUnread, Star, Unstar, Archive, MarkAsSpam, MarkAsNotSpam, Undo, RefreshWindowConstraints, AcceptCertificate, GetStartHiddenActive, CloseWindow, QuitApp, OpenComposerWindow, GetSystemTheme, NotifyStartupComplete, GetOAuthBuildStatus, GetOAuthWarningDisabled, SetOAuthWarningDisabled, GetLastSeenVersion, SetLastSeenVersion, GetAppInfo } from '../wailsjs/go/app/App.js'
+  import { PrepareReply, GetPendingMailto, GetDraft, SendMessage, DeleteDraft, MarkAsRead, MarkAsUnread, Star, Unstar, Archive, MarkAsSpam, MarkAsNotSpam, Undo, RefreshWindowConstraints, AcceptCertificate, GetStartHiddenActive, CloseWindow, QuitApp, OpenComposerWindow, GetSystemTheme, NotifyStartupComplete, GetOAuthBuildStatus, GetOAuthWarningDisabled, SetOAuthWarningDisabled, GetLastSeenVersion, SetLastSeenVersion, GetAppInfo } from '../wailsjs/go/app/App.js'
   // @ts-ignore - wailsjs path
   import { smtp, folder, certificate } from '../wailsjs/go/models'
   // @ts-ignore - wailsjs runtime
@@ -751,6 +752,40 @@
       composerDraftId = null
       composerInitialMessage = null
       showComposer = true
+    }
+  }
+
+  // Undo send: the composer closed and handed its message over. Count down in
+  // a toast; Undo reopens the composer with the same message (and its draft).
+  function handleSendHeld(held: HeldMessage) {
+    holdSend({
+      seconds: held.seconds,
+      send: () => sendHeldMessage(held),
+      undo: () => {
+        if (showComposer) {
+          // Another message is being written: keep this one in Drafts
+          addToast({ type: 'info', message: $_('composer.heldSendInDrafts') })
+          return
+        }
+        composerAccountId = held.accountId
+        composerInitialMessage = held.message
+        composerDraftId = held.draftId
+        showComposer = true
+      },
+    })
+  }
+
+  async function sendHeldMessage(held: HeldMessage) {
+    try {
+      await SendMessage(held.accountId, held.message)
+      if (held.draftId) {
+        DeleteDraft(held.draftId).catch(err => console.error('Failed to delete draft after send:', err))
+      }
+      addToast({ type: 'success', message: $_('composer.messageSent') })
+    } catch (err) {
+      // The draft is only deleted after a successful send, so it stays in Drafts
+      console.error('Failed to send message:', err)
+      addToast({ type: 'error', message: $_('composer.failedToSend') })
     }
   }
 
@@ -1713,6 +1748,7 @@
         imagesLoaded={composerImagesLoaded}
         onClose={closeComposer}
         onSent={closeComposer}
+        onSendHeld={handleSendHeld}
       />
     </div>
   </div>

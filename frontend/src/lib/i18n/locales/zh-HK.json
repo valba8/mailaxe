@@ -216,6 +216,7 @@
     "sendingIn": "{seconds} 秒後傳送…",
     "undoSend": "復原",
     "sendNow": "立即傳送",
+    "heldSendInDrafts": "已取消傳送。郵件已保留在草稿中。",
     "dropToAttach": "拖放檔案以插入或附加",
     "flatpakDndTitle": "無法使用拖放功能",
     "flatpakDndDescription": "除非您手動授予 Mailaxe 存取檔案系統的權限，否則 Flatpak 版本無法使用拖放功能。",

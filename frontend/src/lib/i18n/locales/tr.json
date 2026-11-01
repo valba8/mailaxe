@@ -216,6 +216,7 @@
     "sendingIn": "{seconds} sn içinde gönderilecek…",
     "undoSend": "Geri al",
     "sendNow": "Şimdi gönder",
+    "heldSendInDrafts": "Gönderme iptal edildi. İleti Taslaklar’da tutuldu.",
     "dropToAttach": "Dosyaları yerleştirmek veya eklemek için bırakın",
     "flatpakDndTitle": "Sürükle ve Bırak Kullanılamıyor",
     "flatpakDndDescription": "Mailaxe'un Flatpak sürümünde, dosya sisteminize erişim iznini elle vermediğiniz sürece sürükle ve bırak kullanılamaz.",

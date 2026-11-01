@@ -216,6 +216,7 @@
     "sendingIn": "Enviando em {seconds} s…",
     "undoSend": "Desfazer",
     "sendNow": "Enviar agora",
+    "heldSendInDrafts": "Envio cancelado. A mensagem foi mantida em Rascunhos.",
     "dropToAttach": "Solte os arquivos para inserir ou anexar",
     "flatpakDndTitle": "Arrastar e soltar indisponível",
     "flatpakDndDescription": "Arrastar e soltar não está disponível na versão Flatpak do Mailaxe, a menos que você conceda manualmente permissão de acesso ao seu sistema de arquivos.",

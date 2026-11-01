@@ -216,6 +216,7 @@
     "sendingIn": "{seconds} 秒後に送信します…",
     "undoSend": "元に戻す",
     "sendNow": "今すぐ送信",
+    "heldSendInDrafts": "送信を取り消しました。メッセージは下書きに保存されています。",
     "dropToAttach": "ファイルをドロップして挿入または添付",
     "flatpakDndTitle": "ドラッグ＆ドロップは利用できません",
     "flatpakDndDescription": "Flatpak 版の Mailaxe では、ファイルシステムへのアクセス権限を手動で付与しない限り、ドラッグ＆ドロップは利用できません。",

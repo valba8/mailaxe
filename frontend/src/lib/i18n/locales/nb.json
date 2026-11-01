@@ -216,6 +216,7 @@
     "sendingIn": "Sender om {seconds} s…",
     "undoSend": "Angre",
     "sendNow": "Send nå",
+    "heldSendInDrafts": "Sending avbrutt. Meldingen ble beholdt i Utkast.",
     "dropToAttach": "Slipp filer for å sette inn eller legge ved",
     "flatpakDndTitle": "Dra og Slipp ikke tilgjengelig",
     "flatpakDndDescription": "Dra og slipp er ikke tilgjengelig for Flatpak-versjonen av Mailaxe med mindre du manuelt gir den tilgang til filsystemet ditt.",

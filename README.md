@@ -25,7 +25,7 @@ Other changes:
 
 - **"Collapse all"** now collapses every message in a conversation (Aerion keeps the last one open).
 - The vertical border to the left of the message body is gone.
-- **Undo send**: after clicking Send, the composer waits 6 seconds (configurable in Settings → Composer, 0 to turn off) with **Undo** and **Send now** buttons.
+- **Undo send**: after clicking Send, the composer closes and a notification counts down 6 seconds (configurable in Settings → Composer, 0 to turn off) with **Undo**, which reopens the message, and **Send now**. The detached composer window shows the countdown inside the window.
 - **Notification area icon on Windows**: click it to show the window (handy with "Run in background"); right-click for Open and Quit.
 - Different first-launch defaults: **Yaru (Dark)** theme, **native title bar**, dark composer body, contact photos and the unread accent in the message list, and messages marked as read **immediately** when opened. Everything can be changed in Settings.
 - Mailaxe uses its **own data folder, keyring entries and single-instance lock**, so it can be installed next to Aerion without sharing accounts or settings.

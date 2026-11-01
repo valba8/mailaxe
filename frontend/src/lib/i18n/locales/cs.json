@@ -216,6 +216,7 @@
     "sendingIn": "Odesílání za {seconds} s…",
     "undoSend": "Zpět",
     "sendNow": "Odeslat hned",
+    "heldSendInDrafts": "Odeslání zrušeno. Zpráva zůstala v Konceptech.",
     "dropToAttach": "Přetáhněte soubory pro vložení nebo přiložení",
     "flatpakDndTitle": "Přetahování není dostupné",
     "flatpakDndDescription": "Přetahování není ve verzi Flatpak Mailaxeu dostupné, pokud ručně nepovolíte přístup k souborovému systému.",

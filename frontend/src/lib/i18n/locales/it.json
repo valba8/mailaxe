@@ -216,6 +216,7 @@
     "sendingIn": "Invio tra {seconds} s…",
     "undoSend": "Annulla",
     "sendNow": "Invia ora",
+    "heldSendInDrafts": "Invio annullato. Il messaggio è stato salvato nelle bozze.",
     "dropToAttach": "Trascina i file per inserirli o allegarli",
     "flatpakDndTitle": "Trascinamento e rilascio non disponibili",
     "flatpakDndDescription": "Il trascinamento e il rilascio non sono disponibili nella versione Flatpak di Mailaxe a meno che tu non conceda manualmente il permesso di accedere al filesystem.",

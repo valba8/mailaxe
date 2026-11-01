@@ -216,6 +216,7 @@
     "sendingIn": "Wird in {seconds} s gesendet…",
     "undoSend": "Rückgängig",
     "sendNow": "Jetzt senden",
+    "heldSendInDrafts": "Senden abgebrochen. Die Nachricht wurde in den Entwürfen behalten.",
     "dropToAttach": "Dateien hier ablegen zum Einfügen oder Anhängen",
     "flatpakDndTitle": "Drag & Drop nicht verfügbar",
     "flatpakDndDescription": "Drag & Drop ist in der Flatpak-Version von Mailaxe nicht verfügbar, es sei denn, du erteilst manuell die Berechtigung zum Zugriff auf dein Dateisystem.",

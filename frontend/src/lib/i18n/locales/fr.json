@@ -216,6 +216,7 @@
     "sendingIn": "Envoi dans {seconds} s…",
     "undoSend": "Annuler",
     "sendNow": "Envoyer maintenant",
+    "heldSendInDrafts": "Envoi annulé. Le message a été conservé dans les brouillons.",
     "dropToAttach": "Déposez des fichiers pour les insérer ou les joindre",
     "flatpakDndTitle": "Glisser-déposer non disponible",
     "flatpakDndDescription": "Le glisser-déposer n'est pas disponible sur la version Flatpak d'Mailaxe à moins d'accorder manuellement la permission d'accéder à votre système de fichiers.",

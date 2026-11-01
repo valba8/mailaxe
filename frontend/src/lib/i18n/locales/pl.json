@@ -216,6 +216,7 @@
     "sendingIn": "Wysyłanie za {seconds} s…",
     "undoSend": "Cofnij",
     "sendNow": "Wyślij teraz",
+    "heldSendInDrafts": "Wysyłanie anulowane. Wiadomość została zachowana w Wersjach roboczych.",
     "dropToAttach": "Upuść pliki aby wstawić lub dołączyć",
     "flatpakDndTitle": "Przeciąganie i upuszczanie niedostępne",
     "flatpakDndDescription": "Przeciąganie i upuszczanie nie jest dostępne w wersji Flatpak aplikacji Mailaxe, chyba że ręcznie przyznasz jej uprawnienia dostępu do systemu plików.",

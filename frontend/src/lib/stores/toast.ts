@@ -35,6 +35,11 @@ function createToastStore() {
     update(toasts => toasts.filter(t => t.id !== id))
   }
 
+  // Change a visible toast in place (e.g. a countdown message)
+  function patch(id: string, changes: Partial<Omit<Toast, 'id'>>) {
+    update(toasts => toasts.map(t => (t.id === id ? { ...t, ...changes } : t)))
+  }
+
   function success(message: string, actions?: ToastAction[]) {
     return add({ message, type: 'success', actions })
   }
@@ -55,6 +60,7 @@ function createToastStore() {
     subscribe,
     add,
     remove,
+    patch,
     success,
     error,
     info,
