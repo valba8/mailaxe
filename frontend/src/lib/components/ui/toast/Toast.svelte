@@ -17,35 +17,30 @@
     warning: 'mdi:alert'
   }
 
-  const colors = {
-    success: 'bg-green-100 dark:bg-green-950 border-green-500',
-    error: 'bg-red-100 dark:bg-red-950 border-red-500',
-    info: 'bg-blue-100 dark:bg-blue-950 border-blue-500',
-    warning: 'bg-yellow-100 dark:bg-yellow-950 border-yellow-500'
-  }
-
+  // Background and border follow the active theme (popover surface); only
+  // the icon carries the toast type's color.
   const iconColors = {
-    success: 'text-green-600 dark:text-green-500',
-    error: 'text-red-600 dark:text-red-500',
-    info: 'text-blue-600 dark:text-blue-500',
-    warning: 'text-yellow-600 dark:text-yellow-500'
+    success: 'text-primary',
+    error: 'text-destructive',
+    info: 'text-primary',
+    warning: 'text-amber-500'
   }
 </script>
 
 <div
-  class="flex items-start gap-3 p-4 rounded-lg border shadow-lg backdrop-blur-sm {colors[toast.type]} animate-slide-in"
+  class="flex items-start gap-3 p-4 rounded-lg border border-border bg-popover text-popover-foreground shadow-lg animate-slide-in"
   role="alert"
 >
   <Icon icon={icons[toast.type]} class="w-5 h-5 flex-shrink-0 mt-0.5 {iconColors[toast.type]}" />
 
   <div class="flex-1 min-w-0">
-    <p class="text-sm text-foreground">{toast.message}</p>
+    <p class="text-sm">{toast.message}</p>
 
     {#if toast.actions && toast.actions.length > 0}
       <div class="flex gap-2 mt-2">
         {#each toast.actions as action (action.label)}
           <button
-            class="text-xs font-medium px-2 py-1 rounded hover:bg-white/10 transition-colors"
+            class="text-xs font-medium px-2 py-1 rounded text-primary hover:bg-accent hover:text-accent-foreground transition-colors"
             onclick={action.onClick}
           >
             {action.label}
@@ -56,7 +51,7 @@
   </div>
 
   <button
-    class="p-1 rounded hover:bg-white/10 transition-colors flex-shrink-0"
+    class="p-1 rounded hover:bg-accent transition-colors flex-shrink-0"
     onclick={onClose}
     aria-label={$_('aria.dismiss')}
   >
