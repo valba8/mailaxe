@@ -37,14 +37,14 @@ const (
 	KeyAccentBarUnread            = "accent_bar_unread"
 	KeyAccentUnreadStyle          = "accent_unread_style" // "dot" | "glowdot" | "bar"; applies when accent_bar_unread is on
 	KeyShowMessageListCircles     = "show_message_list_circles"
-	KeyRowHoverActions            = "row_hover_actions"              // show archive/delete buttons under the star when hovering a message list row (default off)
-	KeyShowMessageListProfilePics = "show_message_list_profile_pics" // render contact photos in the message-list avatar slot (default off)
-	KeyAccountColorStrip          = "account_color_strip"            // show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default off)
-	KeyUnreadAccentUnderAvatar    = "unread_accent_under_avatar"     // place the unread accent under the sender avatar instead of the row's left edge (default off)
+	KeyRowHoverActions            = "row_hover_actions"              // show archive/delete buttons under the star when hovering a message list row (default on)
+	KeyShowMessageListProfilePics = "show_message_list_profile_pics" // render contact photos in the message-list avatar slot (default on)
+	KeyAccountColorStrip          = "account_color_strip"            // show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default on)
+	KeyUnreadAccentUnderAvatar    = "unread_accent_under_avatar"     // place the unread accent under the sender avatar instead of the row's left edge (default on)
 	KeyAlwaysShowMessageCheckbox  = "always_show_message_checkbox"   // reserve a fixed checkbox column instead of the hover/swipe slide-reveal (default off)
-	KeyCheckboxToggleButton       = "checkbox_toggle_button"         // hide checkboxes until shown with a message list toolbar button (default off)
+	KeyCheckboxToggleButton       = "checkbox_toggle_button"         // hide checkboxes until shown with a message list toolbar button (default on)
 	KeyShowViewerCircles          = "show_viewer_circles"
-	KeyCollapseQuotedText         = "collapse_quoted_text"    // collapse the quoted part of replies behind a toggle in the viewer (default off)
+	KeyCollapseQuotedText         = "collapse_quoted_text"    // collapse the quoted part of replies behind a toggle in the viewer (default on)
 	KeyShowViewSourceButton       = "show_view_source_button" // show the View Source button below each message in the viewer (default on)
 	KeyLastSeenVersion            = "last_seen_version"       // for "What's new in this version" launch dialog
 	KeyOAuthWarningDisabled       = "oauth_warning_disabled"  // user toggled "Don't show again" on the missing-OAuth-creds launch warning
@@ -124,7 +124,8 @@ const (
 )
 
 // DefaultThemeMode is the default theme mode
-const DefaultThemeMode = ThemeModeSystem
+// Mailaxe defaults to Yaru Dark on first launch (Aerion: follow the system).
+const DefaultThemeMode = ThemeModeYaruDark
 
 // Composer mode values
 const (
@@ -151,8 +152,8 @@ const (
 	PolicyAlways = "always"
 )
 
-// Default mark as read delay in milliseconds (1 second)
-const DefaultMarkAsReadDelay = 1000
+// Default mark as read delay in milliseconds (Mailaxe: immediately; Aerion: 1 second)
+const DefaultMarkAsReadDelay = 0
 
 // Store provides settings persistence operations
 type Store struct {
@@ -365,7 +366,10 @@ func (s *Store) SetMessageListDensity(density string) error {
 func (s *Store) GetAccentBarUnread() (bool, error) {
 	value, err := s.Get(KeyAccentBarUnread)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -435,7 +439,10 @@ func (s *Store) SetShowMessageListCircles(enabled bool) error {
 func (s *Store) GetRowHoverActions() (bool, error) {
 	value, err := s.Get(KeyRowHoverActions)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -455,7 +462,10 @@ func (s *Store) SetRowHoverActions(enabled bool) error {
 func (s *Store) GetShowMessageListProfilePics() (bool, error) {
 	value, err := s.Get(KeyShowMessageListProfilePics)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -473,7 +483,10 @@ func (s *Store) SetShowMessageListProfilePics(enabled bool) error {
 func (s *Store) GetAccountColorStrip() (bool, error) {
 	value, err := s.Get(KeyAccountColorStrip)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -491,7 +504,10 @@ func (s *Store) SetAccountColorStrip(enabled bool) error {
 func (s *Store) GetUnreadAccentUnderAvatar() (bool, error) {
 	value, err := s.Get(KeyUnreadAccentUnderAvatar)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -530,7 +546,10 @@ func (s *Store) SetAlwaysShowMessageCheckbox(enabled bool) error {
 func (s *Store) GetCheckboxToggleButton() (bool, error) {
 	value, err := s.Get(KeyCheckboxToggleButton)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -570,7 +589,10 @@ func (s *Store) SetShowViewerCircles(enabled bool) error {
 func (s *Store) GetCollapseQuotedText() (bool, error) {
 	value, err := s.Get(KeyCollapseQuotedText)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -956,7 +978,10 @@ func (s *Store) SetComposerFormat(format string) error {
 func (s *Store) GetNativeTitleBar() (bool, error) {
 	value, err := s.Get(KeyNativeTitleBar)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -1012,7 +1037,10 @@ func (s *Store) SetDarkMailContent(enabled bool) error {
 func (s *Store) GetDarkComposerBody() (bool, error) {
 	value, err := s.Get(KeyDarkComposerBody)
 	if err != nil {
-		return false, err
+		return true, err
+	}
+	if value == "" {
+		return true, nil
 	}
 	return value == "true", nil
 }
@@ -1032,14 +1060,14 @@ func (s *Store) SetDarkComposerBody(enabled bool) error {
 func ReadNativeTitleBar(dbPath string) bool {
 	db, err := sql.Open("sqlite", dbPath)
 	if err != nil {
-		return false
+		return true
 	}
 	defer db.Close()
 
 	var value string
 	err = db.QueryRow("SELECT value FROM settings WHERE key = ?", KeyNativeTitleBar).Scan(&value)
-	if err != nil {
-		return false
+	if err != nil || value == "" {
+		return true // Mailaxe default: native title bar
 	}
 	return value == "true"
 }

@@ -72,7 +72,7 @@
           <li>🐛 "Collapse all" now collapses every message</li>
         </ul>
 
-        <p>⚙️ The new options are off by default: turn them on in Settings → General.</p>
+        <p>⚙️ The new options are on by default: turn them off in Settings → General.</p>
 
         <p>🔑 Mailaxe ships without OAuth credentials. To use Gmail or Outlook, add the account with IMAP and an app password, or enter your own OAuth client in Settings → Accounts.</p>
 

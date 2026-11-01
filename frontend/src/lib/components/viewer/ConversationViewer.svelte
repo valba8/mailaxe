@@ -142,7 +142,7 @@
   let showDeleteConfirm = $state(false)
 
   // Auto-mark-as-read state
-  let markAsReadDelay = $state(1000) // Default 1 second, loaded from settings
+  let markAsReadDelay = $state(0) // Default immediate, loaded from settings
   let markAsReadTimer: ReturnType<typeof setTimeout> | null = null
   let pendingMarkAsReadIds = $state<Set<string>>(new Set()) // Track message IDs we're marking as read
 

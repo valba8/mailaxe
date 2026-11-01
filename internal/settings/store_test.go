@@ -477,3 +477,43 @@ func TestGenericSetGet(t *testing.T) {
 		t.Errorf("got %q, want empty string", got)
 	}
 }
+
+// TestMailaxeFirstLaunchDefaults checks the values a fresh install starts with.
+func TestMailaxeFirstLaunchDefaults(t *testing.T) {
+	store := NewStore(openTestDB(t))
+
+	theme, err := store.GetThemeMode()
+	if err != nil || theme != ThemeModeYaruDark {
+		t.Errorf("GetThemeMode() = %q, %v; want %q", theme, err, ThemeModeYaruDark)
+	}
+	delay, err := store.GetMarkAsReadDelay()
+	if err != nil || delay != 0 {
+		t.Errorf("GetMarkAsReadDelay() = %d, %v; want 0", delay, err)
+	}
+
+	bools := map[string]func() (bool, error){
+		"NativeTitleBar":             store.GetNativeTitleBar,
+		"DarkComposerBody":           store.GetDarkComposerBody,
+		"CheckboxToggleButton":       store.GetCheckboxToggleButton,
+		"CollapseQuotedText":         store.GetCollapseQuotedText,
+		"ShowMessageListProfilePics": store.GetShowMessageListProfilePics,
+		"AccountColorStrip":          store.GetAccountColorStrip,
+		"RowHoverActions":            store.GetRowHoverActions,
+		"AccentBarUnread":            store.GetAccentBarUnread,
+		"UnreadAccentUnderAvatar":    store.GetUnreadAccentUnderAvatar,
+	}
+	for name, get := range bools {
+		got, err := get()
+		if err != nil || !got {
+			t.Errorf("Get%s() = %v, %v; want true", name, got, err)
+		}
+	}
+
+	// An explicit "off" must still win over the default
+	if err := store.SetCollapseQuotedText(false); err != nil {
+		t.Fatal(err)
+	}
+	if got, _ := store.GetCollapseQuotedText(); got {
+		t.Error("GetCollapseQuotedText() = true after SetCollapseQuotedText(false)")
+	}
+}

@@ -9,7 +9,7 @@
 
 ## What's different from Aerion
 
-Every new feature is **off by default** and can be turned on in **Settings → General**:
+Every new feature is **on by default** in a fresh install and can be turned off in **Settings → General**:
 
 | Setting | What it does |
 |---|---|
@@ -24,6 +24,7 @@ Other changes:
 
 - **"Collapse all"** now collapses every message in a conversation (Aerion keeps the last one open).
 - The vertical border to the left of the message body is gone.
+- Different first-launch defaults: **Yaru (Dark)** theme, **native title bar**, dark composer body, contact photos and the unread accent in the message list, and messages marked as read **immediately** when opened. Everything can be changed in Settings.
 - Mailaxe uses its **own data folder, keyring entries and single-instance lock**, so it can be installed next to Aerion without sharing accounts or settings.
 
 ## Download
