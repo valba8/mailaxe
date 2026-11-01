@@ -26,7 +26,8 @@
   import { message } from '../../../../wailsjs/go/models'
   // @ts-ignore - wailsjs runtime
   import { EventsOn, EventsOff } from '../../../../wailsjs/runtime/runtime'
-  import { getMessageListDensity, getMessageListSortOrder, setMessageListSortOrder, getShowMessageListProfilePics, getCheckboxToggleButton, getCheckboxesRevealed, setCheckboxesRevealed } from '$lib/stores/settings.svelte'
+  import { getMessageListDensity, getMessageListSortOrder, setMessageListSortOrder, getShowMessageListProfilePics, getCheckboxToggleButton, getCheckboxesRevealed, setCheckboxesRevealed, getGroupMessagesByDate } from '$lib/stores/settings.svelte'
+  import { getDateGroup } from '$lib/utils/date'
   import { contactPhotos } from '$lib/stores/contactPhotos.svelte'
   import { accountStore } from '$lib/stores/accounts.svelte'
   import { getLayoutMode, hideViewer } from '$lib/stores/layout.svelte'
@@ -68,6 +69,19 @@
   let selectedThreadId = $state<string | null>(null)
   let lastLoadedFolderId = $state<string | null>(null) // Track folder changes
   let loadGeneration = $state(0) // Invalidates stale async results when folder changes mid-load (#200)
+
+  // Date group header label per conversation index (null = same group as the
+  // row above). Reads $_ so headers re-translate when the language changes.
+  let dateGroupHeaders = $derived.by(() => {
+    if (!getGroupMessagesByDate() || !$_) return []
+    let prevKey = ''
+    return conversations.map((conv) => {
+      const group = getDateGroup(new Date(conv.latestDate))
+      if (group.key === prevKey) return null
+      prevKey = group.key
+      return group.label
+    })
+  })
 
   // Derived: check if this folder is currently syncing (from account store's progress tracking)
   const syncing = $derived(
@@ -1658,7 +1672,7 @@
   {/if}
 
   <!-- Conversation List -->
-  <div bind:this={listContainerRef} class="flex-1 overflow-y-auto scrollbar-thin">
+  <div bind:this={listContainerRef} class="flex-1 overflow-y-auto scrollbar-thin {dateGroupHeaders.length > 0 ? 'scroll-pt-7' : ''}">
     {#if loading && conversations.length === 0 && !isSearchMode}
       <div class="flex items-center justify-center h-32">
         <Icon icon="mdi:loading" class="w-6 h-6 animate-spin text-muted-foreground" />
@@ -1865,6 +1879,14 @@
         {@const convFolderId = (conv as any).folderId || folderId}
         {@const convAccountColor = (conv as any).accountColor || ''}
         {@const convAccountName = (conv as any).accountName || ''}
+        {#if dateGroupHeaders[index]}
+          <div
+            class="sticky top-0 z-10 px-4 py-1 text-xs font-medium text-muted-foreground bg-background/95 backdrop-blur-sm border-b border-border select-none"
+            role="presentation"
+          >
+            {dateGroupHeaders[index]}
+          </div>
+        {/if}
         <ConversationRow
           bind:this={rowRefs[conv.threadId]}
           conversation={conv}

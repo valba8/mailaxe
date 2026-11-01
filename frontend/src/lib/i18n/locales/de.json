@@ -410,6 +410,8 @@
     "showMessageListProfilePicsHelp": "Zeigt das Profilbild des Kontakts (ersatzweise einen farbigen Kreis) in der Nachrichtenliste. Erfordert \"Farbige Kreise in der Nachrichtenliste anzeigen\".",
     "accountColorStrip": "Kontofarbe als Seitenstreifen",
     "accountColorStripHelp": "Zeigt im gemeinsamen Posteingang die Farbe jedes Kontos als Streifen am linken Zeilenrand statt als Punkt neben dem Absender.",
+    "groupMessagesByDate": "Nachrichten nach Datum gruppieren",
+    "groupMessagesByDateHelp": "Teilt die Nachrichtenliste in Gruppen wie Heute, Gestern, Diese Woche und frühere Monate.",
     "showViewerCircles": "Farbige Kreise im Unterhaltungs-Viewer anzeigen",
     "showViewerCirclesHelp": "Farbige Kreise mit Absender-Initialen im Unterhaltungs-Viewer anzeigen",
     "collapseQuotedText": "Zitierten Text einklappen",
@@ -897,6 +899,13 @@
     "yesterday": "Gestern",
     "todayAt": "Heute um {time}",
     "yesterdayAt": "Gestern um {time}"
+  },
+  "dateGroup": {
+    "today": "Heute",
+    "yesterday": "Gestern",
+    "thisWeek": "Diese Woche",
+    "lastWeek": "Letzte Woche",
+    "thisMonth": "Diesen Monat"
   },
   "editor": {
     "bold": "Fett (Strg+B)",

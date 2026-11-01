@@ -416,6 +416,8 @@
     "showMessageListProfilePicsHelp": "Vis kontaktens profilbilde i meldingslisten, eller en farget sirkel hvis bildet mangler. Krever at «Vis fargerike sirkler i meldingslisten» er aktivert.",
     "accountColorStrip": "Kontofarge som sidestripe",
     "accountColorStripHelp": "I den samlede innboksen vises hver kontos farge som en stripe langs venstre kant av raden i stedet for en prikk ved avsenderen.",
+    "groupMessagesByDate": "Grupper meldinger etter dato",
+    "groupMessagesByDateHelp": "Deler meldingslisten inn i grupper som I dag, I går, Denne uken og tidligere måneder.",
     "accentBarUnread": "Merking av uleste meldinger",
     "accentBarUnreadHelp": "Viser en merking på venstresiden av uleste meldinger for enklere identifisering.",
     "accentStyle": "Merkestil",
@@ -897,6 +899,13 @@
     "yesterday": "I går",
     "todayAt": "I dag, kl. {time}",
     "yesterdayAt": "I går, kl. {time}"
+  },
+  "dateGroup": {
+    "today": "I dag",
+    "yesterday": "I går",
+    "thisWeek": "Denne uken",
+    "lastWeek": "Forrige uke",
+    "thisMonth": "Denne måneden"
   },
   "editor": {
     "bold": "Fet (Ctrl+B)",

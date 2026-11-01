@@ -416,6 +416,8 @@
     "showMessageListProfilePicsHelp": "メッセージ一覧に連絡先のプロフィール写真を表示します（ない場合は色付きの円にフォールバック）。「メッセージ一覧に色付きの円を表示」が必要です。",
     "accountColorStrip": "アカウントの色を側面の帯で表示",
     "accountColorStripHelp": "統合受信トレイで、各アカウントの色を差出人の横の点ではなく、行の左端に沿った帯で表示します。",
+    "groupMessagesByDate": "メッセージを日付でグループ化",
+    "groupMessagesByDateHelp": "メッセージ一覧を「今日」「昨日」「今週」や過去の月などのグループに分けて表示します。",
     "accentBarUnread": "未読メッセージのアクセント",
     "accentBarUnreadHelp": "未読メッセージの左側にアクセントを表示して識別しやすくします。",
     "accentStyle": "アクセントのスタイル",
@@ -897,6 +899,13 @@
     "yesterday": "昨日",
     "todayAt": "今日 {time}",
     "yesterdayAt": "昨日 {time}"
+  },
+  "dateGroup": {
+    "today": "今日",
+    "yesterday": "昨日",
+    "thisWeek": "今週",
+    "lastWeek": "先週",
+    "thisMonth": "今月"
   },
   "editor": {
     "bold": "太字（Ctrl+B）",

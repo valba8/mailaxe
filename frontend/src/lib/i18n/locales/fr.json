@@ -410,6 +410,8 @@
     "showMessageListProfilePicsHelp": "Affiche la photo de profil du contact (ou une pastille colorée à défaut) dans la liste des messages. Nécessite « Pastilles colorées dans la liste ».",
     "accountColorStrip": "Couleur du compte en bande latérale",
     "accountColorStripHelp": "Dans la boîte de réception unifiée, affiche la couleur de chaque compte sous forme de bande sur le bord gauche de la ligne au lieu d’un point à côté de l’expéditeur.",
+    "groupMessagesByDate": "Regrouper les messages par date",
+    "groupMessagesByDateHelp": "Divise la liste des messages en groupes comme Aujourd’hui, Hier, Cette semaine et les mois précédents.",
     "showViewerCircles": "Pastilles colorées dans la conversation",
     "showViewerCirclesHelp": "Pastille colorée avec les initiales de l'expéditeur",
     "collapseQuotedText": "Réduire le texte cité",
@@ -891,6 +893,13 @@
     "yesterday": "Hier",
     "todayAt": "Aujourd'hui à {time}",
     "yesterdayAt": "Hier à {time}"
+  },
+  "dateGroup": {
+    "today": "Aujourd’hui",
+    "yesterday": "Hier",
+    "thisWeek": "Cette semaine",
+    "lastWeek": "La semaine dernière",
+    "thisMonth": "Ce mois-ci"
   },
   "editor": {
     "bold": "Gras (Ctrl+B)",

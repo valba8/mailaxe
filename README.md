@@ -18,6 +18,7 @@ Every new feature is **on by default** in a fresh install and can be turned off 
 | **Show checkboxes with a toolbar button** | Hides the selection checkboxes and adds a toolbar button in the message list that shows or hides them for every row. |
 | **Account color as side strip** | In the unified inbox, shows each account's color as a full-height strip on the left of the row instead of a dot that can be mistaken for the unread marker. |
 | **Show accent under the avatar** | Under the unread accent options: places the unread dot or bar under the sender's circle (the bar becomes horizontal). |
+| **Group messages by date** | Splits the message list with headers such as Today, Yesterday, This week, Last week, This month and earlier months. Weeks start on your language's first day. |
 | **Quick actions on hover** | Shows small Archive and Delete buttons under the star when hovering a message in the list. |
 
 Other changes:

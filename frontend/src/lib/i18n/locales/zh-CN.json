@@ -410,6 +410,8 @@
     "showMessageListProfilePicsHelp": "在邮件列表中显示联系人的头像（无头像时显示彩色圆圈）。需要开启「在邮件列表显示彩色圆圈」。",
     "accountColorStrip": "以侧边色条显示账户颜色",
     "accountColorStripHelp": "在统一收件箱中，将每个账户的颜色显示为行左侧的色条，而不是发件人旁的圆点。",
+    "groupMessagesByDate": "按日期分组邮件",
+    "groupMessagesByDateHelp": "将邮件列表分为今天、昨天、本周及更早月份等分组。",
     "showViewerCircles": "在对话视图显示彩色圆圈",
     "showViewerCirclesHelp": "在对话视图中显示带有寄件人姓名缩写的彩色圆圈",
     "collapseQuotedText": "折叠引用文本",
@@ -897,6 +899,13 @@
     "yesterday": "昨天",
     "todayAt": "今天 {time}",
     "yesterdayAt": "昨天 {time}"
+  },
+  "dateGroup": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "thisWeek": "本周",
+    "lastWeek": "上周",
+    "thisMonth": "本月"
   },
   "editor": {
     "bold": "粗体（Ctrl+B）",

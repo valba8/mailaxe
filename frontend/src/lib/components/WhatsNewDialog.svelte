@@ -67,6 +67,7 @@
           <li>💬 Collapse quoted text in replies behind a ••• button</li>
           <li>☑️ Toolbar button to show or hide the selection checkboxes</li>
           <li>🎨 Account color as a side strip, and the unread accent under the avatar</li>
+          <li>📅 Message list grouped by date (Today, Yesterday, This week...)</li>
           <li>⚡ Archive and Delete quick actions when hovering a message</li>
           <li>🧭 View Source in the message right-click menu</li>
           <li>🐛 "Collapse all" now collapses every message</li>

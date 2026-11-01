@@ -104,6 +104,16 @@ func (a *App) SetAccountColorStrip(enabled bool) error {
 	return a.settingsStore.SetAccountColorStrip(enabled)
 }
 
+// GetGroupMessagesByDate returns whether the message list is split into date groups with headers
+func (a *App) GetGroupMessagesByDate() (bool, error) {
+	return a.settingsStore.GetGroupMessagesByDate()
+}
+
+// SetGroupMessagesByDate sets whether the message list is split into date groups with headers
+func (a *App) SetGroupMessagesByDate(enabled bool) error {
+	return a.settingsStore.SetGroupMessagesByDate(enabled)
+}
+
 // GetUnreadAccentUnderAvatar returns whether the unread accent is placed under the sender avatar
 func (a *App) GetUnreadAccentUnderAvatar() (bool, error) {
 	return a.settingsStore.GetUnreadAccentUnderAvatar()

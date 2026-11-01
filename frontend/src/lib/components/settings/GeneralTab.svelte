@@ -32,6 +32,7 @@
     rowHoverActions: boolean
     showMessageListProfilePics: boolean
     accountColorStrip: boolean
+    groupMessagesByDate: boolean
     unreadAccentUnderAvatar: boolean
     alwaysShowMessageCheckbox: boolean
     checkboxToggleButton: boolean
@@ -66,6 +67,7 @@
     rowHoverActions = $bindable(),
     showMessageListProfilePics = $bindable(),
     accountColorStrip = $bindable(),
+    groupMessagesByDate = $bindable(),
     unreadAccentUnderAvatar = $bindable(),
     alwaysShowMessageCheckbox = $bindable(),
     checkboxToggleButton = $bindable(),
@@ -452,6 +454,22 @@
         <Switch
           id="row-hover-actions"
           bind:checked={rowHoverActions}
+        />
+      </div>
+    </div>
+
+    <!-- Show Today / Yesterday / This week... headers between message list rows (default on) -->
+    <div class="space-y-2">
+      <div class="flex items-center justify-between">
+        <div>
+          <Label for="group-messages-by-date">{$_('settingsGeneral.groupMessagesByDate')}</Label>
+          <p class="text-xs text-muted-foreground">
+            {$_('settingsGeneral.groupMessagesByDateHelp')}
+          </p>
+        </div>
+        <Switch
+          id="group-messages-by-date"
+          bind:checked={groupMessagesByDate}
         />
       </div>
     </div>

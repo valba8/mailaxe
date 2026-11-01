@@ -410,6 +410,8 @@
     "showMessageListProfilePicsHelp": "Mostra l'immagine del profilo del contatto (o in alternativa un cerchio colorato) nell'elenco dei messaggi. Richiede \"Mostra cerchi colorati nell'elenco dei messaggi\".",
     "accountColorStrip": "Colore dell’account come striscia laterale",
     "accountColorStripHelp": "Nella posta in arrivo unificata, mostra il colore di ogni account come striscia sul bordo sinistro della riga invece di un punto accanto al mittente.",
+    "groupMessagesByDate": "Raggruppa i messaggi per data",
+    "groupMessagesByDateHelp": "Divide l’elenco dei messaggi in gruppi come Oggi, Ieri, Questa settimana e i mesi precedenti.",
     "showViewerCircles": "Mostra cerchi colorati nel visualizzatore di conversazioni",
     "showViewerCirclesHelp": "Mostra cerchi colorati con le iniziali del mittente nel visualizzatore di conversazioni",
     "collapseQuotedText": "Comprimi testo citato",
@@ -897,6 +899,13 @@
     "yesterday": "Ieri",
     "todayAt": "Oggi alle {time}",
     "yesterdayAt": "Ieri alle {time}"
+  },
+  "dateGroup": {
+    "today": "Oggi",
+    "yesterday": "Ieri",
+    "thisWeek": "Questa settimana",
+    "lastWeek": "La settimana scorsa",
+    "thisMonth": "Questo mese"
   },
   "editor": {
     "bold": "Grassetto (Ctrl+B)",

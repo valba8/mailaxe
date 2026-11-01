@@ -5,9 +5,9 @@
   import * as Tabs from '$lib/components/ui/tabs'
   import { Button } from '$lib/components/ui/button'
   // @ts-ignore - wailsjs path
-  import { GetReadReceiptResponsePolicy, SetReadReceiptResponsePolicy, GetMarkAsReadDelay, SetMarkAsReadDelay, GetMessageListDensity, SetMessageListDensity, GetThemeMode, SetThemeMode, GetShowTitleBar, SetShowTitleBar, GetRunBackground, SetRunBackground, GetStartHidden, SetStartHidden, GetAutostart, SetAutostart, GetLanguage, SetLanguage, GetComposerMode, SetComposerMode, GetMailtoMode, SetMailtoMode, GetComposerFormat, SetComposerFormat, GetNativeTitleBar, SetNativeTitleBar, GetAlwaysLoadImages, SetAlwaysLoadImages, GetDarkMailContent, SetDarkMailContent, GetDarkComposerBody, SetDarkComposerBody, GetAccentBarUnread, SetAccentBarUnread, GetAccentUnreadStyle, SetAccentUnreadStyle, GetShowMessageListCircles, SetShowMessageListCircles, GetRowHoverActions, SetRowHoverActions, GetShowMessageListProfilePics, SetShowMessageListProfilePics, GetAccountColorStrip, SetAccountColorStrip, GetUnreadAccentUnderAvatar, SetUnreadAccentUnderAvatar, GetAlwaysShowMessageCheckbox, SetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, SetCheckboxToggleButton, GetShowViewerCircles, SetShowViewerCircles, GetCollapseQuotedText, SetCollapseQuotedText, GetShowViewSourceButton, SetShowViewSourceButton, GetSpellcheckEnabled, SetSpellcheckEnabled, GetSpellcheckLanguages, SetSpellcheckLanguages, QuitApp } from '../../../../wailsjs/go/app/App.js'
+  import { GetReadReceiptResponsePolicy, SetReadReceiptResponsePolicy, GetMarkAsReadDelay, SetMarkAsReadDelay, GetMessageListDensity, SetMessageListDensity, GetThemeMode, SetThemeMode, GetShowTitleBar, SetShowTitleBar, GetRunBackground, SetRunBackground, GetStartHidden, SetStartHidden, GetAutostart, SetAutostart, GetLanguage, SetLanguage, GetComposerMode, SetComposerMode, GetMailtoMode, SetMailtoMode, GetComposerFormat, SetComposerFormat, GetNativeTitleBar, SetNativeTitleBar, GetAlwaysLoadImages, SetAlwaysLoadImages, GetDarkMailContent, SetDarkMailContent, GetDarkComposerBody, SetDarkComposerBody, GetAccentBarUnread, SetAccentBarUnread, GetAccentUnreadStyle, SetAccentUnreadStyle, GetShowMessageListCircles, SetShowMessageListCircles, GetRowHoverActions, SetRowHoverActions, GetShowMessageListProfilePics, SetShowMessageListProfilePics, GetAccountColorStrip, SetAccountColorStrip, GetGroupMessagesByDate, SetGroupMessagesByDate, GetUnreadAccentUnderAvatar, SetUnreadAccentUnderAvatar, GetAlwaysShowMessageCheckbox, SetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, SetCheckboxToggleButton, GetShowViewerCircles, SetShowViewerCircles, GetCollapseQuotedText, SetCollapseQuotedText, GetShowViewSourceButton, SetShowViewSourceButton, GetSpellcheckEnabled, SetSpellcheckEnabled, GetSpellcheckLanguages, SetSpellcheckLanguages, QuitApp } from '../../../../wailsjs/go/app/App.js'
   import { addToast } from '$lib/stores/toast'
-  import { setMessageListDensity as updateDensityStore, setThemeMode as updateThemeStore, setShowTitleBar as updateShowTitleBarStore, setRunBackground as updateRunBackgroundStore, setStartHidden as updateStartHiddenStore, setAutostart as updateAutostartStore, setLanguage as updateLanguageStore, setComposerMode as updateComposerModeStore, setMailtoMode as updateMailtoModeStore, setComposerFormat as updateComposerFormatStore, setNativeTitleBar as updateNativeTitleBarStore, setAlwaysLoadImages as updateAlwaysLoadImagesStore, setDarkMailContent as updateDarkMailContentStore, setDarkComposerBody as updateDarkComposerBodyStore, setAccentBarUnread as updateAccentBarUnreadStore, setAccentUnreadStyle as updateAccentUnreadStyleStore, setShowMessageListCircles as updateShowMessageListCirclesStore, setRowHoverActions as updateRowHoverActionsStore, setShowMessageListProfilePics as updateShowMessageListProfilePicsStore, setAccountColorStrip as updateAccountColorStripStore, setUnreadAccentUnderAvatar as updateUnreadAccentUnderAvatarStore, setAlwaysShowMessageCheckbox as updateAlwaysShowMessageCheckboxStore, setCheckboxToggleButton as updateCheckboxToggleButtonStore, setShowViewerCircles as updateShowViewerCirclesStore, setCollapseQuotedText as updateCollapseQuotedTextStore, setShowViewSourceButton as updateShowViewSourceButtonStore, setSpellcheckEnabled as updateSpellcheckEnabledStore, setSpellcheckLanguages as updateSpellcheckLanguagesStore, type MessageListDensity, type ThemeMode, type ComposerMode, type ComposerFormat } from '$lib/stores/settings.svelte'
+  import { setMessageListDensity as updateDensityStore, setThemeMode as updateThemeStore, setShowTitleBar as updateShowTitleBarStore, setRunBackground as updateRunBackgroundStore, setStartHidden as updateStartHiddenStore, setAutostart as updateAutostartStore, setLanguage as updateLanguageStore, setComposerMode as updateComposerModeStore, setMailtoMode as updateMailtoModeStore, setComposerFormat as updateComposerFormatStore, setNativeTitleBar as updateNativeTitleBarStore, setAlwaysLoadImages as updateAlwaysLoadImagesStore, setDarkMailContent as updateDarkMailContentStore, setDarkComposerBody as updateDarkComposerBodyStore, setAccentBarUnread as updateAccentBarUnreadStore, setAccentUnreadStyle as updateAccentUnreadStyleStore, setShowMessageListCircles as updateShowMessageListCirclesStore, setRowHoverActions as updateRowHoverActionsStore, setShowMessageListProfilePics as updateShowMessageListProfilePicsStore, setAccountColorStrip as updateAccountColorStripStore, setGroupMessagesByDate as updateGroupMessagesByDateStore, setUnreadAccentUnderAvatar as updateUnreadAccentUnderAvatarStore, setAlwaysShowMessageCheckbox as updateAlwaysShowMessageCheckboxStore, setCheckboxToggleButton as updateCheckboxToggleButtonStore, setShowViewerCircles as updateShowViewerCirclesStore, setCollapseQuotedText as updateCollapseQuotedTextStore, setShowViewSourceButton as updateShowViewSourceButtonStore, setSpellcheckEnabled as updateSpellcheckEnabledStore, setSpellcheckLanguages as updateSpellcheckLanguagesStore, type MessageListDensity, type ThemeMode, type ComposerMode, type ComposerFormat } from '$lib/stores/settings.svelte'
   import { syncSpellcheckLanguagesIfActive, defaultSpellcheckLanguages } from '$lib/spellcheck/settings'
   import { applyThemeFromMode } from '$lib/stores/theme.svelte'
   import { dialogGuardOpen, dialogGuardClose } from '$lib/stores/dialogGuard'
@@ -58,6 +58,7 @@
   let rowHoverActions = $state<boolean>(false)
   let showMessageListProfilePics = $state<boolean>(false)
   let accountColorStrip = $state<boolean>(false)
+  let groupMessagesByDate = $state<boolean>(true)
   let unreadAccentUnderAvatar = $state<boolean>(false)
   let alwaysShowMessageCheckbox = $state<boolean>(false)
   let checkboxToggleButton = $state<boolean>(false)
@@ -108,7 +109,7 @@
     loading = true
     hasSaved = false
     try {
-      const [policy, delayMs, density, theme, titleBar, runBg, startHid, autoSt, lang, comp, mail, compFmt, nativeTB, alwaysImages, darkMail, darkComposer, accentBar, accentStyle, listCircles, hoverActions, listProfilePics, accountStrip, accentUnderAvatar, alwaysCheckbox, checkboxToggle, viewerCircles, collapseQuoted, viewSourceButton, scEnabled, scLangs] = await Promise.all([
+      const [policy, delayMs, density, theme, titleBar, runBg, startHid, autoSt, lang, comp, mail, compFmt, nativeTB, alwaysImages, darkMail, darkComposer, accentBar, accentStyle, listCircles, hoverActions, listProfilePics, accountStrip, groupByDate, accentUnderAvatar, alwaysCheckbox, checkboxToggle, viewerCircles, collapseQuoted, viewSourceButton, scEnabled, scLangs] = await Promise.all([
         GetReadReceiptResponsePolicy(),
         GetMarkAsReadDelay(),
         GetMessageListDensity(),
@@ -131,6 +132,7 @@
         GetRowHoverActions(),
         GetShowMessageListProfilePics(),
         GetAccountColorStrip(),
+        GetGroupMessagesByDate(),
         GetUnreadAccentUnderAvatar(),
         GetAlwaysShowMessageCheckbox(),
         GetCheckboxToggleButton(),
@@ -167,6 +169,7 @@
       rowHoverActions = hoverActions ?? false
       showMessageListProfilePics = listProfilePics ?? false
       accountColorStrip = accountStrip ?? false
+      groupMessagesByDate = groupByDate ?? true
       unreadAccentUnderAvatar = accentUnderAvatar ?? false
       alwaysShowMessageCheckbox = alwaysCheckbox ?? false
       checkboxToggleButton = checkboxToggle ?? false
@@ -214,6 +217,7 @@
       await SetRowHoverActions(rowHoverActions)
       await SetShowMessageListProfilePics(showMessageListProfilePics)
       await SetAccountColorStrip(accountColorStrip)
+      await SetGroupMessagesByDate(groupMessagesByDate)
       await SetUnreadAccentUnderAvatar(unreadAccentUnderAvatar)
       await SetAlwaysShowMessageCheckbox(alwaysShowMessageCheckbox)
       await SetCheckboxToggleButton(checkboxToggleButton)
@@ -246,6 +250,7 @@
       updateRowHoverActionsStore(rowHoverActions)
       updateShowMessageListProfilePicsStore(showMessageListProfilePics)
       updateAccountColorStripStore(accountColorStrip)
+      updateGroupMessagesByDateStore(groupMessagesByDate)
       updateUnreadAccentUnderAvatarStore(unreadAccentUnderAvatar)
       updateAlwaysShowMessageCheckboxStore(alwaysShowMessageCheckbox)
       updateCheckboxToggleButtonStore(checkboxToggleButton)
@@ -370,6 +375,7 @@
               bind:rowHoverActions
               bind:showMessageListProfilePics
               bind:accountColorStrip
+              bind:groupMessagesByDate
               bind:unreadAccentUnderAvatar
               bind:alwaysShowMessageCheckbox
               bind:checkboxToggleButton

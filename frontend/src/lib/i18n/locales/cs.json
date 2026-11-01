@@ -410,6 +410,8 @@
     "showMessageListProfilePicsHelp": "Zobrazit profilovou fotografii kontaktu (případně barevný kroužek) v seznamu zpráv. Vyžaduje „Zobrazit barevné kroužky v seznamu zpráv“.",
     "accountColorStrip": "Barva účtu jako boční pruh",
     "accountColorStripHelp": "Ve sjednocené schránce zobrazí barvu účtu jako pruh u levého okraje řádku místo tečky vedle odesílatele.",
+    "groupMessagesByDate": "Seskupit zprávy podle data",
+    "groupMessagesByDateHelp": "Rozdělí seznam zpráv do skupin jako Dnes, Včera, Tento týden a starší měsíce.",
     "showViewerCircles": "Zobrazit barevné kroužky v náhledu konverzace",
     "showViewerCirclesHelp": "Zobrazit barevné kroužky s iniciálami odesílatele v náhledu konverzace",
     "collapseQuotedText": "Sbalit citovaný text",
@@ -897,6 +899,13 @@
     "yesterday": "Včera",
     "todayAt": "Dnes v {time}",
     "yesterdayAt": "Včera v {time}"
+  },
+  "dateGroup": {
+    "today": "Dnes",
+    "yesterday": "Včera",
+    "thisWeek": "Tento týden",
+    "lastWeek": "Minulý týden",
+    "thisMonth": "Tento měsíc"
   },
   "editor": {
     "bold": "Tučné (Ctrl+B)",

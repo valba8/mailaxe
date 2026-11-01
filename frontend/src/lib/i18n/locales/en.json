@@ -416,6 +416,8 @@
     "showMessageListProfilePicsHelp": "Show the contact's profile picture (falling back to a colored circle) in the message list. Requires \"Show colored circles in message list\".",
     "accountColorStrip": "Account color as side strip",
     "accountColorStripHelp": "In the unified inbox, show each account's color as a strip along the left edge of the row instead of a dot next to the sender.",
+    "groupMessagesByDate": "Group messages by date",
+    "groupMessagesByDateHelp": "Split the message list into groups such as Today, Yesterday, This week and earlier months.",
     "accentBarUnread": "Accent for unread messages",
     "accentBarUnreadHelp": "Shows an accent on the left side of unread messages for easier identification.",
     "accentStyle": "Accent style",
@@ -897,6 +899,13 @@
     "yesterday": "Yesterday",
     "todayAt": "Today at {time}",
     "yesterdayAt": "Yesterday at {time}"
+  },
+  "dateGroup": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "thisWeek": "This week",
+    "lastWeek": "Last week",
+    "thisMonth": "This month"
   },
   "editor": {
     "bold": "Bold (Ctrl+B)",

@@ -416,6 +416,8 @@
     "showMessageListProfilePicsHelp": "Pokazuj awatary nadawców na liście wiadomości.",
     "accountColorStrip": "Kolor konta jako pasek boczny",
     "accountColorStripHelp": "W zbiorczej skrzynce odbiorczej pokazuje kolor każdego konta jako pasek przy lewej krawędzi wiersza zamiast kropki obok nadawcy.",
+    "groupMessagesByDate": "Grupuj wiadomości według daty",
+    "groupMessagesByDateHelp": "Dzieli listę wiadomości na grupy, takie jak Dzisiaj, Wczoraj, Ten tydzień i wcześniejsze miesiące.",
     "accentBarUnread": "Akcent dla nieprzeczytanych wiadomości",
     "accentBarUnreadHelp": "Pokazuje akcent po lewej stronie nieprzeczytanych wiadomości dla łatwiejszej identyfikacji.",
     "accentStyle": "Styl akcentu",
@@ -897,6 +899,13 @@
     "yesterday": "Wczoraj",
     "todayAt": "Dzisiaj o {time}",
     "yesterdayAt": "Wczoraj o {time}"
+  },
+  "dateGroup": {
+    "today": "Dzisiaj",
+    "yesterday": "Wczoraj",
+    "thisWeek": "Ten tydzień",
+    "lastWeek": "Zeszły tydzień",
+    "thisMonth": "Ten miesiąc"
   },
   "editor": {
     "bold": "Pogrubienie (Ctrl+B)",

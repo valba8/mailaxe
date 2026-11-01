@@ -40,6 +40,7 @@ const (
 	KeyRowHoverActions            = "row_hover_actions"              // show archive/delete buttons under the star when hovering a message list row (default on)
 	KeyShowMessageListProfilePics = "show_message_list_profile_pics" // render contact photos in the message-list avatar slot (default on)
 	KeyAccountColorStrip          = "account_color_strip"            // show the unified inbox account color as a full-height strip on the row's left edge instead of a dot (default on)
+	KeyGroupMessagesByDate = "group_messages_by_date" // show Today / Yesterday / This week... headers between message list rows (default on)
 	KeyUnreadAccentUnderAvatar    = "unread_accent_under_avatar"     // place the unread accent under the sender avatar instead of the row's left edge (default on)
 	KeyAlwaysShowMessageCheckbox  = "always_show_message_checkbox"   // reserve a fixed checkbox column instead of the hover/swipe slide-reveal (default off)
 	KeyCheckboxToggleButton       = "checkbox_toggle_button"         // hide checkboxes until shown with a message list toolbar button (default on)
@@ -498,6 +499,27 @@ func (s *Store) SetAccountColorStrip(enabled bool) error {
 		v = "true"
 	}
 	return s.Set(KeyAccountColorStrip, v)
+}
+
+// GetGroupMessagesByDate returns whether the message list is split into date groups with headers. Default: true.
+func (s *Store) GetGroupMessagesByDate() (bool, error) {
+	value, err := s.Get(KeyGroupMessagesByDate)
+	if err != nil {
+		return true, err
+	}
+	if value == "" {
+		return true, nil
+	}
+	return value == "true", nil
+}
+
+// SetGroupMessagesByDate sets whether the message list is split into date groups with headers
+func (s *Store) SetGroupMessagesByDate(enabled bool) error {
+	v := "false"
+	if enabled {
+		v = "true"
+	}
+	return s.Set(KeyGroupMessagesByDate, v)
 }
 
 // GetUnreadAccentUnderAvatar returns whether the unread accent is placed under the sender avatar. Default: false.

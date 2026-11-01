@@ -530,6 +530,10 @@ export function GetFolders(arg1) {
   return window['go']['app']['App']['GetFolders'](arg1);
 }
 
+export function GetGroupMessagesByDate() {
+  return window['go']['app']['App']['GetGroupMessagesByDate']();
+}
+
 export function GetIMAPConnectionForUndo(arg1, arg2) {
   return window['go']['app']['App']['GetIMAPConnectionForUndo'](arg1, arg2);
 }
@@ -1180,6 +1184,10 @@ export function SetDefaultSMIMECertificate(arg1, arg2) {
 
 export function SetExtensionEnabled(arg1, arg2) {
   return window['go']['app']['App']['SetExtensionEnabled'](arg1, arg2);
+}
+
+export function SetGroupMessagesByDate(arg1) {
+  return window['go']['app']['App']['SetGroupMessagesByDate'](arg1);
 }
 
 export function SetLanguage(arg1) {

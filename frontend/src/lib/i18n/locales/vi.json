@@ -410,6 +410,8 @@
     "showMessageListProfilePicsHelp": "Hiện ảnh đại diện của liên hệ (nếu không có thì dùng vòng tròn màu) trong danh sách thư. Yêu cầu bật \"Hiện vòng tròn màu trong danh sách thư\".",
     "accountColorStrip": "Màu tài khoản dạng dải bên",
     "accountColorStripHelp": "Trong hộp thư hợp nhất, hiển thị màu của mỗi tài khoản dưới dạng dải dọc mép trái của hàng thay vì chấm cạnh người gửi.",
+    "groupMessagesByDate": "Nhóm thư theo ngày",
+    "groupMessagesByDateHelp": "Chia danh sách thư thành các nhóm như Hôm nay, Hôm qua, Tuần này và các tháng trước.",
     "showViewerCircles": "Hiện vòng tròn màu trong trình xem hội thoại",
     "showViewerCirclesHelp": "Hiện vòng tròn màu có chữ cái đầu của người gửi trong trình xem hội thoại",
     "collapseQuotedText": "Thu gọn văn bản trích dẫn",
@@ -897,6 +899,13 @@
     "yesterday": "Hôm qua",
     "todayAt": "Hôm nay lúc {time}",
     "yesterdayAt": "Hôm qua lúc {time}"
+  },
+  "dateGroup": {
+    "today": "Hôm nay",
+    "yesterday": "Hôm qua",
+    "thisWeek": "Tuần này",
+    "lastWeek": "Tuần trước",
+    "thisMonth": "Tháng này"
   },
   "editor": {
     "bold": "In đậm (Ctrl+B)",

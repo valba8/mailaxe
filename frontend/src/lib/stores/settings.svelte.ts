@@ -2,7 +2,7 @@
 // Provides reactive state for application settings
 
 // @ts-ignore - wailsjs path
-import { GetMessageListDensity, GetMessageListSortOrder, GetThemeMode, GetShowTitleBar, GetRunBackground, GetStartHidden, GetAutostart, GetLanguage, GetComposerMode, GetMailtoMode, GetComposerFormat, GetNativeTitleBar, GetAlwaysLoadImages, GetDarkMailContent, GetDarkComposerBody, GetAccentBarUnread, GetAccentUnreadStyle, GetShowMessageListCircles, GetRowHoverActions, GetShowMessageListProfilePics, GetAccountColorStrip, GetUnreadAccentUnderAvatar, GetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, GetShowViewerCircles, GetCollapseQuotedText, GetShowViewSourceButton, GetSpellcheckEnabled, GetSpellcheckLanguages, GetSpellcheckCustomWords } from '../../../wailsjs/go/app/App'
+import { GetMessageListDensity, GetMessageListSortOrder, GetThemeMode, GetShowTitleBar, GetRunBackground, GetStartHidden, GetAutostart, GetLanguage, GetComposerMode, GetMailtoMode, GetComposerFormat, GetNativeTitleBar, GetAlwaysLoadImages, GetDarkMailContent, GetDarkComposerBody, GetAccentBarUnread, GetAccentUnreadStyle, GetShowMessageListCircles, GetRowHoverActions, GetShowMessageListProfilePics, GetAccountColorStrip, GetGroupMessagesByDate, GetUnreadAccentUnderAvatar, GetAlwaysShowMessageCheckbox, GetCheckboxToggleButton, GetShowViewerCircles, GetCollapseQuotedText, GetShowViewSourceButton, GetSpellcheckEnabled, GetSpellcheckLanguages, GetSpellcheckCustomWords } from '../../../wailsjs/go/app/App'
 import { setLocale as setI18nLocale, locale as i18nLocale } from '$lib/i18n'
 import { get } from 'svelte/store'
 import { loadDateFnsLocale, getDateFnsLocale } from '$lib/i18n/dateFnsLocale'
@@ -48,6 +48,7 @@ let showMessageListCircles = $state<boolean>(true)
 let rowHoverActions = $state<boolean>(true)
 let showMessageListProfilePics = $state<boolean>(true)
 let accountColorStrip = $state<boolean>(true)
+let groupMessagesByDate = $state<boolean>(true)
 let unreadAccentUnderAvatar = $state<boolean>(true)
 let alwaysShowMessageCheckbox = $state<boolean>(false)
 let checkboxToggleButton = $state<boolean>(true)
@@ -152,6 +153,10 @@ export function getShowMessageListProfilePics(): boolean {
 
 export function getAccountColorStrip(): boolean {
   return accountColorStrip
+}
+
+export function getGroupMessagesByDate(): boolean {
+  return groupMessagesByDate
 }
 
 export function getUnreadAccentUnderAvatar(): boolean {
@@ -287,6 +292,10 @@ export function setAccountColorStrip(v: boolean) {
   accountColorStrip = v
 }
 
+export function setGroupMessagesByDate(v: boolean) {
+  groupMessagesByDate = v
+}
+
 export function setUnreadAccentUnderAvatar(v: boolean) {
   unreadAccentUnderAvatar = v
 }
@@ -319,7 +328,7 @@ export function setShowViewSourceButton(v: boolean) {
 // Load settings from backend (call on app startup)
 export async function loadSettings(): Promise<ThemeMode> {
   try {
-    const [density, sortOrder, theme, titleBar, runBg, startHid, autoSt, lang, compMode, mailMode, compFormat, nativeTB, alwaysImages, darkMail, darkComposer, accentBar, accentStyle, listCircles, hoverActions, listProfilePics, accountStrip, accentUnderAvatar, alwaysCheckbox, checkboxToggle, viewerCircles, collapseQuoted, viewSourceButton, scEnabled, scLangs, scWords] = await Promise.all([
+    const [density, sortOrder, theme, titleBar, runBg, startHid, autoSt, lang, compMode, mailMode, compFormat, nativeTB, alwaysImages, darkMail, darkComposer, accentBar, accentStyle, listCircles, hoverActions, listProfilePics, accountStrip, groupByDate, accentUnderAvatar, alwaysCheckbox, checkboxToggle, viewerCircles, collapseQuoted, viewSourceButton, scEnabled, scLangs, scWords] = await Promise.all([
       GetMessageListDensity(),
       GetMessageListSortOrder(),
       GetThemeMode(),
@@ -341,6 +350,7 @@ export async function loadSettings(): Promise<ThemeMode> {
       GetRowHoverActions(),
       GetShowMessageListProfilePics(),
       GetAccountColorStrip(),
+      GetGroupMessagesByDate(),
       GetUnreadAccentUnderAvatar(),
       GetAlwaysShowMessageCheckbox(),
       GetCheckboxToggleButton(),
@@ -371,6 +381,7 @@ export async function loadSettings(): Promise<ThemeMode> {
     rowHoverActions = hoverActions ?? false
     showMessageListProfilePics = listProfilePics ?? false
     accountColorStrip = accountStrip ?? false
+    groupMessagesByDate = groupByDate ?? true
     unreadAccentUnderAvatar = accentUnderAvatar ?? false
     alwaysShowMessageCheckbox = alwaysCheckbox ?? false
     checkboxToggleButton = checkboxToggle ?? false
