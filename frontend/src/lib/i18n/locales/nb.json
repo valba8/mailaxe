@@ -875,15 +875,6 @@
     "acceptOnce": "Godta én gang",
     "acceptAlways": "Alltid godta"
   },
-  "terms": {
-    "title": "Programvilkår & personvernspolicy",
-    "description": "Vennligst les gjennom våre vilkår for å fortsette å bruke Mailaxe.",
-    "content": "Disse dokumentene forklarer hvordan Mailaxe behandler dine data og under hvilke vilkår du kan bruke dette programmet.",
-    "privacyPolicy": "Personvernspolicy",
-    "termsOfUse": "Programvilkår",
-    "agreeLabel": "Jeg har lest og godtar vilkårene og personvernspolicyen",
-    "accept": "Godta & Fortsett"
-  },
   "oauthMissing": {
     "title": "OAuth-legitimasjon mangler",
     "intro": "Denne versjonen av Mailaxe inneholder ikke OAuth-legitimasjon for:",

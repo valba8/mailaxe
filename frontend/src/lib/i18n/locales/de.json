@@ -875,15 +875,6 @@
     "acceptOnce": "Einmal akzeptieren",
     "acceptAlways": "Immer akzeptieren"
   },
-  "terms": {
-    "title": "Nutzungsbedingungen & Datenschutzrichtlinie",
-    "description": "Bitte Bedingungen lesen und akzeptieren, um Mailaxe weiterhin zu nutzen.",
-    "content": "Diese Dokumente erklären, wie die Anwendung mit deinen Daten umgeht und unter welchen Bedingungen du diese Software verwenden darfst.",
-    "privacyPolicy": "Datenschutzrichtlinie",
-    "termsOfUse": "Nutzungsbedingungen",
-    "agreeLabel": "Ich habe die Nutzungsbedingungen und die Datenschutzrichtlinie gelesen und stimme ihnen zu",
-    "accept": "Akzeptieren & Fortfahren"
-  },
   "oauthMissing": {
     "title": "OAuth-Anmeldedaten fehlen",
     "intro": "Diese Mailaxe-Version enthält keine OAuth-Zugangsdaten für:",

@@ -875,15 +875,6 @@
     "acceptOnce": "Bir Kez Kabul Et",
     "acceptAlways": "Her Zaman Kabul Et"
   },
-  "terms": {
-    "title": "Kullanım Koşulları ve Gizlilik Politikası",
-    "description": "Mailaxe'u kullanmaya devam etmek için lütfen koşullarımızı inceleyin ve kabul edin.",
-    "content": "Bu belgeler, uygulamanın verilerinizi nasıl işlediğini ve bu yazılımı hangi koşullar altında kullanabileceğinizi açıklar.",
-    "privacyPolicy": "Gizlilik Politikası",
-    "termsOfUse": "Kullanım Koşulları",
-    "agreeLabel": "Kullanım Koşullarını ve Gizlilik Politikasını okudum ve kabul ediyorum",
-    "accept": "Kabul Et ve Devam Et"
-  },
   "oauthMissing": {
     "title": "OAuth kimlik bilgileri eksik",
     "intro": "Bu Mailaxe sürümü şunlar için OAuth kimlik bilgilerini içermiyor:",

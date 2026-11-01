@@ -875,15 +875,6 @@
     "acceptOnce": "Accepter une fois",
     "acceptAlways": "Toujours accepter"
   },
-  "terms": {
-    "title": "Conditions & Confidentialité",
-    "description": "Veuillez accepter nos conditions pour continuer à utiliser Mailaxe.",
-    "content": "Ces documents expliquent la gestion de vos données et les termes d'utilisation du logiciel.",
-    "privacyPolicy": "Politique de confidentialité",
-    "termsOfUse": "Conditions d'utilisation",
-    "agreeLabel": "J'ai lu et j'accepte les conditions d'utilisation et la politique de confidentialité",
-    "accept": "Accepter et Continuer"
-  },
   "dialog": {
     "deletePermanently": "Supprimer définitivement ?",
     "deleteDescription": "Ceci supprimera définitivement les messages sélectionnés. Cette action est irréversible.",

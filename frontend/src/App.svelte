@@ -10,7 +10,6 @@
   import Composer from './lib/components/composer/Composer.svelte'
   import ToastContainer from './lib/components/ui/toast/ToastContainer.svelte'
   import SpellSuggestionMenu from './lib/spellcheck/SpellSuggestionMenu.svelte'
-  import TermsDialog from './lib/components/TermsDialog.svelte'
   import OAuthMissingDialog from './lib/components/OAuthMissingDialog.svelte'
   import WhatsNewDialog from './lib/components/WhatsNewDialog.svelte'
   import CertificateDialog from './lib/components/settings/CertificateDialog.svelte'
@@ -43,7 +42,7 @@
   import { dispatchExtensionShortcut } from '$lib/stores/extensionShortcuts.svelte'
   import { initLayout, getLayoutMode, getResponsiveView, showViewer, hideViewer, showSidebar, hideSidebar, isResponsive } from '$lib/stores/layout.svelte'
   // @ts-ignore - wailsjs path
-  import { PrepareReply, GetPendingMailto, GetDraft, MarkAsRead, MarkAsUnread, Star, Unstar, Archive, MarkAsSpam, MarkAsNotSpam, Undo, GetTermsAccepted, SetTermsAccepted, RefreshWindowConstraints, AcceptCertificate, GetStartHiddenActive, CloseWindow, QuitApp, OpenComposerWindow, GetSystemTheme, NotifyStartupComplete, GetOAuthBuildStatus, GetOAuthWarningDisabled, SetOAuthWarningDisabled, GetLastSeenVersion, SetLastSeenVersion, GetAppInfo } from '../wailsjs/go/app/App.js'
+  import { PrepareReply, GetPendingMailto, GetDraft, MarkAsRead, MarkAsUnread, Star, Unstar, Archive, MarkAsSpam, MarkAsNotSpam, Undo, RefreshWindowConstraints, AcceptCertificate, GetStartHiddenActive, CloseWindow, QuitApp, OpenComposerWindow, GetSystemTheme, NotifyStartupComplete, GetOAuthBuildStatus, GetOAuthWarningDisabled, SetOAuthWarningDisabled, GetLastSeenVersion, SetLastSeenVersion, GetAppInfo } from '../wailsjs/go/app/App.js'
   // @ts-ignore - wailsjs path
   import { smtp, folder, certificate } from '../wailsjs/go/models'
   // @ts-ignore - wailsjs runtime
@@ -147,9 +146,6 @@
   // Shutdown state
   let isShuttingDown = $state(false)
 
-  // Terms acceptance state
-  let showTermsDialog = $state(false)
-
   // Launch-time OAuth credentials warning state
   let showOAuthMissingDialog = $state(false)
   let oauthBuildStatus = $state({ google: true, microsoft: true, googleTesting: true })
@@ -180,16 +176,6 @@
     setTimeout(() => QuitApp(), 100)
   }
 
-  // Handle terms acceptance
-  async function handleTermsAccepted() {
-    try {
-      await SetTermsAccepted(true)
-      showTermsDialog = false
-    } catch (err) {
-      console.error('Failed to save terms acceptance:', err)
-    }
-  }
-
   // OAuth warning dismiss — optionally persists the opt-out so the warning
   // stops firing on future launches even when credentials remain missing.
   async function dismissOAuthWarning(dontShowAgain: boolean) {
@@ -215,18 +201,19 @@
     showWhatsNewDialog = false
   }
 
-  // Reactive sequencing: Terms → OAuth warning → What's New.
+  // Reactive sequencing: OAuth warning → What's New. (Mailaxe has no
+  // first-run Terms dialog; TERMS/PRIVACY are linked from Settings → About.)
   // Each gates on the previous being closed so users see them one at a
   // time, never stacked.
   $effect(() => {
-    if (!showTermsDialog && pendingOAuthWarning && !showOAuthMissingDialog) {
+    if (pendingOAuthWarning && !showOAuthMissingDialog) {
       showOAuthMissingDialog = true
       pendingOAuthWarning = false
     }
   })
 
   $effect(() => {
-    if (!showTermsDialog && !showOAuthMissingDialog && pendingWhatsNew && !showWhatsNewDialog) {
+    if (!showOAuthMissingDialog && pendingWhatsNew && !showWhatsNewDialog) {
       showWhatsNewDialog = true
       pendingWhatsNew = false
     }
@@ -397,23 +384,11 @@
     // Load image allowlist cache for synchronous checks in EmailBody
     loadImageAllowlist()
 
-    // Check if terms have been accepted
-    try {
-      const termsAccepted = await GetTermsAccepted()
-      if (!termsAccepted) {
-        showTermsDialog = true
-      }
-    } catch (err) {
-      console.error('Failed to check terms acceptance:', err)
-      // Show dialog on error to be safe
-      showTermsDialog = true
-    }
-
     // OAuth credentials warning: surface missing provider creds on every
     // launch unless the user has explicitly opted out. The dialog shows
     // all three providers with a missing/present indicator, so the
     // trigger fires when ANY of them is missing. Actual opening is
-    // deferred via $effect so Terms can resolve first.
+    // deferred via $effect.
     try {
       const status = await GetOAuthBuildStatus()
       const anyMissing = !status.google || !status.microsoft || !status.googleTesting
@@ -1755,9 +1730,6 @@
     <p class="text-white/90 text-sm font-medium">{$_('window.shuttingDown')}</p>
   </div>
 {/if}
-
-<!-- Terms Acceptance Dialog -->
-<TermsDialog bind:open={showTermsDialog} onAccept={handleTermsAccepted} />
 
 <!-- Launch-time OAuth credentials warning. Shows on every launch when one
      or more provider credentials weren't compiled in, unless the user

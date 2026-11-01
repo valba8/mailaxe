@@ -875,15 +875,6 @@
     "acceptOnce": "接受一次",
     "acceptAlways": "始終接受"
   },
-  "terms": {
-    "title": "使用條款與隱私權政策",
-    "description": "請閱覽並接受我們的條款以繼續使用 Mailaxe。",
-    "content": "這些文件說明應用程式如何處理您的資料，以及您使用本軟體的條款。",
-    "privacyPolicy": "隱私權政策",
-    "termsOfUse": "使用條款",
-    "agreeLabel": "我已閱讀並同意使用條款和隱私權政策",
-    "accept": "接受並繼續"
-  },
   "oauthMissing": {
     "title": "缺少 OAuth 認證資訊",
     "intro": "此 Mailaxe 版本未包含以下服務的 OAuth 憑證：",

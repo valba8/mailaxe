@@ -875,15 +875,6 @@
     "acceptOnce": "Accept Once",
     "acceptAlways": "Accept Always"
   },
-  "terms": {
-    "title": "Terms of Use & Privacy Policy",
-    "description": "Please review and accept our terms to continue using Mailaxe.",
-    "content": "These documents explain how the application handles your data and the terms under which you may use this software.",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfUse": "Terms of Use",
-    "agreeLabel": "I have read and agree to the Terms of Use and Privacy Policy",
-    "accept": "Accept & Continue"
-  },
   "oauthMissing": {
     "title": "OAuth credentials missing",
     "intro": "This build of Mailaxe does not include OAuth credentials for:",

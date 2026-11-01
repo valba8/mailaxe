@@ -875,15 +875,6 @@
     "acceptOnce": "Chấp nhận một lần",
     "acceptAlways": "Luôn chấp nhận"
   },
-  "terms": {
-    "title": "Điều khoản sử dụng & Chính sách quyền riêng tư",
-    "description": "Vui lòng đọc và chấp nhận điều khoản của chúng tôi để tiếp tục sử dụng Mailaxe.",
-    "content": "Các tài liệu này giải thích cách ứng dụng xử lý dữ liệu của bạn và các điều khoản sử dụng phần mềm này.",
-    "privacyPolicy": "Chính sách quyền riêng tư",
-    "termsOfUse": "Điều khoản sử dụng",
-    "agreeLabel": "Tôi đã đọc và đồng ý với Điều khoản sử dụng và Chính sách quyền riêng tư",
-    "accept": "Chấp nhận & Tiếp tục"
-  },
   "oauthMissing": {
     "title": "Thiếu thông tin xác thực OAuth",
     "intro": "Bản Mailaxe này không kèm thông tin xác thực OAuth cho:",

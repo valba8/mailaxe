@@ -875,15 +875,6 @@
     "acceptOnce": "Přijmout jednou",
     "acceptAlways": "Vždy přijmout"
   },
-  "terms": {
-    "title": "Podmínky používání a zásady ochrany osobních údajů",
-    "description": "Pro pokračování v používání aplikace Mailaxe si prosím přečtěte a přijměte naše podmínky.",
-    "content": "Tyto dokumenty vysvětlují, jak aplikace nakládá s vašimi údaji a za jakých podmínek můžete tento software používat.",
-    "privacyPolicy": "Zásady ochrany osobních údajů",
-    "termsOfUse": "Podmínky používání",
-    "agreeLabel": "Přečetl(a) jsem si podmínky používání a zásady ochrany osobních údajů a souhlasím s nimi.",
-    "accept": "Přijmout a pokračovat"
-  },
   "oauthMissing": {
     "title": "Chybí přihlašovací údaje OAuth",
     "intro": "Tato verze Mailaxe neobsahuje přihlašovací údaje OAuth pro:",

@@ -875,15 +875,6 @@
     "acceptOnce": "Zaakceptuj raz",
     "acceptAlways": "Zaakceptuj zawsze"
   },
-  "terms": {
-    "title": "Warunki użytkowania i polityka prywatności",
-    "description": "Proszę przejrzeć i zaakceptować nasze warunki, aby kontynuować korzystanie z Mailaxeu.",
-    "content": "Dokumenty te wyjaśniają, jak aplikacja obsługuje Twoje dane i warunki, na których możesz korzystać z tego oprogramowania.",
-    "privacyPolicy": "Polityka prywatności",
-    "termsOfUse": "Warunki użytkowania",
-    "agreeLabel": "Przeczytałem i zgadzam się z Warunkami użytkowania i polityką prywatności",
-    "accept": "Zaakceptuj i kontynuuj"
-  },
   "oauthMissing": {
     "title": "Brak obsługi OAuth",
     "intro": "Ta wersja Mailaxe nie zawiera danych logowania OAuth dla:",

@@ -875,15 +875,6 @@
     "acceptOnce": "Accetta una volta",
     "acceptAlways": "Accetta sempre"
   },
-  "terms": {
-    "title": "Condizioni d'uso e Informativa sulla privacy",
-    "description": "Ti preghiamo di leggere e accettare i nostri termini per continuare a utilizzare Mailaxe.",
-    "content": "Questi documenti spiegano come l'applicazione gestisce i tuoi dati e le condizioni alle quali puoi utilizzare questo software.",
-    "privacyPolicy": "Informativa sulla privacy",
-    "termsOfUse": "Condizioni d'uso",
-    "agreeLabel": "Ho letto e accetto le Condizioni d'uso e l'Informativa sulla privacy",
-    "accept": "Accetta e continua"
-  },
   "oauthMissing": {
     "title": "Credenziali OAuth mancanti",
     "intro": "Questa build di Mailaxe non include credenziali OAuth per:",

@@ -875,15 +875,6 @@
     "acceptOnce": "一度だけ受け入れる",
     "acceptAlways": "常に受け入れる"
   },
-  "terms": {
-    "title": "利用規約とプライバシーポリシー",
-    "description": "Mailaxe を引き続き使用するには、規約を確認して同意してください。",
-    "content": "これらのドキュメントは、アプリがデータをどのように扱うか、およびこのソフトウェアを使用するための条件について説明しています。",
-    "privacyPolicy": "プライバシーポリシー",
-    "termsOfUse": "利用規約",
-    "agreeLabel": "利用規約とプライバシーポリシーを読み、同意しました",
-    "accept": "同意して続行"
-  },
   "oauthMissing": {
     "title": "OAuth 資格情報がありません",
     "intro": "この Mailaxe ビルドには次の OAuth 認証情報が含まれていません：",
