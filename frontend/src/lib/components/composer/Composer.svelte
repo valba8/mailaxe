@@ -2082,6 +2082,11 @@
           // Tab skips security rows + toolbar and goes directly to body
           if (e.key === 'Tab' && !e.shiftKey) {
             e.preventDefault()
+            // Plain text mode hides the rich editor and shows its own
+            if (isPlainTextMode) {
+              plainTextRef?.focus()
+              return
+            }
             editor?.commands.focus('start')
           }
         }}
