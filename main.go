@@ -195,7 +195,7 @@ func runMainMode(mailtoData *app.MailtoData, rawMailtoArg string) {
 		AssetServer: &assetserver.Options{
 			Assets: assets,
 		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
+		BackgroundColour: &options.RGBA{R: 44, G: 44, B: 44, A: 1}, // Yaru Dark #2C2C2C, the default theme
 		OnStartup:        application.Startup,
 		OnShutdown:       application.Shutdown,
 		OnBeforeClose:    application.BeforeClose,
@@ -290,7 +290,7 @@ func runComposerMode() {
 			// so we can rewrite "/" to "/composer.html"
 			Handler: composerAssetHandler,
 		},
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
+		BackgroundColour: &options.RGBA{R: 44, G: 44, B: 44, A: 1}, // Yaru Dark #2C2C2C, the default theme
 		OnStartup:        composerApp.Startup,
 		OnShutdown:       composerApp.Shutdown,
 		Bind: []interface{}{
