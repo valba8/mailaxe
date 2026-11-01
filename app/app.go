@@ -519,9 +519,6 @@ func (a *App) Startup(ctx context.Context) {
 		})
 	}
 
-	// Notification area icon (Windows only; no-op elsewhere)
-	a.startTray()
-
 	// Logging, paths, db open, migrations, and credential store are all
 	// initialized in Preflight (called from main.go before wails.Run). By
 	// the time Startup runs, a.paths, a.db, and a.credStore are non-nil.
@@ -538,6 +535,10 @@ func (a *App) Startup(ctx context.Context) {
 	a.settingsStore = settings.NewStore(db)
 	a.appStateStore = appstate.NewStore(db.DB)
 	a.imageAllowlistStore = settings.NewImageAllowlistStore(db)
+
+	// Notification area icon (Windows only; no-op elsewhere). Needs
+	// settingsStore for the menu language.
+	a.startTray()
 
 	// Restore the persisted window position (size/maximized are applied via
 	// wails.Run options in main.go; position can only be set post-creation).
