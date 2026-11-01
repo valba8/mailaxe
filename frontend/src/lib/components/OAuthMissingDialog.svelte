@@ -1,12 +1,10 @@
 <script lang="ts">
-  // Launch-time warning shown when one or more OAuth provider credentials
-  // weren't compiled into this build of Mailaxe (fork builds ship without them). Sign-in for the listed
-  // providers will silently fail otherwise. Acknowledged via the OK button;
-  // an optional "Don't show again" toggle persists the opt-out via the
-  // SetOAuthWarningDisabled setting in App.svelte.
+  // First-launch warning shown when one or more OAuth provider credentials
+  // weren't compiled into this build of Mailaxe (fork builds ship without
+  // them). Sign-in for the listed providers will silently fail otherwise.
+  // App.svelte records it as shown, so it appears only once.
   import * as AlertDialog from '$lib/components/ui/alert-dialog'
   import { Button } from '$lib/components/ui/button'
-  import Switch from '$lib/components/ui/switch/Switch.svelte'
   import Icon from '@iconify/svelte'
   // @ts-ignore - wailsjs path
   import { BrowserOpenURL } from '../../../wailsjs/runtime/runtime'
@@ -22,7 +20,7 @@
   interface Props {
     open: boolean
     oauthStatus: OAuthStatus
-    onDismiss: (dontShowAgain: boolean) => void
+    onDismiss: () => void
   }
   // Hold the dialog guard while open so global shortcuts (Ctrl+, etc.) don't
   // fire behind this modal. Effect cleanup releases it on close and on
@@ -35,8 +33,6 @@
 
 
   let { open = $bindable(false), oauthStatus, onDismiss }: Props = $props()
-
-  let dontShowAgain = $state(false)
 
   const INSTALL_URL = 'https://github.com/valba8/aerion#gmail-and-outlook-setup'
 
@@ -51,8 +47,7 @@
   }
 
   function handleOk() {
-    onDismiss(dontShowAgain)
-    dontShowAgain = false
+    onDismiss()
   }
 
   function openInstallDocs() {
@@ -92,11 +87,6 @@
     >
       https://github.com/valba8/aerion#gmail-and-outlook-setup
     </button>
-
-    <label class="flex items-center gap-3 text-sm mt-2">
-      <Switch bind:checked={dontShowAgain} />
-      <span>{$_('oauthMissing.dontShowAgain')}</span>
-    </label>
 
     <AlertDialog.Footer>
       <Button onclick={handleOk}>{$_('common.ok')}</Button>

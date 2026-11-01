@@ -879,8 +879,7 @@
     "title": "缺少 OAuth 認證資訊",
     "intro": "此 Mailaxe 版本未包含以下服務的 OAuth 憑證：",
     "implication": "Mailaxe 是 Aerion 的非官方分支，發布時不包含 OAuth 憑證。若要使用 Gmail 或 Outlook，請使用應用程式密碼透過 IMAP 新增帳戶，或在 設定 → 帳戶 → OAuth Credentials 填入你自己的 OAuth 用戶端。",
-    "installInstruction": "逐步設定指南：",
-    "dontShowAgain": "不再顯示"
+    "installInstruction": "逐步設定指南："
   },
   "dialog": {
     "deletePermanently": "永久刪除？",

@@ -879,8 +879,7 @@
     "title": "OAuth kimlik bilgileri eksik",
     "intro": "Bu Mailaxe sürümü şunlar için OAuth kimlik bilgilerini içermiyor:",
     "implication": "Mailaxe, Aerion’un resmî olmayan bir çatalıdır ve OAuth kimlik bilgileri olmadan dağıtılır. Gmail veya Outlook kullanmak için hesabı bir uygulama şifresiyle IMAP üzerinden ekleyin ya da Ayarlar → Hesaplar → OAuth Credentials bölümüne kendi OAuth istemcinizi girin.",
-    "installInstruction": "Adım adım kurulum kılavuzu:",
-    "dontShowAgain": "Bunu bir daha gösterme"
+    "installInstruction": "Adım adım kurulum kılavuzu:"
   },
   "dialog": {
     "deletePermanently": "Kalıcı Olarak Silinsin mi?",

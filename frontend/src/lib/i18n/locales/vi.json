@@ -879,8 +879,7 @@
     "title": "Thiếu thông tin xác thực OAuth",
     "intro": "Bản Mailaxe này không kèm thông tin xác thực OAuth cho:",
     "implication": "Mailaxe là một bản fork không chính thức của Aerion và được phân phối không kèm thông tin xác thực OAuth. Để dùng Gmail hoặc Outlook, hãy thêm tài khoản qua IMAP với mật khẩu ứng dụng, hoặc nhập ứng dụng OAuth của riêng bạn trong Cài đặt → Tài khoản → OAuth Credentials.",
-    "installInstruction": "Hướng dẫn thiết lập từng bước:",
-    "dontShowAgain": "Không hiển thị lại"
+    "installInstruction": "Hướng dẫn thiết lập từng bước:"
   },
   "dialog": {
     "deletePermanently": "Xóa vĩnh viễn?",

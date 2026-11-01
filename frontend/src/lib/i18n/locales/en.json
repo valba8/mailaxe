@@ -879,8 +879,7 @@
     "title": "OAuth credentials missing",
     "intro": "This build of Mailaxe does not include OAuth credentials for:",
     "implication": "Mailaxe is an unofficial fork of Aerion and is distributed without OAuth credentials. To use Gmail or Outlook, either add the account with IMAP and an app password, or enter your own OAuth client in Settings → Accounts → OAuth Credentials.",
-    "installInstruction": "Step-by-step setup guide:",
-    "dontShowAgain": "Don't show this again"
+    "installInstruction": "Step-by-step setup guide:"
   },
   "dialog": {
     "deletePermanently": "Delete Permanently?",

@@ -176,16 +176,9 @@
     setTimeout(() => QuitApp(), 100)
   }
 
-  // OAuth warning dismiss — optionally persists the opt-out so the warning
-  // stops firing on future launches even when credentials remain missing.
-  async function dismissOAuthWarning(dontShowAgain: boolean) {
-    if (dontShowAgain) {
-      try {
-        await SetOAuthWarningDisabled(true)
-      } catch (err) {
-        console.error('Failed to persist OAuth warning preference:', err)
-      }
-    }
+  // OAuth warning dismiss. The warning is already marked as shown when it is
+  // queued, so closing it only hides it.
+  function dismissOAuthWarning() {
     showOAuthMissingDialog = false
   }
 
@@ -384,11 +377,11 @@
     // Load image allowlist cache for synchronous checks in EmailBody
     loadImageAllowlist()
 
-    // OAuth credentials warning: surface missing provider creds on every
-    // launch unless the user has explicitly opted out. The dialog shows
-    // all three providers with a missing/present indicator, so the
-    // trigger fires when ANY of them is missing. Actual opening is
-    // deferred via $effect.
+    // OAuth credentials warning: Mailaxe builds never include OAuth creds,
+    // so the warning is shown once, on the first launch, and then recorded
+    // via SetOAuthWarningDisabled. The dialog shows all three providers with
+    // a missing/present indicator, so the trigger fires when ANY of them is
+    // missing. Actual opening is deferred via $effect.
     try {
       const status = await GetOAuthBuildStatus()
       const anyMissing = !status.google || !status.microsoft || !status.googleTesting
@@ -397,6 +390,7 @@
         if (!disabled) {
           oauthBuildStatus = status
           pendingOAuthWarning = true
+          await SetOAuthWarningDisabled(true)
         }
       }
     } catch (err) {
@@ -1731,9 +1725,8 @@
   </div>
 {/if}
 
-<!-- Launch-time OAuth credentials warning. Shows on every launch when one
-     or more provider credentials weren't compiled in, unless the user
-     opts out via "Don't show again". -->
+<!-- OAuth credentials warning. Shown once, on the first launch, when one or
+     more provider credentials weren't compiled in. -->
 <OAuthMissingDialog
   bind:open={showOAuthMissingDialog}
   oauthStatus={oauthBuildStatus}

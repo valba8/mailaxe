@@ -879,8 +879,7 @@
     "title": "OAuth 資格情報がありません",
     "intro": "この Mailaxe ビルドには次の OAuth 認証情報が含まれていません：",
     "implication": "Mailaxe は Aerion の非公式フォークで、OAuth 認証情報なしで配布されています。Gmail や Outlook を使うには、アプリパスワードを使って IMAP でアカウントを追加するか、設定 → アカウント → OAuth Credentials で独自の OAuth クライアントを入力してください。",
-    "installInstruction": "設定手順ガイド：",
-    "dontShowAgain": "今後表示しない"
+    "installInstruction": "設定手順ガイド："
   },
   "dialog": {
     "deletePermanently": "完全に削除しますか？",

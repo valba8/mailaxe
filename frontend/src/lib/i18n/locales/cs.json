@@ -879,8 +879,7 @@
     "title": "Chybí přihlašovací údaje OAuth",
     "intro": "Tato verze Mailaxe neobsahuje přihlašovací údaje OAuth pro:",
     "implication": "Mailaxe je neoficiální fork Aerionu a šíří se bez přihlašovacích údajů OAuth. Chcete-li používat Gmail nebo Outlook, přidejte účet přes IMAP s heslem aplikace, nebo zadejte vlastního klienta OAuth v Nastavení → Účty → OAuth Credentials.",
-    "installInstruction": "Podrobný návod k nastavení:",
-    "dontShowAgain": "Příště nezobrazovat"
+    "installInstruction": "Podrobný návod k nastavení:"
   },
   "dialog": {
     "deletePermanently": "Trvale smazat?",

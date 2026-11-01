@@ -879,8 +879,7 @@
     "title": "Brak obsługi OAuth",
     "intro": "Ta wersja Mailaxe nie zawiera danych logowania OAuth dla:",
     "implication": "Mailaxe to nieoficjalny fork Aeriona rozpowszechniany bez danych logowania OAuth. Aby korzystać z Gmaila lub Outlooka, dodaj konto przez IMAP z hasłem aplikacji albo wpisz własnego klienta OAuth w Ustawienia → Konta → OAuth Credentials.",
-    "installInstruction": "Instrukcja konfiguracji krok po kroku:",
-    "dontShowAgain": "Nie pokazuj ponownie"
+    "installInstruction": "Instrukcja konfiguracji krok po kroku:"
   },
   "dialog": {
     "deletePermanently": "Usunąć permanentnie?",

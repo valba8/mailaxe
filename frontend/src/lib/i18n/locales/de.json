@@ -879,8 +879,7 @@
     "title": "OAuth-Anmeldedaten fehlen",
     "intro": "Diese Mailaxe-Version enthält keine OAuth-Zugangsdaten für:",
     "implication": "Mailaxe ist ein inoffizieller Fork von Aerion und wird ohne OAuth-Zugangsdaten verteilt. Um Gmail oder Outlook zu nutzen, füge das Konto per IMAP mit einem App-Passwort hinzu oder trage deinen eigenen OAuth-Client unter Einstellungen → Konten → OAuth Credentials ein.",
-    "installInstruction": "Schritt-für-Schritt-Anleitung:",
-    "dontShowAgain": "Nicht mehr anzeigen"
+    "installInstruction": "Schritt-für-Schritt-Anleitung:"
   },
   "dialog": {
     "deletePermanently": "Endgültig löschen?",

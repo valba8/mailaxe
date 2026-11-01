@@ -879,8 +879,7 @@
     "title": "OAuth-legitimasjon mangler",
     "intro": "Denne versjonen av Mailaxe inneholder ikke OAuth-legitimasjon for:",
     "implication": "Mailaxe er en uoffisiell fork av Aerion og distribueres uten OAuth-legitimasjon. For å bruke Gmail eller Outlook kan du legge til kontoen via IMAP med et apppassord, eller oppgi din egen OAuth-klient under Innstillinger → Kontoer → OAuth Credentials.",
-    "installInstruction": "Trinnvis oppsettsveiledning:",
-    "dontShowAgain": "Ikke vis dette igjen"
+    "installInstruction": "Trinnvis oppsettsveiledning:"
   },
   "dialog": {
     "deletePermanently": "Slett permanent?",
