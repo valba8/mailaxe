@@ -421,7 +421,7 @@
       // Stale guard: user navigated away while we were fetching
       if (threadId !== tid) return
 
-      if (!updated?.messages || updated.messages.length === 0) {
+      if (!updated?.messages || updated.messages.length === 0 || leftFolder(updated, fid)) {
         dismissConversation(true)
         return
       }
@@ -522,6 +522,15 @@
         contentContainerRef.scrollTop = contentContainerRef.scrollHeight
       }
     }
+  }
+
+  /** True when the shown conversation had a message in folder `fid` and the
+   *  refreshed one has none left there. GetConversation also returns the
+   *  thread's Sent and Drafts copies, so after archiving or moving a thread
+   *  those remain and the result is not empty. */
+  function leftFolder(updated: messageModels.Conversation, fid: string): boolean {
+    const inFolder = (c: messageModels.Conversation | null) => !!c?.messages?.some(m => m.folderId === fid)
+    return inFolder(conversation) && !inFolder(updated)
   }
 
   /** Dismiss the current conversation from the viewer.
@@ -757,11 +766,21 @@
   // Re-fetch conversation to pick up flag changes (star, read) from external actions
   export async function refreshFlags() {
     if (!threadId || !folderId) return
+    const tid = threadId
+    const fid = folderId
     try {
-      const updated = await GetConversation(threadId, folderId)
+      const updated = await GetConversation(tid, fid)
+      if (threadId !== tid) return
       // Best-effort flag refresh: never replace a shown thread with an empty
       // one (the thread may have just been deleted/moved, #260).
       if (!updated?.messages?.length) return
+      // The thread was archived/moved out of this folder and only its Sent or
+      // Drafts copies remain: clear the viewer instead of showing just those.
+      // No auto-select here — the caller's action already handles that.
+      if (leftFolder(updated, fid)) {
+        dismissConversation(false)
+        return
+      }
       conversation = updated
     } catch {
       // Silent — flag refresh is best-effort
