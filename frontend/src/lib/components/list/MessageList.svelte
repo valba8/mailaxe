@@ -18,7 +18,7 @@
   import { cn } from '$lib/utils'
   import { Button } from '$lib/components/ui/button'
   // @ts-ignore - wailsjs bindings
-  import { GetConversations, GetConversationCount, SyncFolder, ForceSyncFolder, CancelFolderSync, SetMessageListSortOrder, GetUnifiedInboxConversations, GetUnifiedInboxCount, SearchConversations, SearchUnifiedInbox, GetSearchCount, GetSearchCountUnifiedInbox, GetFTSIndexStatus, IsFTSIndexing, Archive, Trash, DeletePermanently, EmptyTrash, EmptySpam, Undo, IMAPSearchFolder, FetchServerMessage } from '../../../../wailsjs/go/app/App'
+  import { GetConversations, GetConversationCount, GetMarkAllCoverage, SyncFolder, ForceSyncFolder, CancelFolderSync, SetMessageListSortOrder, GetUnifiedInboxConversations, GetUnifiedInboxCount, SearchConversations, SearchUnifiedInbox, GetSearchCount, GetSearchCountUnifiedInbox, GetFTSIndexStatus, IsFTSIndexing, Archive, Trash, DeletePermanently, EmptyTrash, EmptySpam, Undo, IMAPSearchFolder, FetchServerMessage } from '../../../../wailsjs/go/app/App'
   import { toasts } from '$lib/stores/toast'
   import { _ } from '$lib/i18n'
   import { ConfirmDialog } from '$lib/components/ui/confirm-dialog'
@@ -1047,6 +1047,25 @@
     conversations.reduce((sum, c) => sum + (c.unreadCount || 0), 0)
   )
 
+  // Unread messages the server reports for this folder that are older than the
+  // sync period, so they're never in the list. The sidebar badge uses the
+  // server count and includes them; the list says so instead of looking wrong.
+  let hiddenUnread = $state(0)
+  $effect(() => {
+    const fid = isUnifiedView ? null : folderId
+    const serverUnread = fid && accountId ? accountStore.getFolder(accountId, fid)?.unreadCount ?? 0 : 0
+    void unreadCount // re-check when local read state changes
+    if (!fid || serverUnread === 0) {
+      hiddenUnread = 0
+      return
+    }
+    let cancelled = false
+    GetMarkAllCoverage(fid, true)
+      .then((n) => { if (!cancelled) hiddenUnread = n })
+      .catch(() => { if (!cancelled) hiddenUnread = 0 })
+    return () => { cancelled = true }
+  })
+
   // Reference to the list container for scrolling
   let listContainerRef = $state<HTMLDivElement | null>(null)
 
@@ -1668,6 +1687,14 @@
           style="width: {indexProgress}%"
         ></div>
       </div>
+    </div>
+  {/if}
+
+  <!-- Unread mail older than the sync period (counted in the sidebar badge, not listed) -->
+  {#if hiddenUnread > 0 && !isSearchMode}
+    <div class="flex items-center gap-2 px-4 py-1.5 text-xs text-muted-foreground bg-muted/50 border-b border-border">
+      <Icon icon="mdi:information-outline" class="w-4 h-4 shrink-0" />
+      <span>{$_('messageList.hiddenUnread', { values: { count: hiddenUnread } })}</span>
     </div>
   {/if}
 

@@ -64,6 +64,7 @@
     "searchMessages": "メッセージを検索...",
     "noMessages": "このフォルダにメッセージはありません",
     "olderThanSyncPeriod": "このフォルダにはサーバー上に同期期間より古いメッセージが {count} 件あります",
+    "hiddenUnread": "同期期間より古く、ここに表示されない未読メッセージ: {count} 件",
     "selectFolder": "メッセージを表示するにはフォルダを選択してください",
     "emptyTrash": "ゴミ箱を空にする",
     "emptySpam": "迷惑メールを空にする",

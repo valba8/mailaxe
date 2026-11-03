@@ -64,6 +64,7 @@
     "searchMessages": "Tìm kiếm thư...",
     "noMessages": "Không có thư trong thư mục này",
     "olderThanSyncPeriod": "Thư mục này có {count} thư trên máy chủ cũ hơn khoảng thời gian đồng bộ của bạn",
+    "hiddenUnread": "Thư chưa đọc cũ hơn khoảng thời gian đồng bộ, không hiển thị ở đây: {count}",
     "selectFolder": "Chọn thư mục để xem thư",
     "emptyTrash": "Xóa sạch thùng rác",
     "emptySpam": "Xóa sạch thư rác",

@@ -64,6 +64,7 @@
     "searchMessages": "Search messages...",
     "noMessages": "No messages in this folder",
     "olderThanSyncPeriod": "This folder has {count} messages on the server that are older than your sync period",
+    "hiddenUnread": "Unread messages older than your sync period, not shown here: {count}",
     "selectFolder": "Select a folder to view messages",
     "emptyTrash": "Empty Trash",
     "emptySpam": "Empty Spam",

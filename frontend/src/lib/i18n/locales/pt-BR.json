@@ -64,6 +64,7 @@
     "searchMessages": "Pesquisar mensagens...",
     "noMessages": "Nenhuma mensagem nesta pasta",
     "olderThanSyncPeriod": "Esta pasta tem {count} mensagens no servidor mais antigas que o seu período de sincronização",
+    "hiddenUnread": "Mensagens não lidas mais antigas que o período de sincronização, não exibidas aqui: {count}",
     "selectFolder": "Selecione uma pasta para ver as mensagens",
     "emptyTrash": "Esvaziar lixeira",
     "emptySpam": "Esvaziar spam",

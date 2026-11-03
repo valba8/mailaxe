@@ -64,6 +64,7 @@
     "searchMessages": "İletilerde ara...",
     "noMessages": "Bu klasörde ileti yok",
     "olderThanSyncPeriod": "Bu klasörde sunucuda senkronizasyon döneminizden daha eski {count} ileti var",
+    "hiddenUnread": "Senkronizasyon döneminden eski, burada gösterilmeyen okunmamış iletiler: {count}",
     "selectFolder": "İletileri görüntülemek için bir klasör seçin",
     "emptyTrash": "Çöp Kutusunu Boşalt",
     "emptySpam": "Spam'i Boşalt",

@@ -64,6 +64,7 @@
     "searchMessages": "Szukaj wiadomości...",
     "noMessages": "Brak wiadomości w tym folderze",
     "olderThanSyncPeriod": "Ten folder zawiera {count} wiadomości na serwerze starszych niż okres synchronizacji",
+    "hiddenUnread": "Nieprzeczytane wiadomości starsze niż okres synchronizacji, niewidoczne tutaj: {count}",
     "selectFolder": "Wybierz folder aby zobaczyć wiadomości",
     "emptyTrash": "Opróżnij kosz",
     "emptySpam": "Opróżnij spam",

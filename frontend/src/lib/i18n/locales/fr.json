@@ -64,6 +64,7 @@
     "searchMessages": "Rechercher des messages...",
     "noMessages": "Aucun message dans ce dossier",
     "olderThanSyncPeriod": "Ce dossier contient {count} messages sur le serveur antérieurs à votre période de synchronisation",
+    "hiddenUnread": "Messages non lus antérieurs à votre période de synchronisation, non affichés ici : {count}",
     "selectFolder": "Sélectionnez un dossier pour voir les messages",
     "emptyTrash": "Vider la corbeille",
     "emptySpam": "Vider le spam",

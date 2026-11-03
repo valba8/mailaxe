@@ -64,6 +64,7 @@
     "searchMessages": "搜索邮件...",
     "noMessages": "此文件夹中没有邮件",
     "olderThanSyncPeriod": "此文件夹中有 {count} 封早于同步时段设置的邮件在服务器上",
+    "hiddenUnread": "早于同步时段、未在此显示的未读邮件：{count} 封",
     "selectFolder": "选择文件夹以查看邮件",
     "emptyTrash": "清空回收站",
     "emptySpam": "清空垃圾邮件",

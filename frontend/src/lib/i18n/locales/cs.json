@@ -64,6 +64,7 @@
     "searchMessages": "Hledat zprávy...",
     "noMessages": "V této složce nejsou žádné zprávy",
     "olderThanSyncPeriod": "Tato složka obsahuje {count} zpráv na serveru, které jsou starší než vaše období synchronizace",
+    "hiddenUnread": "Nepřečtené zprávy starší než období synchronizace, zde nezobrazené: {count}",
     "selectFolder": "Vyberte složku pro zobrazení zpráv",
     "emptyTrash": "Vyprázdnit koš",
     "emptySpam": "Vyprázdnit spam",

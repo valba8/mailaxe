@@ -64,6 +64,7 @@
     "searchMessages": "Nachrichten suchen...",
     "noMessages": "Keine Nachrichten in diesem Ordner",
     "olderThanSyncPeriod": "Dieser Ordner enthält {count} Nachrichten auf dem Server, die älter als Ihr Synchronisierungszeitraum sind",
+    "hiddenUnread": "Ungelesene Nachrichten, die älter als der Synchronisierungszeitraum sind und hier nicht angezeigt werden: {count}",
     "selectFolder": "Ordner auswählen, um Nachrichten anzuzeigen",
     "emptyTrash": "Papierkorb leeren",
     "emptySpam": "Spam leeren",

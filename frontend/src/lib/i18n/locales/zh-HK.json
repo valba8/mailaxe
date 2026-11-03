@@ -64,6 +64,7 @@
     "searchMessages": "搜尋郵件...",
     "noMessages": "此資料夾中沒有郵件",
     "olderThanSyncPeriod": "此資料夾中有 {count} 封早於同步期間設定的郵件在伺服器上",
+    "hiddenUnread": "早於同步期間、未在此顯示的未讀郵件：{count} 封",
     "selectFolder": "選擇資料夾以檢視郵件",
     "emptyTrash": "清空垃圾桶",
     "emptySpam": "清空垃圾郵件",

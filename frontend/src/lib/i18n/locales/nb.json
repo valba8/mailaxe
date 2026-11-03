@@ -64,6 +64,7 @@
     "searchMessages": "Søk i meldinger…",
     "noMessages": "Ingen meldinger i denne mappen",
     "olderThanSyncPeriod": "Denne mappen har {count} meldinger på serveren som er eldre enn synkroniseringsperioden din",
+    "hiddenUnread": "Uleste meldinger eldre enn synkroniseringsperioden, vises ikke her: {count}",
     "selectFolder": "Velg en mappe for å se meldinger",
     "emptyTrash": "Tøm papirkurven",
     "emptySpam": "Tøm søppelpost",
