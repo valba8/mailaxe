@@ -382,7 +382,7 @@ type StartupDialogInfo struct {
 // Other backends show the URL as selectable plain text and use the
 // ActionURL field to drive an "Open Docs" button.
 func StartupDialogInfoFor(err error) StartupDialogInfo {
-	const docsRollbackURL = "https://github.com/valba8/aerion/blob/mailaxe/docs/SQL_ROLLBACK.md"
+	const docsRollbackURL = "https://github.com/valba8/mailaxe/blob/main/docs/SQL_ROLLBACK.md"
 
 	var schemaTooNew *database.ErrSchemaTooNew
 	if errors.As(err, &schemaTooNew) {

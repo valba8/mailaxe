@@ -3,7 +3,7 @@
 **Mailaxe** is an unofficial fork of [Aerion](https://github.com/hkdb/aerion), the open source, lightweight desktop email client. It keeps everything Aerion does and adds a handful of optional tweaks to the message viewer and the message list.
 
 > [!IMPORTANT]
-> Mailaxe is **not** affiliated with, sponsored by or endorsed by the Aerion project. Please report Mailaxe problems in [this repository's issues](https://github.com/valba8/aerion/issues), not to the Aerion developers.
+> Mailaxe is **not** affiliated with, sponsored by or endorsed by the Aerion project. Please report Mailaxe problems in [this repository's issues](https://github.com/valba8/mailaxe/issues), not to the Aerion developers.
 
 <!-- Screenshot: replace with docs/images/mailaxe.png once available -->
 
@@ -32,7 +32,7 @@ Other changes:
 
 ## Download
 
-Get the latest build from the [Releases page](https://github.com/valba8/aerion/releases):
+Get the latest build from the [Releases page](https://github.com/valba8/mailaxe/releases):
 
 - **Windows:** `Mailaxe-windows-setup-amd64.exe` (installer) or `Mailaxe-windows-amd64.exe` (portable).
 - **Linux:** `mailaxe-linux-amd64.tar.gz` (binary; needs `webkit2gtk-4.1`).

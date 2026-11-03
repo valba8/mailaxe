@@ -16,11 +16,11 @@ There are two issue templates:
 - **Bug report**: something doesn't work as expected.
 - **Feature or UI change**: a new feature, an improvement to an existing one, or a visual/aesthetic change.
 
-Search the [existing issues](https://github.com/valba8/aerion/issues) first. Opening an issue before a pull request is optional; it's useful when you want feedback on an idea before spending time on it.
+Search the [existing issues](https://github.com/valba8/mailaxe/issues) first. Opening an issue before a pull request is optional; it's useful when you want feedback on an idea before spending time on it.
 
 ## Pull Requests
 
-1. Fork the repository and create a branch from `mailaxe` (the default branch). Use one branch per change: `fix/...` for bug fixes, `feature/...` for features, `ui/...` for visual changes.
+1. Fork the repository and create a branch from `main`. Use one branch per change: `fix/...` for bug fixes, `feature/...` for features, `ui/...` for visual changes.
 2. Keep each pull request focused on **one** change. Several small PRs are reviewed (and merged) much faster than one big one.
 3. Fill in the pull request template: what it changes, why, how you tested it, and screenshots for anything visual.
 4. Make sure the checks below pass.
@@ -194,7 +194,7 @@ cd frontend && npm test
 ### Development Setup
 
 ```bash
-git clone https://github.com/valba8/aerion.git mailaxe
+git clone https://github.com/valba8/mailaxe.git
 cd mailaxe
 cd frontend && npm install && cd ..
 wails dev

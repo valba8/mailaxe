@@ -16,7 +16,7 @@ Modifications
 -------------
 Mailaxe modifies the original Aerion source code. Every change made to the
 Aerion files is recorded in the Git history of the Mailaxe repository
-(https://github.com/valba8/aerion), starting after Aerion's v0.3.6-dev
+(https://github.com/valba8/mailaxe), starting after Aerion's v0.3.6-dev
 branch. In summary, Mailaxe:
 
   - renames the application to Mailaxe and gives it its own data directory,

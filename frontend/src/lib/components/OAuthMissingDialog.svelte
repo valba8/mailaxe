@@ -34,7 +34,7 @@
 
   let { open = $bindable(false), oauthStatus, onDismiss }: Props = $props()
 
-  const INSTALL_URL = 'https://github.com/valba8/aerion#gmail-and-outlook-setup'
+  const INSTALL_URL = 'https://github.com/valba8/mailaxe#gmail-and-outlook-setup'
 
   function iconFor(present: boolean): string {
     if (present) return 'lucide:check'
@@ -85,7 +85,7 @@
       class="text-sm text-primary hover:underline break-all text-left focus:outline-none focus-visible:outline-none focus:ring-0"
       onclick={openInstallDocs}
     >
-      https://github.com/valba8/aerion#gmail-and-outlook-setup
+      https://github.com/valba8/mailaxe#gmail-and-outlook-setup
     </button>
 
     <AlertDialog.Footer>

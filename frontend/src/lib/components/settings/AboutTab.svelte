@@ -28,11 +28,11 @@
     }
   })
 
-  const PRIVACY_URL = 'https://github.com/valba8/aerion/blob/mailaxe/docs/PRIVACY.md'
-  const TERMS_URL = 'https://github.com/valba8/aerion/blob/mailaxe/docs/TERMS.md'
+  const PRIVACY_URL = 'https://github.com/valba8/mailaxe/blob/main/docs/PRIVACY.md'
+  const TERMS_URL = 'https://github.com/valba8/mailaxe/blob/main/docs/TERMS.md'
   // Mailaxe is a derivative of Aerion (Apache 2.0); credit the original project
   const UPSTREAM_URL = 'https://github.com/hkdb/aerion'
-  const LICENSE_URL = 'https://github.com/valba8/aerion/blob/mailaxe/LICENSE'
+  const LICENSE_URL = 'https://github.com/valba8/mailaxe/blob/main/LICENSE'
 
   function openWebsite() {
     if (appInfo?.website) {

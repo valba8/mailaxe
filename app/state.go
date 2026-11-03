@@ -44,7 +44,7 @@ func (a *App) GetAppInfo() AppInfo {
 		Name:        "Mailaxe",
 		Version:     Version,
 		Description: "An Open Source Lightweight E-Mail Client",
-		Website:     "https://github.com/valba8/aerion",
+		Website:     "https://github.com/valba8/mailaxe",
 		License:     "Apache 2.0",
 	}
 }

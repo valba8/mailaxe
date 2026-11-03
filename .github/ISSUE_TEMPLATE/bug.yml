@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please search [existing issues](https://github.com/valba8/aerion/issues?q=label%3Abug) first. Pull requests with a fix are welcome, with or without an issue.
+        Please search [existing issues](https://github.com/valba8/mailaxe/issues?q=label%3Abug) first. Pull requests with a fix are welcome, with or without an issue.
 
   - type: dropdown
     id: os

@@ -6,7 +6,7 @@
 
 ## Introduction
 
-Mailaxe ("we," "our," or "the Application") is an open-source desktop email client. Mailaxe source code and releases are hosted at [https://github.com/valba8/aerion](https://github.com/valba8/aerion). This Privacy Policy explains how Mailaxe handles your information. Because Mailaxe is a desktop application that runs entirely on your computer, our approach to privacy is fundamentally different from cloud-based services.
+Mailaxe ("we," "our," or "the Application") is an open-source desktop email client. Mailaxe source code and releases are hosted at [https://github.com/valba8/mailaxe](https://github.com/valba8/mailaxe). This Privacy Policy explains how Mailaxe handles your information. Because Mailaxe is a desktop application that runs entirely on your computer, our approach to privacy is fundamentally different from cloud-based services.
 
 **Key Point:** Mailaxe does not operate any servers that collect, store, or process your data. All your information stays on your device.
 
@@ -108,10 +108,10 @@ We may update this Privacy Policy from time to time. Changes will be reflected i
 
 ## Open Source Transparency
 
-Mailaxe is open-source software. You can review exactly how we handle your data by examining our source code at [https://github.com/valba8/aerion](https://github.com/valba8/aerion).
+Mailaxe is open-source software. You can review exactly how we handle your data by examining our source code at [https://github.com/valba8/mailaxe](https://github.com/valba8/mailaxe).
 
 ## Contact Us
 
 If you have questions about this Privacy Policy, please contact us at:
 
-**GitHub Issues:** [https://github.com/valba8/aerion/issues](https://github.com/valba8/aerion/issues)
+**GitHub Issues:** [https://github.com/valba8/mailaxe/issues](https://github.com/valba8/mailaxe/issues)

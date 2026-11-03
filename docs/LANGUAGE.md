@@ -1,7 +1,7 @@
 # Contributing Translations
 
 > [!NOTE]
-> **Mailaxe:** this guide comes from Aerion. In Mailaxe you don't need to claim a language with an issue first: open the pull request directly against the `mailaxe` branch of [valba8/aerion](https://github.com/valba8/aerion). The checklist and file list below still apply (Flatpak metainfo steps are optional, since Mailaxe doesn't ship a Flatpak).
+> **Mailaxe:** this guide comes from Aerion. In Mailaxe you don't need to claim a language with an issue first: open the pull request directly against the `main` branch of [valba8/mailaxe](https://github.com/valba8/mailaxe). The checklist and file list below still apply (Flatpak metainfo steps are optional, since Mailaxe doesn't ship a Flatpak).
 
 If your language already exists in the code base and you are looking to improve the existing translation, comment in the existing contribution issue of your language to propose the change. With verification of at least one participant in the issue, submit a PR. If you are unfamiliar or uncomfortable with git ops, suggestions to see if someone will pick it up are also welcomed.
 

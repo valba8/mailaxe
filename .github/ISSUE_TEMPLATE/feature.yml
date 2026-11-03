@@ -5,9 +5,9 @@ body:
   - type: markdown
     attributes:
       value: |
-        Please search [existing issues](https://github.com/valba8/aerion/issues?q=label%3Aenhancement) first.
+        Please search [existing issues](https://github.com/valba8/mailaxe/issues?q=label%3Aenhancement) first.
 
-        You don't need an issue to send a pull request: if you have already implemented it, open the PR directly. New features and visual changes should come with a **Settings** option that is **off by default** (see [CONTRIBUTING](https://github.com/valba8/aerion/blob/mailaxe/CONTRIBUTING.md#optional-features-need-a-setting)).
+        You don't need an issue to send a pull request: if you have already implemented it, open the PR directly. New features and visual changes should come with a **Settings** option that is **off by default** (see [CONTRIBUTING](https://github.com/valba8/mailaxe/blob/main/CONTRIBUTING.md#optional-features-need-a-setting)).
 
   - type: dropdown
     id: kind

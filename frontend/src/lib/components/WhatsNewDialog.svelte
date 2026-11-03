@@ -31,7 +31,7 @@
     return () => dialogGuardClose()
   })
 
-  const CHANGELOG_URL = 'https://github.com/valba8/aerion/releases'
+  const CHANGELOG_URL = 'https://github.com/valba8/mailaxe/releases'
 
   // Open external links via the backend OpenURL: on Linux it tries the OpenURI
   // portal first, so links work inside the Flatpak sandbox (where xdg-open —
@@ -86,7 +86,7 @@
             class="text-primary hover:underline break-all focus:outline-none focus-visible:outline-none focus:ring-0"
             onclick={() => openExternal(CHANGELOG_URL)}
           >
-            https://github.com/valba8/aerion/releases
+            https://github.com/valba8/mailaxe/releases
           </button>
         </p>
       </div>

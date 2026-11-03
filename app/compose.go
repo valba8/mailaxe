@@ -159,7 +159,7 @@ func (ops *composeOps) getIMAPCredentials(ctx context.Context, accountID string)
 	config.SendID = acc.IMAPRequireID
 	config.ClientName = "Mailaxe"
 	config.ClientVersion = Version
-	config.ClientVendor = "github.com/hkdb/aerion"
+	config.ClientVendor = "github.com/valba8/mailaxe"
 
 	switch acc.AuthType {
 	case account.AuthOAuth2:

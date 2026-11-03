@@ -10,7 +10,7 @@ By downloading, installing, or using Mailaxe ("the Application"), you agree to b
 
 ## Description of Service
 
-Mailaxe is an open-source desktop email client. Mailaxe source code and releases are hosted at [https://github.com/valba8/aerion](https://github.com/valba8/aerion). Mailaxe allows you to:
+Mailaxe is an open-source desktop email client. Mailaxe source code and releases are hosted at [https://github.com/valba8/mailaxe](https://github.com/valba8/mailaxe). Mailaxe allows you to:
 
 - Connect to email accounts via IMAP/SMTP
 - Send and receive emails
@@ -29,7 +29,7 @@ Mailaxe is a derivative work of Aerion (Copyright 2024-2025 Aerion Contributors)
 - Modify the software and distribute your modifications
 - Use the software commercially
 
-Subject to the conditions of the Apache License 2.0, including preservation of copyright notices and disclaimers. The full license text is available in the LICENSE file included with the Application and at [https://github.com/valba8/aerion](https://github.com/valba8/aerion).
+Subject to the conditions of the Apache License 2.0, including preservation of copyright notices and disclaimers. The full license text is available in the LICENSE file included with the Application and at [https://github.com/valba8/mailaxe](https://github.com/valba8/mailaxe).
 
 ## User Responsibilities
 
@@ -126,4 +126,4 @@ These Terms constitute the entire agreement between you and the developers of Ma
 
 If you have questions about these Terms of Use, please contact us at:
 
-**GitHub Issues:** [https://github.com/valba8/aerion/issues](https://github.com/valba8/aerion/issues)
+**GitHub Issues:** [https://github.com/valba8/mailaxe/issues](https://github.com/valba8/mailaxe/issues)
