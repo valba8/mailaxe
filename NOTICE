@@ -24,8 +24,17 @@ branch. In summary, Mailaxe:
   - ships without OAuth client credentials (users provide their own);
   - adds optional message viewer and message list features (collapsible
     quoted text, checkbox toolbar toggle, account color strip, unread accent
-    under the avatar, hover quick actions, View Source in the context menu)
-    and fixes "Collapse all".
+    under the avatar, hover quick actions, date groups, View Source in the
+    context menu) and fixes "Collapse all";
+  - adds undo send and a notification area icon on Windows;
+  - shows a thread's archived messages when it returns to the inbox, and
+    notes unread mail older than the sync period in the message list;
+  - changes first-launch defaults, the icons and notification styling, moves
+    folder sync to the folder context menu, and removes the first-run Terms
+    dialog;
+  - fixes plain-text signatures, keyboard focus in the plain-text composer,
+    and viewer and list behavior for archived threads and threads present in
+    two accounts.
 
 Trademarks
 ----------

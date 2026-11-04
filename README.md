@@ -5,7 +5,7 @@
 > [!IMPORTANT]
 > Mailaxe is **not** affiliated with, sponsored by or endorsed by the Aerion project. Please report Mailaxe problems in [this repository's issues](https://github.com/valba8/mailaxe/issues), not to the Aerion developers.
 
-<!-- Screenshot: replace with docs/images/mailaxe.png once available -->
+![Mailaxe main window with the unified inbox, the message list grouped by date and a conversation open](docs/images/mailaxe.jpg)
 
 ## What's different from Aerion
 
@@ -27,8 +27,20 @@ Other changes:
 - The vertical border to the left of the message body is gone.
 - **Undo send**: after clicking Send, the composer closes and a notification counts down 6 seconds (configurable in Settings → Composer, 0 to turn off) with **Undo**, which reopens the message, and **Send now**. The detached composer window shows the countdown inside the window.
 - **Notification area icon on Windows**: click it to show the window (handy with "Run in background"); right-click for Open and Quit.
+- **Archived messages stay in the conversation**: when a new reply brings an archived conversation back to the inbox, its earlier messages are still shown. Archiving, deleting or marking it as spam from the viewer leaves those messages where they are.
+- **Notice for older unread mail**: the sidebar badge counts all unread mail on the server, while the list only shows what is inside the sync period. The list now says how many unread messages are older and not shown.
+- **Roomier message list header**: the sync button is gone, since sync is at the bottom of the sidebar. **Sync Folder** and **Force Re-sync** are in each folder's right-click menu, and Ctrl+Shift+S still syncs the current folder.
+- **Unread dot next to the sender**: when it isn't under the avatar, the dot sits just before the sender's name, so the account color strip doesn't hide it.
+- **Notifications follow the theme** instead of using fixed green and red backgrounds, and a failed archive says why.
+- **No first-run Terms dialog**, and the missing OAuth credentials warning appears only on the first launch.
 - Different first-launch defaults: **Yaru (Dark)** theme, **native title bar**, dark composer body, contact photos and the unread accent in the message list, and messages marked as read **immediately** when opened. Everything can be changed in Settings.
 - Mailaxe uses its **own data folder, keyring entries and single-instance lock**, so it can be installed next to Aerion without sharing accounts or settings.
+
+Fixes:
+
+- The signature is inserted in plain-text compose mode, and Tab from the subject moves to the plain-text body.
+- The viewer closes when a conversation you replied to is archived or moved, instead of keeping only your reply on screen.
+- A conversation between two of your own accounts appears as two independent rows in the unified inbox: selecting, checking or acting on one doesn't affect the other.
 
 ## Download
 

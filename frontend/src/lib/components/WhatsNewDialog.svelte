@@ -70,11 +70,16 @@
           <li>📅 Message list grouped by date (Today, Yesterday, This week...)</li>
           <li>⚡ Archive and Delete quick actions when hovering a message</li>
           <li>↩️ Undo send: a few seconds to take back a message after clicking Send</li>
+          <li>🖥️ Notification area icon on Windows</li>
+          <li>📦 Archived messages stay in the conversation when a new reply brings it back to the inbox</li>
+          <li>📬 A notice in the list when a folder has unread mail older than the sync period</li>
+          <li>🔄 Folder sync moved to each folder's right-click menu, leaving more room in the list header</li>
+          <li>🌓 Notifications that follow the selected theme</li>
           <li>🧭 View Source in the message right-click menu</li>
           <li>🐛 "Collapse all" now collapses every message</li>
         </ul>
 
-        <p>⚙️ The new options are on by default: turn them off in Settings → General.</p>
+        <p>⚙️ The new options are on by default: turn them off in Settings → General. The undo send delay is in Settings → Composer.</p>
 
         <p>🔑 Mailaxe ships without OAuth credentials. To use Gmail or Outlook, add the account with IMAP and an app password, or enter your own OAuth client in Settings → Accounts.</p>
 
