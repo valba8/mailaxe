@@ -99,6 +99,7 @@
 
   // State
   let conversation = $state<messageModels.Conversation | null>(null)
+  let dismissedThreadId: string | null = null
   // Per-message EmailBody refs, used to pull each rendered body for printing.
   let emailBodyRefs: Record<string, { getPrintableHtml(): Promise<string> }> = {}
   let loading = $state(false)
@@ -421,10 +422,11 @@
       // Stale guard: user navigated away while we were fetching
       if (threadId !== tid) return
 
-      if (!updated?.messages || updated.messages.length === 0 || leftFolder(updated, fid)) {
+      if (goneFromFolder(updated, fid)) {
         dismissConversation(true)
         return
       }
+      if (!updated?.messages) return
       if (!conversation?.messages) return
 
       // Compare message count and latest message ID to detect actual changes
@@ -477,15 +479,16 @@
       // Stale guard: user navigated away while we were fetching
       if (threadId !== tid) return
 
-      // A thread with no messages is gone (e.g. just deleted/moved; the
-      // backend returns an empty conversation, not null). Showing it renders
-      // a blank "(No subject)" pane — dismiss and let the list select the
-      // next row instead (#260).
-      if (!result?.messages?.length) {
+      // A thread with no messages here is gone (e.g. just deleted/moved; the
+      // backend returns an empty conversation, not null, or only the thread's
+      // Sent and Drafts copies). Dismiss and let the list select the next row
+      // instead of rendering a blank pane (#260) or just those copies.
+      if (goneFromFolder(result, fid)) {
         dismissConversation(true)
         return
       }
 
+      dismissedThreadId = null
       conversation = result
 
       // Auto-expand unread messages and the last message
@@ -524,13 +527,12 @@
     }
   }
 
-  /** True when the shown conversation had a message in folder `fid` and the
-   *  refreshed one has none left there. GetConversation also returns the
-   *  thread's Sent and Drafts copies, so after archiving or moving a thread
-   *  those remain and the result is not empty. */
-  function leftFolder(updated: messageModels.Conversation, fid: string): boolean {
-    const inFolder = (c: messageModels.Conversation | null) => !!c?.messages?.some(m => m.folderId === fid)
-    return inFolder(conversation) && !inFolder(updated)
+  /** True when the thread has no message left in folder `fid`. The list only
+   *  offers threads with a message there, and GetConversation also returns the
+   *  thread's Sent and Drafts copies, so those can remain after archiving or
+   *  moving it. */
+  function goneFromFolder(conv: messageModels.Conversation | null, fid: string): boolean {
+    return !conv?.messages?.some(m => m.folderId === fid)
   }
 
   /** Dismiss the current conversation from the viewer.
@@ -542,7 +544,10 @@
       markAsReadTimer = null
     }
     conversation = null
-    if (autoSelectNext) {
+    // Later syncs of the same gone thread land here again: only advance once.
+    const alreadyDismissed = dismissedThreadId === threadId
+    dismissedThreadId = threadId
+    if (autoSelectNext && !alreadyDismissed) {
       onActionComplete?.(true)
     }
   }
@@ -777,7 +782,7 @@
       // The thread was archived/moved out of this folder and only its Sent or
       // Drafts copies remain: clear the viewer instead of showing just those.
       // No auto-select here — the caller's action already handles that.
-      if (leftFolder(updated, fid)) {
+      if (goneFromFolder(updated, fid)) {
         dismissConversation(false)
         return
       }
