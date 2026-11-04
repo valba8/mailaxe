@@ -1958,6 +1958,7 @@ export namespace message {
 	    pgpSignerKeyId?: string;
 	    pgpEncrypted?: boolean;
 	    hasPGP?: boolean;
+	    contextOnly?: boolean;
 	    // Go type: time
 	    receivedAt: any;
 	
@@ -2007,6 +2008,7 @@ export namespace message {
 	        this.pgpSignerKeyId = source["pgpSignerKeyId"];
 	        this.pgpEncrypted = source["pgpEncrypted"];
 	        this.hasPGP = source["hasPGP"];
+	        this.contextOnly = source["contextOnly"];
 	        this.receivedAt = this.convertValues(source["receivedAt"], null);
 	    }
 	

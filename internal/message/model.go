@@ -73,6 +73,10 @@ type Message struct {
 	PGPEncrypted bool `json:"pgpEncrypted,omitempty"` // Whether the message is PGP encrypted
 	HasPGP       bool `json:"hasPGP,omitempty"`       // Computed: pgp_raw_body IS NOT NULL
 
+	// Set by GetConversation on a thread's archived messages outside the viewed
+	// folder: shown for context, left out of conversation-wide moves
+	ContextOnly bool `json:"contextOnly,omitempty"`
+
 	// Timestamps
 	ReceivedAt time.Time `json:"receivedAt"`
 }

@@ -820,9 +820,15 @@
     }
   }
 
+  // Messages a conversation-wide move applies to: not the ones shown only for
+  // context because they were already archived.
+  function movableMessageIds(messages: messageModels.Message[]): string[] {
+    return messages.filter(m => !m.contextOnly).map(m => m.id)
+  }
+
   async function handleArchive() {
     if (!conversation?.messages) return
-    const messageIds = conversation.messages.map(m => m.id)
+    const messageIds = movableMessageIds(conversation.messages)
 
     try {
       await Archive(messageIds)
@@ -844,7 +850,7 @@
       showDeleteConfirm = true
     } else {
       // Move to trash (undoable)
-      const messageIds = conversation.messages.map(m => m.id)
+      const messageIds = movableMessageIds(conversation.messages)
       try {
         const movedToTrash = await Trash(messageIds)
         const toastMsg = movedToTrash ? $_('toast.movedToTrash') : $_('toast.deletedFromFolder')
@@ -860,7 +866,7 @@
 
   async function handleConfirmPermanentDelete() {
     if (!conversation?.messages) return
-    const messageIds = conversation.messages.map(m => m.id)
+    const messageIds = movableMessageIds(conversation.messages)
 
     try {
       await DeletePermanently(messageIds)
@@ -907,7 +913,7 @@
 
   async function handleSpam() {
     if (!conversation?.messages) return
-    const messageIds = conversation.messages.map(m => m.id)
+    const messageIds = movableMessageIds(conversation.messages)
 
     try {
       if (isSpamFolder) {

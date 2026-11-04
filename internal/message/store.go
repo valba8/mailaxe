@@ -1575,9 +1575,14 @@ func (s *Store) GetConversation(threadID, folderID string) (*Conversation, error
 		c.LatestDate = parseTimeString(latestDateStr.String)
 	}
 
-	// Get messages in the thread from current folder + Sent + Drafts
-	// This gives full conversation context without cross-folder bleed
+	// Get messages in the thread from current folder + Sent + Drafts, plus what
+	// was archived, so a reply that brings an archived thread back to the inbox
+	// doesn't hide its earlier messages. Trash and Spam keep the narrow scope.
 	// Exclude messages in Trash folder unless we're viewing Trash
+	messagesFolderFilter := folderFilter
+	if folderType != "trash" && folderType != "spam" {
+		messagesFolderFilter = "AND (m.folder_id = ? OR f.folder_type IN ('sent', 'drafts', 'archive', 'all'))"
+	}
 	messagesQuery := fmt.Sprintf(`
 		SELECT m.id, m.account_id, m.folder_id, m.uid, m.message_id, m.in_reply_to, m.references_list, m.thread_id,
 		       m.subject, m.from_name, m.from_email, m.to_list, m.cc_list, m.bcc_list, m.reply_to, m.date,
@@ -1588,7 +1593,7 @@ func (s *Store) GetConversation(threadID, folderID string) (*Conversation, error
 		       m.smime_encrypted, (m.smime_raw_body IS NOT NULL) as has_smime,
 		       m.pgp_status, m.pgp_signer_email, m.pgp_signer_key_id,
 		       m.pgp_encrypted, (m.pgp_raw_body IS NOT NULL) as has_pgp,
-		       m.received_at
+		       m.received_at, f.folder_type
 		FROM messages m
 		INNER JOIN folders f ON m.folder_id = f.id
 		WHERE m.account_id = ? AND (
@@ -1598,7 +1603,7 @@ func (s *Store) GetConversation(threadID, folderID string) (*Conversation, error
 		)
 		%s %s
 		ORDER BY m.date ASC
-	`, trashFilter, folderFilter)
+	`, trashFilter, messagesFolderFilter)
 
 	rows, err := s.db.Query(messagesQuery, accountID, normalizedThreadID, normalizedThreadID, normalizedThreadID, folderID)
 	if err != nil {
@@ -1613,6 +1618,7 @@ func (s *Store) GetConversation(threadID, folderID string) (*Conversation, error
 		var pgpStatus, pgpSignerEmail, pgpSignerKeyID sql.NullString
 		var dateStr, receivedAtStr sql.NullString
 		var uidI64 int64
+		var msgFolderType string
 
 		err := rows.Scan(
 			&m.ID, &m.AccountID, &m.FolderID, &uidI64, &messageID, &inReplyTo, &references, &threadIDVal,
@@ -1624,12 +1630,13 @@ func (s *Store) GetConversation(threadID, folderID string) (*Conversation, error
 			&m.SMIMEEncrypted, &m.HasSMIME,
 			&pgpStatus, &pgpSignerEmail, &pgpSignerKeyID,
 			&m.PGPEncrypted, &m.HasPGP,
-			&receivedAtStr,
+			&receivedAtStr, &msgFolderType,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("failed to scan message: %w", err)
 		}
 		m.UID = uint32(uidI64)
+		m.ContextOnly = m.FolderID != folderID && (msgFolderType == "archive" || msgFolderType == "all")
 
 		if messageID.Valid {
 			m.MessageID = messageID.String
@@ -1704,15 +1711,17 @@ func (s *Store) GetConversation(threadID, folderID string) (*Conversation, error
 		c.Messages = append(c.Messages, m)
 	}
 
-	// Dedupe copies of the same email (#222): the query spans current
-	// folder + Sent + Drafts, so a self-BCC'd send appears as both the
-	// Sent copy and the delivered copy. Collapse rows sharing a non-empty
-	// Message-ID, preferring current folder > sent > drafts so actions
-	// operate on the copy in the folder being viewed. Stable, keeps
-	// date-ASC order.
+	// Dedupe copies of the same email (#222): the query spans several
+	// folders, so a self-BCC'd send appears as both the Sent copy and the
+	// delivered copy. Collapse rows sharing a non-empty Message-ID, preferring
+	// current folder > sent > drafts > archived so actions operate on the copy
+	// in the folder being viewed. Stable, keeps date-ASC order.
 	msgPriority := func(m *Message) int {
 		if m.FolderID == folderID {
 			return 0
+		}
+		if m.ContextOnly {
+			return 3
 		}
 		if m.IsDraft {
 			return 2
