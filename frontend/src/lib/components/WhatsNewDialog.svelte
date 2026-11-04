@@ -59,7 +59,7 @@
       </div>
 
       <div class="space-y-4 max-h-[60vh] overflow-y-auto text-sm">
-        <p>🚀 Welcome to Mailaxe v0.3.6-mailaxe.1!</p>
+        <p>🚀 Welcome to Mailaxe v1.0.0!</p>
 
         <p>Mailaxe is an unofficial fork of Aerion v0.3.6. On top of Aerion, it adds:</p>
 

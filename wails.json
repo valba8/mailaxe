@@ -9,7 +9,7 @@
   "info": {
     "companyName": "Mailaxe",
     "productName": "Mailaxe",
-    "productVersion": "0.3.6",
+    "productVersion": "1.0.0",
     "copyright": "Copyright 2024-2025 Aerion Contributors; Mailaxe modifications Copyright 2026 valba8",
     "comments": "Unofficial fork of Aerion, a modern, cross-platform email client",
     "protocols": [

@@ -3,7 +3,7 @@ name: Release
 # Mailaxe release workflow (replaces Aerion's, which also publishes Flatpak,
 # AUR and signed macOS builds tied to the upstream project).
 #
-# Push a tag like v0.3.6-mailaxe.1 to build Windows and Linux binaries and
+# Push a tag like v1.0.0 to build Windows and Linux binaries and
 # attach them to a DRAFT GitHub release for review before publishing.
 # Builds carry no OAuth credentials: users bring their own (see README).
 
@@ -98,7 +98,7 @@ jobs:
         run: |
           TAG=${{ github.ref_name }}
           gh release view "$TAG" >/dev/null 2>&1 || \
-            gh release create "$TAG" --draft --prerelease --generate-notes \
+            gh release create "$TAG" --draft --generate-notes \
               --title "Mailaxe $TAG" \
               --notes "Unofficial fork of Aerion. Builds ship without OAuth credentials: see the README for Gmail/Outlook setup."
           gh release upload "$TAG" artifacts/* --clobber

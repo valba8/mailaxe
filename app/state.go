@@ -23,11 +23,11 @@ func (a *App) SaveUIState(state *appstate.UIState) error {
 // App Info API - Exposed to frontend via Wails bindings
 // ============================================================================
 
-// Version is the Mailaxe release version (Aerion base version + "-mailaxe.N"). Bump on each release; consumed by
+// Version is the Mailaxe release version. Bump on each release; consumed by
 // the About dialog via GetAppInfo() and by the --version CLI flag in main.go.
 // (wails.json, frontend/package.json, and metainfo.xml each carry their own
 // version strings for their respective tooling.)
-const Version = "0.3.6-mailaxe.1"
+const Version = "1.0.0"
 
 // AppInfo contains application metadata
 type AppInfo struct {

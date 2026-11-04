@@ -52,7 +52,7 @@ body:
     attributes:
       label: Mailaxe Version
       description: "Find it in Mailaxe at ⚙️ (Settings) → About."
-      placeholder: e.g. 0.3.6-mailaxe.1
+      placeholder: e.g. 1.0.0
     validations:
       required: true
 
