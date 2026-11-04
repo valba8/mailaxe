@@ -83,8 +83,9 @@
     return !selectedRowAccountId || !row.accountId || row.accountId === selectedRowAccountId
   }
 
+  // Identifies one list row; checkboxes and row refs use it, not the thread ID.
   function rowKey(row: RowIdentity): string {
-    return row.threadId + '-' + (row.accountId || '')
+    return row.threadId + '-' + (row.accountId || accountId || '')
   }
   let lastLoadedFolderId = $state<string | null>(null) // Track folder changes
   let loadGeneration = $state(0) // Invalidates stale async results when folder changes mid-load (#200)
@@ -115,7 +116,7 @@
   )
 
   // Multi-select state
-  let checkedThreadIds = $state<Set<string>>(new Set())
+  let checkedRowKeys = $state<Set<string>>(new Set())
   let lastClickedIndex = $state<number | null>(null)
 
   // Pagination
@@ -368,7 +369,7 @@
       prevFolderId = null
       conversations = []
       totalCount = 0
-      checkedThreadIds = new Set()
+      checkedRowKeys = new Set()
       return
     }
 
@@ -380,7 +381,7 @@
     prevFolderId = currentFolder
     loadGeneration++ // Invalidate any in-flight loads from the previous folder (#200)
     offset = 0
-    checkedThreadIds = new Set()
+    checkedRowKeys = new Set()
     lastClickedIndex = null
     // Clear search state when folder changes
     showSearch = false
@@ -428,7 +429,7 @@
   const selectedMessageIds = $derived(
     [...new Set(
       [...conversations, ...searchResults]
-        .filter((c) => checkedThreadIds.has(c.threadId))
+        .filter((c) => checkedRowKeys.has(rowKey(c)))
         .flatMap((c: any) => c.messageIds || c.messages?.map((m: any) => m.id) || [])
     )]
   )
@@ -437,18 +438,18 @@
   // Show "Star" if any selected is unstarred, show "Mark as Read" if any selected is unread
   const selectedHasUnstarred = $derived(
     [...conversations, ...searchResults]
-      .filter((c) => checkedThreadIds.has(c.threadId))
+      .filter((c) => checkedRowKeys.has(rowKey(c)))
       .some((c: any) => !c.isStarred)
   )
   const selectedHasUnread = $derived(
     [...conversations, ...searchResults]
-      .filter((c) => checkedThreadIds.has(c.threadId))
+      .filter((c) => checkedRowKeys.has(rowKey(c)))
       .some((c: any) => (c.unreadCount || 0) > 0)
   )
 
   // Clear multi-select (called when right-clicking on unchecked row)
   function clearSelection() {
-    checkedThreadIds = new Set()
+    checkedRowKeys = new Set()
     lastClickedIndex = null
   }
 
@@ -880,11 +881,11 @@
     if (event?.shiftKey) {
       const start = lastClickedIndex !== null ? Math.min(lastClickedIndex, index) : index
       const end = lastClickedIndex !== null ? Math.max(lastClickedIndex, index) : index
-      const newChecked = new Set(checkedThreadIds)
+      const newChecked = new Set(checkedRowKeys)
       for (let i = start; i <= end; i++) {
-        newChecked.add(activeList[i].threadId)
+        newChecked.add(rowKey(activeList[i]))
       }
-      checkedThreadIds = newChecked
+      checkedRowKeys = newChecked
       return
     }
 
@@ -893,14 +894,14 @@
 
     // Ctrl/Cmd+click: toggle single checkbox without changing selection
     if (event?.ctrlKey || event?.metaKey) {
-      const newChecked = new Set(checkedThreadIds)
-      toggleSetEntry(newChecked, threadId)
-      checkedThreadIds = newChecked
+      const newChecked = new Set(checkedRowKeys)
+      toggleSetEntry(newChecked, rowKey(activeList[index]))
+      checkedRowKeys = newChecked
       return
     }
 
     // Normal click - select for viewing, clear checks
-    checkedThreadIds = new Set()
+    checkedRowKeys = new Set()
     markSelected(activeList[index])
 
     // For unified view or search, use real folderId and accountId from conversation data
@@ -943,23 +944,23 @@
     }
   }
 
-  function handleCheck(threadId: string, isChecked: boolean, index: number, event?: MouseEvent) {
+  function handleCheck(key: string, isChecked: boolean, index: number, event?: MouseEvent) {
     if (event?.shiftKey && lastClickedIndex !== null) {
       const start = Math.min(lastClickedIndex, index)
       const end = Math.max(lastClickedIndex, index)
-      const newChecked = new Set(checkedThreadIds)
+      const newChecked = new Set(checkedRowKeys)
       for (let i = start; i <= end; i++) {
-        newChecked.add(activeList[i].threadId)
+        newChecked.add(rowKey(activeList[i]))
       }
-      checkedThreadIds = newChecked
+      checkedRowKeys = newChecked
       return
     }
 
     lastClickedIndex = index
-    const newChecked = new Set(checkedThreadIds)
-    if (isChecked) newChecked.add(threadId)
-    if (!isChecked) newChecked.delete(threadId)
-    checkedThreadIds = newChecked
+    const newChecked = new Set(checkedRowKeys)
+    if (isChecked) newChecked.add(key)
+    if (!isChecked) newChecked.delete(key)
+    checkedRowKeys = newChecked
   }
 
   export function handleActionComplete(autoSelectNext: boolean = false) {
@@ -1234,10 +1235,11 @@
 
   // Toggle checkbox for focused message (Space key)
   export function toggleCheck() {
-    if (!selectedThreadId) return
-    const newChecked = new Set(checkedThreadIds)
-    toggleSetEntry(newChecked, selectedThreadId)
-    checkedThreadIds = newChecked
+    const row = activeList[getSelectedIndex()]
+    if (!row) return
+    const newChecked = new Set(checkedRowKeys)
+    toggleSetEntry(newChecked, rowKey(row))
+    checkedRowKeys = newChecked
     lastClickedIndex = getSelectedIndex()
   }
 
@@ -1253,10 +1255,10 @@
     if (!conv) return
 
     // Check both current and new message
-    const newChecked = new Set(checkedThreadIds)
-    newChecked.add(activeList[currentIndex].threadId)
-    newChecked.add(conv.threadId)
-    checkedThreadIds = newChecked
+    const newChecked = new Set(checkedRowKeys)
+    newChecked.add(rowKey(activeList[currentIndex]))
+    newChecked.add(rowKey(conv))
+    checkedRowKeys = newChecked
 
     // Move focus (but don't open in viewer)
     markSelected(conv)
@@ -1277,10 +1279,10 @@
     if (!conv) return
 
     // Check both current and new message
-    const newChecked = new Set(checkedThreadIds)
-    newChecked.add(activeList[currentIndex].threadId)
-    newChecked.add(conv.threadId)
-    checkedThreadIds = newChecked
+    const newChecked = new Set(checkedRowKeys)
+    newChecked.add(rowKey(activeList[currentIndex]))
+    newChecked.add(rowKey(conv))
+    checkedRowKeys = newChecked
 
     // Move focus (but don't open in viewer)
     markSelected(conv)
@@ -1296,7 +1298,7 @@
 
   // Check if any messages are checked
   export function hasCheckedMessages(): boolean {
-    return checkedThreadIds.size > 0
+    return checkedRowKeys.size > 0
   }
 
   // Get aggregated star state (true if any unstarred)
@@ -1311,21 +1313,21 @@
 
   // Get index of earliest checked item (for post-delete focus)
   function getEarliestCheckedIndex(): number {
-    if (checkedThreadIds.size === 0) return getSelectedIndex()
+    if (checkedRowKeys.size === 0) return getSelectedIndex()
     for (let i = 0; i < activeList.length; i++) {
-      if (checkedThreadIds.has(activeList[i].threadId)) return i
+      if (checkedRowKeys.has(rowKey(activeList[i]))) return i
     }
     return getSelectedIndex()
   }
 
   // Clear all checkboxes
   export function clearChecked() {
-    checkedThreadIds = new Set()
+    checkedRowKeys = new Set()
     lastClickedIndex = null
   }
 
   export function selectAll() {
-    checkedThreadIds = new Set(activeList.map(c => c.threadId))
+    checkedRowKeys = new Set(activeList.map(rowKey))
   }
 
   // Open context menu for the currently selected conversation row
@@ -1783,7 +1785,7 @@
               conversation={result}
               density={getMessageListDensity()}
               selected={isSelectedRow(result)}
-              checked={checkedThreadIds.has(result.threadId)}
+              checked={checkedRowKeys.has(rowKey(result))}
               accountId={resultAccountId}
               folderId={resultFolderId}
               {folderType}
@@ -1792,7 +1794,7 @@
               selectedIsRead={!selectedHasUnread}
               isNonLocal={result._isLocal === false}
               onSelect={(e) => selectConversation(result.threadId, index, e)}
-              onCheck={(checked, e) => handleCheck(result.threadId, checked, index, e)}
+              onCheck={(checked, e) => handleCheck(rowKey(result), checked, index, e)}
               onClearSelection={clearSelection}
               onActionComplete={handleActionComplete}
               {onReply}
@@ -1854,7 +1856,7 @@
             conversation={result}
             density={getMessageListDensity()}
             selected={isSelectedRow(result)}
-            checked={checkedThreadIds.has(result.threadId)}
+            checked={checkedRowKeys.has(rowKey(result))}
             accountId={isUnifiedView ? resultAccountId : accountId!}
             folderId={isUnifiedView ? resultFolderId : folderId!}
             {folderType}
@@ -1870,7 +1872,7 @@
             searchFolderName={result.folderName}
             searchFolderType={result.folderType}
             onSelect={(e) => selectConversation(result.threadId, index, e)}
-            onCheck={(checked, e) => handleCheck(result.threadId, checked, index, e)}
+            onCheck={(checked, e) => handleCheck(rowKey(result), checked, index, e)}
             onClearSelection={clearSelection}
             onActionComplete={handleActionComplete}
             {onReply}
@@ -1941,7 +1943,7 @@
           conversation={conv}
           density={getMessageListDensity()}
           selected={isSelectedRow(conv)}
-          checked={checkedThreadIds.has(conv.threadId)}
+          checked={checkedRowKeys.has(rowKey(conv))}
           accountId={isUnifiedView ? convAccountId : accountId!}
           folderId={isUnifiedView ? convFolderId : folderId!}
           {folderType}
@@ -1952,7 +1954,7 @@
           accountColor={convAccountColor}
           accountName={convAccountName}
           onSelect={(e) => selectConversation(conv.threadId, index, e)}
-          onCheck={(checked, e) => handleCheck(conv.threadId, checked, index, e)}
+          onCheck={(checked, e) => handleCheck(rowKey(conv), checked, index, e)}
           onClearSelection={clearSelection}
           onActionComplete={handleActionComplete}
           {onReply}
