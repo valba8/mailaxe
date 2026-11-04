@@ -1499,7 +1499,7 @@
       messageListRef?.handleActionComplete(true)
     } catch (err) {
       console.error('Archive failed:', err)
-      addToast({ type: 'error', message: $_('toast.failedToArchive') })
+      addToast({ type: 'error', message: `${$_('toast.failedToArchive')}: ${err}` })
     }
   }
 

@@ -99,7 +99,7 @@
 
   // State
   let conversation = $state<messageModels.Conversation | null>(null)
-  let dismissedThreadId: string | null = null
+  let dismissedThread: string | null = null
   // Per-message EmailBody refs, used to pull each rendered body for printing.
   let emailBodyRefs: Record<string, { getPrintableHtml(): Promise<string> }> = {}
   let loading = $state(false)
@@ -420,7 +420,7 @@
       const updated = await GetConversation(tid, fid)
 
       // Stale guard: user navigated away while we were fetching
-      if (threadId !== tid) return
+      if (threadId !== tid || folderId !== fid) return
 
       if (goneFromFolder(updated, fid)) {
         dismissConversation(true)
@@ -477,7 +477,7 @@
       const result = await GetConversation(tid, fid)
 
       // Stale guard: user navigated away while we were fetching
-      if (threadId !== tid) return
+      if (threadId !== tid || folderId !== fid) return
 
       // A thread with no messages here is gone (e.g. just deleted/moved; the
       // backend returns an empty conversation, not null, or only the thread's
@@ -488,7 +488,7 @@
         return
       }
 
-      dismissedThreadId = null
+      dismissedThread = null
       conversation = result
 
       // Auto-expand unread messages and the last message
@@ -545,8 +545,8 @@
     }
     conversation = null
     // Later syncs of the same gone thread land here again: only advance once.
-    const alreadyDismissed = dismissedThreadId === threadId
-    dismissedThreadId = threadId
+    const alreadyDismissed = dismissedThread === `${threadId}:${folderId}`
+    dismissedThread = `${threadId}:${folderId}`
     if (autoSelectNext && !alreadyDismissed) {
       onActionComplete?.(true)
     }
@@ -775,7 +775,7 @@
     const fid = folderId
     try {
       const updated = await GetConversation(tid, fid)
-      if (threadId !== tid) return
+      if (threadId !== tid || folderId !== fid) return
       // Best-effort flag refresh: never replace a shown thread with an empty
       // one (the thread may have just been deleted/moved, #260).
       if (!updated?.messages?.length) return
@@ -832,7 +832,7 @@
       onActionComplete?.(true)
     } catch (err) {
       console.error('Archive failed:', err)
-      toasts.error($_('toast.failedToArchive'))
+      toasts.error(`${$_('toast.failedToArchive')}: ${err}`)
     }
   }
 

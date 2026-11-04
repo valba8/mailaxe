@@ -155,7 +155,7 @@
       onActionComplete?.(true)
     } catch (err) {
       console.error('Archive failed:', err)
-      toasts.error($_('toast.failedToArchive'))
+      toasts.error(`${$_('toast.failedToArchive')}: ${err}`)
     }
   }
 
