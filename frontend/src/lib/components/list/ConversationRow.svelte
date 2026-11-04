@@ -510,9 +510,10 @@
     {#if showUnreadAccent && !accentUnderAvatar && getAccentUnreadStyle() !== 'bar'}
       <!-- Unread accent, dot variants: absolute so it never shifts row content
            (unlike the 2px bar border); glow via inline style — theme primary.
+           Inset so the list edge and the account strip do not hide it.
            With "accent under avatar" it sits under the avatar instead. -->
       <span
-        class="pointer-events-none absolute -left-0.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"
+        class="pointer-events-none absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"
         style={getAccentUnreadStyle() === 'glowdot' ? 'box-shadow: 0 0 6px 1px hsl(var(--primary) / 0.7)' : ''}
       ></span>
     {/if}
