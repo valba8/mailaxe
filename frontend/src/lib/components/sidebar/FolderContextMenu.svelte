@@ -4,12 +4,15 @@
   import {
     ContextMenuContent,
     ContextMenuItem,
+    ContextMenuSeparator,
   } from '$lib/components/ui/context-menu'
   import {
     MarkAllFolderMessagesAsRead,
     MarkAllFolderMessagesAsUnread,
     MarkWholeFolder,
     GetMarkAllCoverage,
+    SyncFolder,
+    ForceSyncFolder,
   } from '../../../../wailsjs/go/app/App'
   import { toasts } from '$lib/stores/toast'
   import type { Snippet } from 'svelte'
@@ -17,11 +20,13 @@
   import MarkAllScopeDialog from './MarkAllScopeDialog.svelte'
 
   interface Props {
+    accountId: string
     folderId: string
     children?: Snippet
   }
 
   let {
+    accountId,
     folderId,
     children,
   }: Props = $props()
@@ -82,6 +87,15 @@
   function handleMarkAllUnread() {
     void startMarkAll(false)
   }
+
+  async function handleSync(sync: (accountId: string, folderId: string) => Promise<void>) {
+    try {
+      await sync(accountId, folderId)
+    } catch (err) {
+      console.error('Failed to sync folder:', err)
+      toasts.error($_('sidebar.syncError'))
+    }
+  }
 </script>
 
 <MarkAllScopeDialog
@@ -107,6 +121,15 @@
     <ContextMenuItem onSelect={handleMarkAllUnread}>
       <Icon icon="mdi:email-outline" class="mr-2 h-4 w-4" />
       {$_('contextMenu.markAllAsUnread')}
+    </ContextMenuItem>
+    <ContextMenuSeparator />
+    <ContextMenuItem onSelect={() => handleSync(SyncFolder)}>
+      <Icon icon="mdi:refresh" class="mr-2 h-4 w-4" />
+      {$_('messageList.syncFolder')}
+    </ContextMenuItem>
+    <ContextMenuItem onSelect={() => handleSync(ForceSyncFolder)}>
+      <Icon icon="mdi:refresh-auto" class="mr-2 h-4 w-4" />
+      {$_('messageList.forceResync')}
     </ContextMenuItem>
   </ContextMenuContent>
 </ContextMenuPrimitive.Root>
