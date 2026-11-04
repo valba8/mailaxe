@@ -507,17 +507,6 @@
     role="button"
     tabindex="0"
   >
-    {#if showUnreadAccent && !accentUnderAvatar && getAccentUnreadStyle() !== 'bar'}
-      <!-- Unread accent, dot variants: absolute so it never shifts row content
-           (unlike the 2px bar border); glow via inline style — theme primary.
-           Inset so the list edge and the account strip do not hide it.
-           With "accent under avatar" it sits under the avatar instead. -->
-      <span
-        class="pointer-events-none absolute left-1.5 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full bg-primary"
-        style={getAccentUnreadStyle() === 'glowdot' ? 'box-shadow: 0 0 6px 1px hsl(var(--primary) / 0.7)' : ''}
-      ></span>
-    {/if}
-
     {#if showAccountIndicator && accountColor && getAccountColorStrip()}
       <!-- Account color (unified inbox, strip setting): full-height strip on
            the left edge; otherwise a dot next to the sender -->
@@ -612,6 +601,16 @@
     <!-- Content -->
     <div class="flex-1 min-w-0">
       <div class="flex items-center gap-2 mb-0.5">
+        {#if showUnreadAccent && !accentUnderAvatar && getAccentUnreadStyle() !== 'bar'}
+          <!-- Unread accent, dot variants: before the sender, which moves over
+               to make room; glow via inline style — theme primary. With "accent
+               under avatar" it sits under the avatar instead. -->
+          <span
+            class="pointer-events-none w-1.5 h-1.5 rounded-full flex-shrink-0 bg-primary"
+            style={getAccentUnreadStyle() === 'glowdot' ? 'box-shadow: 0 0 6px 1px hsl(var(--primary) / 0.7)' : ''}
+          ></span>
+        {/if}
+
         <!-- Account Indicator (unified inbox, default dot style) -->
         {#if showAccountIndicator && accountColor && !getAccountColorStrip()}
           <span
