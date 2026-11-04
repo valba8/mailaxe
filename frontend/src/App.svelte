@@ -297,7 +297,7 @@
 
       // Highlight the thread in the message list (with small delay to ensure list has loaded)
       setTimeout(() => {
-        messageListRef?.selectThread(data.threadId)
+        messageListRef?.selectThread(data.threadId, data.accountId)
       }, 100)
 
       // Persist state
